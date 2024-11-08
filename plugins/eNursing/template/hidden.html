@@ -1,0 +1,46 @@
+{{if $data.controlMode=="readOnly"}}
+	<label
+		type=			"label"
+		class=			"formItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	<input
+		type=			"hidden"
+		class=			"formItem hiddenFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		{{if $data.controlMode=="disabled"}}
+			disabled=	"disabled"
+		{{/if}}
+		style=			"border-radius: 4px;"
+		value=			"{{$data.defaultValue}}"
+	>
+	</input>
+{{/if}}

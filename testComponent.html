@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="d-flex flex-column">
+        <div class="border" id="buttonBlock">
+        </div>
+        <div class="flex-fill border" data-role="drop-container" style="height: 95vh;">
+            
+        </div>
+    </div>
+</body>
+    <script src="js/config.js"></script>
+    <script src="js/method.js"></script>
+    <script src="js/bean.js"></script>
+    <script type="module">
+        import { ComponentFactory } from './js/componentModule/init-component.js'
+        (function() {
+            for (let components in ComponentFactory.baseComponent) {
+                const component = ComponentFactory.baseComponent[components]
+                document.querySelector('#buttonBlock').appendChild({
+                    'button': {
+                        'class':        'btn btn-primary',
+                        'draggable':    'true',
+                        'value':        components.replace(/_/g, ''),
+                        'text':         `${ component.dragDescription }(${ component.dragName })`
+                    }
+                }.createElemental()[0])
+            }
+            const dragButtons       = document.querySelectorAll('[draggable="true"]')
+            const dropContainers    = document.querySelector('[data-role="drop-container"]')
+            dropContainers.addEventListener('dragover', dropOver)
+            dropContainers.addEventListener('drop', dropped)
+            dragButtons.forEach(button => button.addEventListener('dragstart', dragStart))
+        })()
+        
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', `button,${ e.target.getAttribute('value') }`)
+        }
+
+        function dropOver(e) {
+            e.preventDefault()
+		    e.stopPropagation()
+        }
+
+        function dropped(e) {
+            let plain 		= e.dataTransfer.getData('text/plain')
+	        if (plain.indexOf(',') > -1) plain = plain.split(',')
+            const dragTag 	= plain[0]
+            const type 		= plain[1]
+            const eleObject = document.querySelector(`${ dragTag }[value="${ type }"]`)
+            const defaultBeanName = `base_${ type }_${ new Date().format('HHmmss') }`
+            let buttonName
+            if (eleObject) {
+                buttonName 		= eleObject.textContent
+            }
+            const component =  ComponentFactory.create(`__${ type }`, defaultBeanName, defaultBeanName, buttonName.replace(/\(+\w+\)/, ''))
+            console.log(component)
+        }
+
+        function dropEnter(e) {
+            e.preventDefault()
+		    e.stopPropagation()
+        }
+        
+    </script>
+</html>

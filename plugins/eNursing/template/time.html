@@ -1,0 +1,106 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem timeFontFormItem"
+			id=				"font_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem timeLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem timeDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem timeFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+	<input
+		type=			"text"
+		class=			"formItem timeFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		autocomplete=	"off"
+		placeholder=	"{{$data.placeholder}}"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-datetime=  "time"
+		data-timeformat="{{$data.timeFormat}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		data-typeformat='{{$data.typeFormat}}'
+		data-minlimit=  '{{if $data.minLimit}}{{$data.minLimit}}{{else}}{"time":"00:00"}{{/if}}'
+		data-maxlimit=  '{{if $data.maxLimit}}{{$data.maxLimit}}{{else}}{"time":"23:59"}{{/if}}'
+		{{if isHor||isVer}}
+			data-upload= "false"
+		{{else if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		{{if $data.controlMode=="disabled"}}
+			disabled=	"disabled"
+		{{/if}}
+		style=			"border-radius: 4px;{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+		onclick=		"{{$data.click}}"
+		{{if $data.blur != "" && $data.blur != undefined}}
+			onblur=		'checkTimeFormat(this);ruleTools.showElement(this);ruleTools.viryElement(this);{{@$data.blur}}'
+		{{else}}
+			onblur=		'checkTimeFormat(this);ruleTools.showElement(this);ruleTools.viryElement(this);'
+		{{/if}}
+	>
+	</input>
+	{{if $data.backTitle}}
+	<label
+		class=			"timeBkFormItem"
+		id=				"label_backTitle_{{$data.name}}"
+	>
+	{{$data.backTitle}}
+	</label>
+	{{/if}}
+	</div>
+	<script>
+	    //初始化datetimepicker的日期時間
+	    var $dtpicker = $('#{{$data.name}}');
+	    $dtpicker.mousedown(function(event) {
+	    	$(this).datetimepicker(JSON.parse(getDataset(this).typeformat).time);
+	    	$(this).datetimepicker('show');
+	    });
+	    {{if $data.defaultValue}}
+	    	setDatetimeDafaultValue($dtpicker[0], {{@$data.defaultValue}}, {{@$data.typeFormat}}.time);
+		{{/if}}
+    	setDatetimeLimit($dtpicker[0]);
+    	$dtpicker.change();
+	</script>
+{{/if}}

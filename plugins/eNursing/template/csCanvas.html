@@ -1,0 +1,123 @@
+{{if $data.controlMode=="text"}}
+	<label
+		type=			"label"
+		class=			"formItem ccvsLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload!=null&&$data.upload!=undefined}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem ccvsDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+		<canvas
+			type=			"csCanvas"
+			class=			"formItem csCanvasFormItem csCanvas{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+			id=				"{{$data.name}}"
+			name=			"{{$data.name}}"
+			data-title=		"{{$data.title}}"
+			data-bean=		"{{$data.name}}"
+			data-id=		"{{$data.name}}"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-cs-canvas-param=""
+			data-busy=		"false"
+			data-prompttips="{{if $data.promptTips}}{{$data.promptTips}}{{else}}請點選「{{$data.title}}」{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+		>
+		</canvas>
+	</div>
+	<script>
+		var objCvs_{{$data.name}};
+		var csTypeFormatArr_{{$data.name}} = JSON.parse("{{@$data.typeFormat}}");
+		document.getElementById("{{$data.name}}").changeCsCanvasProp = function (csCanvasParam, itemValue, otherValue) {
+			var that = this;
+			//如果正在查詢的話，等他查完再接著查
+			var isBusy = document.getElementById("{{$data.name}}").getAttribute("data-busy") == "true";
+			if (isBusy) {
+				console.log("查詢csCanvas人形圖設定資料-{$data.name}} 忙碌中，1秒後再試一次");
+				setTimeout(function(){
+					document.getElementById("{{$data.name}}").changeCsCanvasProp(csCanvasParam, itemValue, otherValue);
+				}, 1000)
+				return;
+			}
+			document.getElementById("{{$data.name}}").setAttribute("data-busy", "true");
+			console.log("===={{$data.title}} gForm")
+			//已經查過的就不用再查了
+			if (propCsCanvasMap[csCanvasParam]) {
+				//初始化csCanvas
+				objCvs_{{$data.name}} = that.createCsCanvas("{{$data.name}}", {{$data.width}}, {{$data.height}}, data, {{$data.options}}, itemValue, otherValue);
+				return;
+			}
+			//查詢參數
+			var csGFormJS = nursing.createGForm()
+			var csSourceId = csCanvasParam.split("|:|")[0];
+			var csSearchParam = csCanvasParam.split("|:|")[1];
+			csGFormJS.searchParamGF.status = 'Y'
+			csGFormJS.searchParamGF.formType = 'propCsCanvas'
+			csGFormJS.searchParamGF.itemCondition = "{searchParam}='"+csSearchParam+"'"
+			csGFormJS.searchParamGF.sourceId = csSourceId
+
+			//取得資料
+			csGFormJS.getGFormListWithConditionPlus(csGFormJS, function(result){
+				if (result.length==0){
+					alert("查詢「{{$data.title}}」發生錯誤!");
+					console.error("查詢「{{$data.title}}」發生錯誤!", result);
+					return;
+				}
+				var map = result[0].gForm.gformItemMap;
+				map.getValue = function(key) { return (this[key]) ? this[key].itemValue : ''};
+				var data = {
+					"imgSrc": 	map.getValue('imgSrc'),
+					"sourceId":	result[0].gForm.sourceId,
+					"csName":  	map.getValue('csName'),
+					"typeA":   	map.getValue('typeA'),
+					"typeB":   	map.getValue('typeB'),
+					"templateDiv": (map.getValue('templateDiv')) ? JSON.parse(map.getValue('templateDiv')) : null,
+					"areas" :   (map.getValue('areas')) ? JSON.parse(map.getValue('areas')) : []
+				};
+				//初始化csCanvas
+				objCvs_{{$data.name}} = that.createCsCanvas("{{$data.name}}", {{$data.width}}, {{$data.height}}, data, {{$data.options}}, itemValue, otherValue);
+			}, function(e){
+				alert("查詢「{{$data.title}}」發生錯誤!");
+				console.error(e)
+			});
+			//初始化csCanvas
+			this.createCsCanvas = function (id, width, height, data, options, itemValue, otherValue){
+				if (itemValue || otherValue){
+					//設定值
+					options.onReady = function(){ //在canvas設定完成後呼叫
+						document.getElementById("{{$data.name}}").csCanvas.doSetDefaultValue(itemValue, otherValue);
+					};
+				}
+				document.getElementById("{{$data.name}}").setAttribute("data-cs-canvas-param", csCanvasParam);
+				document.getElementById("{{$data.name}}").setAttribute("data-busy", "false");
+				return new csCanvas(id, width, height, data, options);
+			}
+		}
+		document.getElementById("{{$data.name}}").changeCsCanvasProp(csTypeFormatArr_{{$data.name}}[0].sourceId+"|:|"+csTypeFormatArr_{{$data.name}}[0].csName+"-"+csTypeFormatArr_{{$data.name}}[0].typeA+"-"+csTypeFormatArr_{{$data.name}}[0].typeB);
+
+	</script>
+{{/if}}

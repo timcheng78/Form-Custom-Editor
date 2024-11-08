@@ -1,0 +1,1372 @@
+html,
+body {
+    font-size: 16px;
+    height: 100%;
+}
+body {
+    font-family: "Microsoft JhengHei", "Noto Sans TC", "Open Sans";
+    color: #444;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #dfe5ef;
+}
+.structure1 .title-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0rem;
+    color: #444;
+    background-color: #fff;
+    padding: 4px 10px;
+    margin-bottom: 0px;
+    z-index: 1;
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+}
+.structure1 .title-bar.vertical {
+    line-height: 2;
+}
+.structure1 .title-bar .title-bar-text {
+    padding: 0rem;
+    width: auto;
+}
+.structure1 .title-bar .title-bar-text .h4 {
+    color: #444;
+}
+.structure1 .title-bar .sub-title {
+    color: #888;
+    font-size: 1rem;
+    font-weight: normal;
+}
+.structure1 .title-bar .title-bar-text,
+.structure1 .title-bar .mobile-fixed {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    max-width: none;
+}
+.structure1 .title-bar .input-group-append .btn {
+    margin-left: 0rem !important;
+}
+.structure1 .btn-main {
+    background-color: #fd8a02 !important;
+    border-color: #fd8a02 !important;
+    color: #fff !important;
+    white-space: nowrap;
+}
+.structure1 .btn-main:not(:disabled):not(.disabled):hover,
+.structure1 .btn-main:not(:disabled):not(.disabled):focus,
+.structure1 .btn-main:not(:disabled):not(.disabled):active {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.structure1 .btn-main:not(:disabled):not(.disabled):hover {
+    background-color: #fd7302 !important;
+    color: #fff !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.structure1 .btn-main i {
+    color: #fff;
+}
+.structure1 .btn-main span {
+    color: #fff;
+    padding: 0rem 0.25rem;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+.structure1 .btn-sub {
+    background-color: #4d6881 !important;
+    border-color: #4d6881 !important;
+    color: #fff !important;
+    white-space: nowrap;
+}
+.structure1 .btn-sub:not(:disabled):not(.disabled):hover,
+.structure1 .btn-sub:not(:disabled):not(.disabled):focus,
+.structure1 .btn-sub:not(:disabled):not(.disabled):active {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.structure1 .btn-sub:not(:disabled):not(.disabled):hover {
+    background-color: #4d6881 !important;
+    color: #fff !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.structure1 .btn-sub i {
+    color: #fff;
+}
+.structure1 .btn-sub span {
+    color: #fff;
+    padding: 0rem 0.25rem;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+.structure1 .btn-other {
+    background-color: #fff !important;
+    border-color: #4d6881 !important;
+    color: #4d6881 !important;
+    white-space: nowrap;
+}
+.structure1 .btn-other:not(:disabled):not(.disabled):hover,
+.structure1 .btn-other:not(:disabled):not(.disabled):focus,
+.structure1 .btn-other:not(:disabled):not(.disabled):active {
+    color: #fff !important;
+    background-color: #4d6881 !important;
+    border-color: #4d6881 !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.structure1 .btn-other:not(:disabled):not(.disabled):hover i,
+.structure1 .btn-other:not(:disabled):not(.disabled):focus i,
+.structure1 .btn-other:not(:disabled):not(.disabled):active i {
+    color: #fff;
+}
+.structure1 .btn-other:not(:disabled):not(.disabled):hover span,
+.structure1 .btn-other:not(:disabled):not(.disabled):focus span,
+.structure1 .btn-other:not(:disabled):not(.disabled):active span {
+    color: #fff;
+}
+.structure1 .btn-other i {
+    color: #4d6881;
+}
+.structure1 .btn-other span {
+    color: #4d6881;
+    padding: 0rem 0.25rem;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+.structure1 .btn-disabled {
+    background-color: #e9ecef !important;
+    border-color: #e9ecef !important;
+    color: #444 !important;
+    white-space: nowrap;
+}
+.structure1 .btn-disabled:not(:disabled):not(.disabled) {
+    cursor: no-drop;
+}
+.structure1 .btn-disabled:not(:disabled):not(.disabled):hover,
+.structure1 .btn-disabled:not(:disabled):not(.disabled):focus,
+.structure1 .btn-disabled:not(:disabled):not(.disabled):active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.structure1 .btn-disabled:not(:disabled):not(.disabled):hover i,
+.structure1 .btn-disabled:not(:disabled):not(.disabled):focus i,
+.structure1 .btn-disabled:not(:disabled):not(.disabled):active i {
+    color: #444;
+}
+.structure1 .btn-disabled:not(:disabled):not(.disabled):hover span,
+.structure1 .btn-disabled:not(:disabled):not(.disabled):focus span,
+.structure1 .btn-disabled:not(:disabled):not(.disabled):active span {
+    color: #444;
+}
+.structure1 .btn-disabled i {
+    color: #444;
+}
+.structure1 .btn-disabled span {
+    color: #444;
+    padding: 0rem 0.25rem;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+.structure1 .mobile-fixed {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.structure1 .mobile-fixed .btn-main {
+    min-width: 5rem;
+}
+.structure1 .mobile-fixed .btn {
+    margin: 0.125rem;
+}
+.structure1 .tab-content-block {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.structure1 .tab-content-block .tab-content {
+    position: relative;
+    z-index: 0;
+}
+.structure1 .tab-content-block .tab-pane {
+    padding: 1rem;
+    border: 1px solid;
+    border-color: transparent #dee2e6 #dee2e6 #dee2e6;
+}
+.structure1 .tab-menu {
+    position: relative;
+    padding-right: 2rem;
+    padding-top: 2.625rem;
+    z-index: 2;
+}
+.structure1 .tab-menu.fixed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+    padding-top: 2rem;
+}
+.structure1 .tab-menu.fixed .tab-menu-toggle {
+    top: 0rem;
+}
+.structure1 .tab-menu.fixed .nav-item {
+    max-width: none !important;
+}
+.structure1 .tab-menu.fixed .nav-item .nav-link {
+    background-color: #fff;
+}
+.structure1 .tab-menu.fixed .nav-item .nav-link.active {
+    padding: 0.25rem 1rem;
+    border-radius: 0rem;
+    border: none;
+    background-color: #4d6881;
+    color: #fff;
+}
+.structure1 .tab-menu.fixed .nav-item .nav-link.active:hover,
+.structure1 .tab-menu.fixed .nav-item .nav-link.active:active {
+    background-color: #4d6881;
+    color: #fff;
+}
+.structure1 .tab-menu.active {
+    padding-top: 2rem;
+}
+.structure1 .tab-menu.active .tab-menu-toggle {
+    top: 0rem;
+}
+.structure1 .tab-menu.active .tab-menu-toggle i {
+    display: inline-block;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: all 1s;
+    transition: all 1s;
+}
+.structure1 .tab-menu.active .nav-tabs {
+    top: 0.625rem;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.structure1 .tab-menu.active .nav-item.active .nav-link.active {
+    border: none;
+    border-radius: 0rem;
+    padding: 0.25rem 1rem;
+    background-color: #4d6881;
+    color: #fff;
+}
+.structure1 .tab-menu + .tab-content .tab-pane {
+    border-radius: 0rem 0rem 0.375rem 0.375rem;
+    background-color: #fff;
+}
+.structure1 .tab-menu .tab-menu-toggle {
+    display: none;
+    position: absolute;
+    min-width: 2rem;
+    right: 0rem;
+    top: 0.625rem;
+    color: #ffffff;
+    background-color: #4d6881;
+    padding: 0.25rem 0rem;
+    text-align: center;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+}
+.structure1 .tab-menu .tab-menu-toggle.show {
+    display: inline-block;
+}
+.structure1 .tab-menu .tab-menu-toggle.show + .nav-tabs {
+    min-width: auto;
+    width: calc(100% - 2rem);
+    top: 0rem;
+}
+.structure1 .nav-tabs {
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    min-width: 100%;
+    top: 0rem;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.structure1 .nav-tabs::-webkit-scrollbar {
+    height: 0;
+}
+.structure1 .nav-tabs.hide + .tab-content .tab-pane {
+    border-radius: 0.375rem;
+    background-color: #fff;
+}
+.structure1 .nav-item {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    text-align: center;
+    white-space: nowrap;
+}
+.structure1 .nav-item:nth-child(1):nth-last-child(1) {
+    max-width: 14rem;
+}
+.structure1 .nav-item:nth-child(2):nth-last-child(1) {
+    max-width: 14rem;
+}
+.structure1 .nav-item:first-child:nth-last-child(2) {
+    max-width: 14rem;
+}
+.structure1 .nav-item:nth-child(3):nth-last-child(1) {
+    max-width: 14rem;
+}
+.structure1 .nav-item:nth-child(2):nth-last-child(2) {
+    max-width: 14rem;
+}
+.structure1 .nav-item:first-child:nth-last-child(3) {
+    max-width: 14rem;
+}
+.structure1 .nav-item .nav-link {
+    position: relative;
+    color: #444;
+    border: none;
+    border-radius: 0px;
+    background-color: #ededed;
+    padding: 0.25rem 1rem;
+}
+.structure1 .nav-item .nav-link:focus,
+.structure1 .nav-item .nav-link:hover {
+    border: none;
+    background-color: #d1d1d1;
+}
+.structure1 .nav-item .nav-link:after {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    content: "";
+    left: 0px;
+    width: 1px;
+    height: 60%;
+    background-color: #dee2e6;
+    z-index: 1;
+}
+.structure1 .nav-item .nav-link:before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 1px;
+    background-color: #dee2e6;
+    z-index: 1;
+}
+.structure1 .nav-item .nav-link.active {
+    border: 1px solid;
+    border-color: #fff;
+    border-radius: 0.375rem 0.375rem 0rem 0rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+}
+.structure1 .nav-item .nav-link.active::before,
+.structure1 .nav-item .nav-link.active:after {
+    display: none;
+}
+.structure1 .nav-item .nav-link.active:focus,
+.structure1 .nav-item .nav-link.active:hover {
+    background-color: #fff;
+}
+.structure1 .nav-item.add-nav-item {
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+}
+.structure1 .nav-item.add-nav-item .nav-link {
+    display: inline-block;
+}
+.structure1 .rejectedItem {
+    margin-right: 0.25rem;
+}
+.structure1 .rejectedItem:last-child {
+    margin-right: 0rem;
+}
+.structure1 .table {
+    table-layout: fixed;
+    background-color: #ffffff;
+}
+.structure1 .table thead th,
+.structure1 .table thead td {
+    background-color: #e8f5ff;
+}
+.structure1 .table thead .tablesorter-header {
+    cursor: pointer;
+}
+.structure1 .table thead .tablesorter-header.show .feather-arrow-down {
+    display: inline-block;
+}
+.structure1 .table thead .tablesorter-header.show.rotate .feather-arrow-down {
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+}
+.structure1 .table thead .tablesorter-header .feather-arrow-down {
+    display: none;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    font-size: 0.875rem;
+    color: red;
+}
+.structure1 .table th,
+.structure1 .table td {
+    padding: 0.5rem 0.75rem;
+}
+.structure1 .table th label,
+.structure1 .table td label {
+    margin-bottom: 0rem;
+}
+.structure1 .table .table-bordered {
+    border: none;
+}
+.structure1 .table tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+}
+.structure1 .table tbody tr td.table-data-title {
+    background: #e8f5ff;
+}
+.structure1 .table tbody tr td.table-sub-title {
+    position: relative;
+    padding: 0.35rem 3rem 0.35rem 1.25rem;
+    background-color: #585858;
+    color: #fff;
+}
+.structure1 .table tbody tr td.table-sub-title.table-sub-title-toggle {
+    cursor: pointer;
+}
+.structure1 .table tbody tr td.table-sub-title.table-sub-title-toggle.active .toggle-btn::before {
+    content: "\e9b1";
+}
+.structure1 .table tbody tr td.table-sub-title.table-sub-title-toggle .toggle-btn {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    right: 1rem;
+}
+.structure1 .table tbody tr td.table-sub-title label {
+    line-height: 2;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.structure1 .table tbody tr td.table-sub-title .form-row-div {
+    width: auto;
+}
+.structure1 .table tbody tr td.table-sub-title .form-row-div .btn {
+    margin: 0rem 0.25rem;
+    border: none;
+    background-color: #fff;
+    color: #444;
+}
+.structure1 .table tbody tr td.table-sub-title .form-row-div .btn:hover {
+    opacity: 0.95;
+}
+.structure1 .table tbody tr td.table-sub-title .toggle-btn {
+    display: none;
+}
+.structure1 .table tbody tr td.nurstr1 {
+    background-color: #eee;
+}
+.structure1 .table-list {
+    table-layout: auto;
+}
+.structure1 .table-list .btn {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-left: 0.25rem;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+.structure1 .table-list th,
+.structure1 .table-list td {
+    position: relative;
+    line-height: 2;
+}
+.structure1 .table-list td {
+    font-weight: normal;
+}
+.structure1 .table-list tbody tr:nth-of-type(even) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.structure1 .table-list .table-btn-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.structure1 .table-list .table-btn-block .btn {
+    margin: 0.125rem 0.125rem 0.125rem 0.25rem;
+}
+.structure1 .table-list .table-btn-block .btn:not(:first-child) {
+    margin-left: 0rem !important;
+}
+.structure1 .table-list .table-more {
+    display: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+}
+.structure1 .table-list .table-more i {
+    color: #4d6881;
+}
+.structure1 .table-list .table-more.active + .table-btn-mobile-hide {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+.structure1 .rejectedItem {
+    border-width: 2px;
+}
+.structure1 .form-row-div {
+    width: 100%;
+    margin: 0px;
+    overflow: initial;
+}
+.structure1 .form-group.pFormItem {
+    width: 100%;
+}
+.structure1 .divInlineBlock-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.structure1 .divInlineBlock-group div {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-width: 30%;
+    width: 10%;
+}
+.structure1 .divInlineBlock-group div .txDivFormItem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: auto;
+}
+.structure1 .divInlineBlock-group div input {
+    width: 90px !important;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .form-control,
+.structure1 .txDivFormItem .textFormItem,
+.structure1 .slDivFormItem .selectFormItem {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #444;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+.structure1 .form-control:focus,
+.structure1 .txDivFormItem .textFormItem:focus,
+.structure1 .slDivFormItem .selectFormItem:focus,
+.structure1 .form-control:active,
+.structure1 .txDivFormItem .textFormItem:active,
+.structure1 .slDivFormItem .selectFormItem:active {
+    color: #444;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.structure1 .form-control:disabled,
+.structure1 .txDivFormItem .textFormItem:disabled,
+.structure1 .slDivFormItem .selectFormItem:disabled,
+.structure1 .form-control[readonly],
+.structure1 .txDivFormItem .textFormItem[readonly],
+.structure1 .slDivFormItem .selectFormItem[readonly] {
+    background-color: #e9ecef;
+}
+.structure1 .txDivFormItem {
+    width: 100%;
+}
+.structure1 .divVerFormItem[data-upload="true"] {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.structure1 .divVerFormItem .replaceVerFormItemOk {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .divVerFormItem .isVerDivFormItem {
+    display: -webkit-inline-box !important;
+    display: -ms-inline-flexbox !important;
+    display: inline-flex !important;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.structure1 .divVerFormItem .isVerDivFormItem .isVerFormItem {
+    width: auto !important;
+    margin: 0.25rem;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .divVerFormItem .isVerDivFormItem label {
+    white-space: nowrap;
+}
+.structure1 .divHorFormItem[data-upload="true"] {
+    display: -webkit-inline-box !important;
+    display: -ms-inline-flexbox !important;
+    display: inline-flex !important;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.structure1 .divHorFormItem .replaceHorFormItemOk {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .divHorFormItem .isHorDivFormItem {
+    display: -webkit-inline-box !important;
+    display: -ms-inline-flexbox !important;
+    display: inline-flex !important;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.structure1 .divHorFormItem .isHorDivFormItem .isHorFormItem {
+    width: auto;
+    margin: 0.25rem;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .divHorFormItem .isHorDivFormItem label {
+    white-space: nowrap;
+}
+.structure1 .taDivFormItem {
+    width: 100%;
+}
+.structure1 .taDivFormItem .textareaFormItem {
+    width: 100%;
+}
+.structure1 .radioFormItem {
+    display: none;
+}
+.structure1 .radioFormItem[data-horizontalformitem] + .rdLabelFormItem {
+    min-width: auto;
+}
+.structure1 .radioFormItem + .rdLabelFormItem {
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    margin: 2px 5px 2px 0px;
+    text-align: left;
+    min-width: 8rem;
+}
+.structure1 .radioFormItem + .rdLabelFormItem:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #888;
+}
+.structure1 .radioFormItem:checked + .rdLabelFormItem:before {
+    border: 1px solid #00aefe;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.structure1 .radioFormItem:checked + .rdLabelFormItem:after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 9px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #00aefe;
+}
+.structure1 .radioFormItem:checked:disabled + .rdLabelFormItem:before {
+    border: 1px solid #888;
+    -webkit-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+.structure1 .radioFormItem:disabled + .rdLabelFormItem:after {
+    background-color: #b3b3b3;
+}
+.structure1 .radio-default {
+    display: none;
+}
+.structure1 .radio-default + .radio-label-default {
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    margin: 2px 5px 2px 0px;
+    text-align: left;
+}
+.structure1 .radio-default + .radio-label-default:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid #888;
+}
+.structure1 .radio-default:checked + .radio-label-default:before {
+    border: 1px solid #00aefe;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.structure1 .radio-default:checked + .radio-label-default:after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 9px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #00aefe;
+}
+.structure1 .radio-default:checked:disabled + .radio-label-default:before {
+    border: 1px solid #888;
+    -webkit-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+.structure1 .radio-default:disabled + .radio-label-default:after {
+    background-color: #b3b3b3;
+}
+.structure1 .checkboxFormItem {
+    display: none;
+}
+.structure1 .checkboxFormItem + .ckLabelFormItem {
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    text-align: left;
+    min-width: auto;
+    padding-left: 2rem;
+    /* min-height: 2rem; */
+}
+.structure1 .checkboxFormItem + .ckLabelFormItem:before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid #888;
+    background-color: #fff;
+}
+.structure1 .checkboxFormItem:checked + label:after {
+    content: "";
+    position: absolute;
+    left: 11px;
+    width: 9px;
+    height: 15px;
+    top: 4px;
+    border-radius: 3px;
+    border: 4px solid #00aefe;
+    border-top: none;
+    border-left: none;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.structure1 .checkboxFormItem:checked:disabled + label:after {
+    border-color: #b3b3b3;
+}
+.structure1 .slDivFormItem {
+    width: 100%;
+}
+.structure1 .toggle-block {
+    padding: 0.5rem 1rem 0rem 1rem;
+}
+.structure1 .toggle-block .navbar {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    justify-items: normal;
+    padding: 0rem;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+.structure1 .toggle-block .toggle-title {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #585858;
+    padding: 0.25rem 1rem;
+}
+.structure1 .toggle-block .toggle-title.collapsed i:before {
+    content: "\e9b1";
+}
+.structure1 .toggle-block .toggle-title .navbar-brand {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    max-width: calc(100% - 1rem);
+    font-weight: bold;
+    margin: 0rem;
+    padding: 0rem;
+    color: #fff;
+}
+.structure1 .toggle-block .toggle-title .navbar-brand span {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 1rem;
+    color: #ffc107;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.structure1 .toggle-block .toggle-title i {
+    color: #fff;
+}
+.structure1 .toggle-block .search-toggle-block {
+    width: 100%;
+    background-color: #fff;
+}
+.structure1 .toggle-block .search-toggle-block .toggle-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.5rem 1.25rem;
+}
+.structure1 .toggle-block .search-toggle-block .form-row-div {
+    width: auto;
+}
+.structure1 .toggle-block .search-list {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    margin: 0.25rem 0rem;
+}
+.structure1 .toggle-block .search-list label {
+    margin-bottom: 0rem;
+}
+.structure1 .toggle-block .search-list .form-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .toggle-block .search-list .form-group .date-list {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .toggle-block .search-list .form-group .dateInput {
+    min-width: 8rem;
+    width: auto !important;
+    -webkit-box-flex: 2;
+    -ms-flex: 2 1 auto;
+    flex: 2 1 auto;
+}
+.structure1 .toggle-block .search-list .form-group .timeInput {
+    max-width: 5rem;
+    width: auto !important;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+.structure1 .toggle-block .search-list .form-control,
+.structure1 .toggle-block .search-list .txDivFormItem .textFormItem,
+.structure1 .txDivFormItem .toggle-block .search-list .textFormItem,
+.structure1 .toggle-block .search-list .slDivFormItem .selectFormItem,
+.structure1 .slDivFormItem .toggle-block .search-list .selectFormItem {
+    margin: 0.125rem;
+}
+.structure1 .toggle-block .search-list .btn {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    margin: 0rem 0.125rem !important;
+}
+.structure1 .toggle-block .search-list .form-check {
+    width: auto;
+}
+.structure1 .card-content {
+    padding: 0rem 1rem 1rem 1rem;
+}
+.structure1 .card-content .card {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #fff;
+}
+.structure1 .add-table-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+.structure1 .page-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.structure1 .page-block .page-info {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.structure1 .page-block .page-info label {
+    margin: 0rem 0.125rem;
+}
+.structure1 .page-block .page-info label span {
+    color: #4d6881;
+}
+.structure1 .page-block .page-info .form-control,
+.structure1 .page-block .page-info .txDivFormItem .textFormItem,
+.structure1 .txDivFormItem .page-block .page-info .textFormItem,
+.structure1 .page-block .page-info .slDivFormItem .selectFormItem,
+.structure1 .slDivFormItem .page-block .page-info .selectFormItem {
+    height: calc(1.25em + 0.75rem + 2px);
+    padding: 0.25rem 0.75rem;
+}
+.structure1 .page-block .pagination-block {
+    width: auto;
+    text-align: center;
+}
+.structure1 .page-block .pagination-block .pagination {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+.structure1 .page-block .pagination-block .form-control,
+.structure1 .page-block .pagination-block .txDivFormItem .textFormItem,
+.structure1 .txDivFormItem .page-block .pagination-block .textFormItem,
+.structure1 .page-block .pagination-block .slDivFormItem .selectFormItem,
+.structure1 .slDivFormItem .page-block .pagination-block .selectFormItem {
+    border-radius: 0rem;
+    min-width: 5rem;
+    height: calc(1.25em + 0.75rem + 2px);
+    padding: 0.25rem 0.75rem;
+}
+@media (max-width: 1199px) {
+    .structure1 .table {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+    .structure1 .table tbody {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .structure1 .table tbody tr td.table-sub-title {
+        padding: 0.35rem 1.5rem 0.35rem 0.5rem;
+    }
+    .structure1 .table tr,
+    .structure1 .table th,
+    .structure1 .table td {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .structure1 .table .table-data-title {
+        width: 30%;
+    }
+    .structure1 .table .table-data-title + td {
+        width: 70%;
+    }
+    .structure1 .table td.nurstr1 {
+        width: 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        max-width: none;
+    }
+    .structure1 .table-list {
+        border: none;
+    }
+    .structure1 .table-list thead {
+        display: none;
+    }
+    .structure1 .table-list tbody tr {
+        position: relative;
+        border-bottom: 1px solid #eeeeee;
+        padding: 2rem 0rem 1.5rem 0rem;
+        margin-bottom: 1rem;
+    }
+    .structure1 .table-list tbody tr:nth-of-type(even) {
+        background-color: transparent;
+    }
+    .structure1 .table-list tbody tr:last-child {
+        border-bottom: none;
+        margin-bottom: 0rem;
+    }
+    .structure1 .table-list tbody tr td,
+    .structure1 .table-list tbody tr th {
+        position: relative;
+        line-height: 1.5;
+        border: none;
+        padding: 0.25rem 0rem;
+        text-align: left;
+    }
+    .structure1 .table-list tbody tr td::before,
+    .structure1 .table-list tbody tr th::before {
+        content: attr(data-mobile-title) "：";
+        position: relative;
+        left: 0rem;
+        font-weight: bold;
+        min-width: 7rem;
+        text-align: right;
+        background-color: #e8f5ff;
+        padding: 0.125rem 0.5rem;
+        margin-right: 0.5rem;
+        border-radius: 0.25rem;
+    }
+    .structure1 .table-list tbody tr .table-td-number {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: auto;
+        padding: 0.25rem 0.5rem;
+        font-weight: bold;
+    }
+    .structure1 .table-list tbody tr .table-td-number::before {
+        content: "";
+        display: none;
+    }
+    .structure1 .table-list tbody tr .table-td-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+    .structure1 .table-list tbody tr .table-td-btn::before {
+        content: "";
+        display: none;
+    }
+    .structure1 .table-list tbody tr .table-td-btn .table-btn-mobile-show .btn {
+        border: none;
+        color: #4d6881;
+        background-color: transparent;
+    }
+    .structure1 .table-list tbody tr .table-td-btn .table-btn-mobile-show .btn:hover,
+    .structure1 .table-list tbody tr .table-td-btn .table-btn-mobile-show .btn:active,
+    .structure1 .table-list tbody tr .table-td-btn .table-btn-mobile-show .btn:focus {
+        background-color: transparent !important;
+    }
+    .structure1 .table-list tbody tr .table-td-btn .table-btn-mobile-show .btn i {
+        font-size: 1.25rem;
+        color: #4d6881;
+    }
+    .structure1 .table-list tbody tr .table-td-btn .table-btn-mobile-show .btn span {
+        display: none;
+    }
+    .structure1 .table-list tbody tr .table-more.show {
+        display: inline-block;
+    }
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide {
+        display: none;
+        position: absolute;
+        top: 2rem;
+        right: 0rem;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        justify-items: center;
+        -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+        border-radius: 0.25rem;
+    }
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn {
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        min-width: 5rem;
+        margin-left: 0rem !important;
+        border-radius: 0rem;
+        border: none;
+        border-bottom: 1px solid;
+        border-color: #eeeeee !important;
+        padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+    }
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:last-child {
+        border-bottom: none;
+    }
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:hover,
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:active,
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:focus {
+        background-color: transparent !important;
+    }
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:hover i,
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:active i,
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn:focus i {
+        color: #4d6881;
+    }
+    .structure1 .table-list tbody tr .table-btn-block .table-btn-mobile-hide .btn span {
+        color: #4d6881 !important;
+        display: inline-block;
+        font-size: 0.75rem;
+    }
+    .structure1 .add-table-block {
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eeeeee;
+    }
+    .structure1 .page-block {
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eeeeee;
+    }
+}
+@media (max-width: 767px) {
+    .structure1 .mobile-fixed {
+        position: fixed;
+        background-color: #fff;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        padding: 0.5rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        border-top: 1px solid #dee2e6;
+        z-index: 1;
+    }
+    .structure1 .mobile-fixed .btn {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+    .structure1 .mobile-fixed .btn-main {
+        -webkit-box-flex: 2;
+        -ms-flex: 2 1 auto;
+        flex: 2 1 auto;
+    }
+    .structure1 .nav-item {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-width: auto;
+    }
+    .structure1 .tab-content-block {
+        padding: 0.5rem 0rem 0.5rem 0rem;
+    }
+    .structure1 .table .table-data-title {
+        width: 100%;
+    }
+    .structure1 .table .table-data-title + td {
+        width: 100%;
+    }
+    .structure1 .toggle-block {
+        padding: 0rem;
+    }
+    .structure1 .toggle-block .toggle-title .navbar-brand {
+        font-size: 0.875rem;
+    }
+    .structure1 .toggle-block .toggle-title .navbar-brand span {
+        font-size: 0.875rem;
+    }
+    .structure1 .toggle-block .navbar {
+        border-radius: 0rem;
+    }
+    .structure1 .date-block {
+        width: 100%;
+    }
+    .structure1 .date-block .form-group {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+    .structure1 .date-block .date-list {
+        width: 100%;
+    }
+    .structure1 .date-block .span-default {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    .structure1 .button-block {
+        width: 100%;
+    }
+    .structure1 .card-content {
+        padding: 0rem;
+    }
+    .structure1 .card-content .card {
+        border-radius: 0rem;
+        padding: 1rem 0.5rem;
+    }
+    .structure1 .taDivFormItem .textareaFormItem {
+        width: 100% !important;
+    }
+    .structure1 .page-block {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+    .structure1 .page-block .page-info {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        margin: 0.25rem 0rem;
+    }
+    .structure1 .page-block .page-info .form-control,
+    .structure1 .page-block .page-info .txDivFormItem .textFormItem,
+    .structure1 .txDivFormItem .page-block .page-info .textFormItem,
+    .structure1 .page-block .page-info .slDivFormItem .selectFormItem,
+    .structure1 .slDivFormItem .page-block .page-info .selectFormItem {
+        width: auto !important;
+    }
+    .structure1 .page-block .pagination-block {
+        margin: 0.25rem 0rem;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+    }
+}
+@media (max-width: 400px) {
+    .structure1 .page-block {
+        padding-bottom: 1rem;
+    }
+    .structure1 .page-block .page-info .form-control,
+    .structure1 .page-block .page-info .txDivFormItem .textFormItem,
+    .structure1 .txDivFormItem .page-block .page-info .textFormItem,
+    .structure1 .page-block .page-info .slDivFormItem .selectFormItem,
+    .structure1 .slDivFormItem .page-block .page-info .selectFormItem {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+    .structure1 .page-block .pagination-block {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+    .structure1 .page-block .pagination-block .page-item:not(:first-child).page-item:not(:last-child) {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+}
+/*# sourceMappingURL=style1-1.min.css.map */

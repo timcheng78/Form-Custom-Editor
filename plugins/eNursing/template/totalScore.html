@@ -1,0 +1,57 @@
+<div
+		class=			"divFormItem"
+		id=				"div_{{$data.name}}"
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+>
+{{if $data.showTitle==true}}
+	<font
+		class=			"fontFormItem"
+		id=				"font_{{$data.name}}"
+	>
+		{{$data.title}}：
+	</font>
+{{/if}}
+<input
+	type=			"hidden"
+	class=			"formItem"
+	id=				"{{$data.name}}"
+	name=			"{{$data.name}}"
+	data-title=		"{{$data.title}}"
+	data-bean=		"{{$data.name}}"
+	data-id=		"{{$data.name}}"
+	data-parent=	"{{$data.parent}}"
+	data-required=	"{{$data.required}}"
+	data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+	{{if $data.upload}}
+		data-upload="{{$data.upload}}"
+	{{else}}
+		data-upload="{{$data.show}}"
+	{{/if}}
+	{{if $data.controlMode=="disabled"}}
+		disabled=	"disabled"
+	{{/if}}
+	data-totalScoreCons=	"{{$data.totalScoreCons}}"
+	style=			""
+	onclick=		""
+>
+</input>
+
+<label
+	id=				"label_{{$data.name}}"
+>
+</label>
+
+</div>
+<script>
+	!function() {
+		var tCons="{{$data.totalScoreCons}}".split(",");
+		for (var i=0, len=tCons.length; i<len; i++){
+			var $con = $("input[name='"+tCons[i]+"']");
+			var click = $con.attr("onclick");
+			$con.attr("onclick", click.replace("toggleCheck(this);", ""));
+			$con.on('change',function(){
+				countTotalScore(this,"{{$data.name}}","label_{{$data.name}}",{{@$data.formToolAttribute}},{{@$data.scoreDesc|jsonFormat}});
+			});
+		}
+	}()
+</script>

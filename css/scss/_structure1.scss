@@ -1,0 +1,1248 @@
+
+//*icon 網址:https://dropways.github.io/feathericons/
+//*群組
+@mixin size($w,$h:$w) {
+    width:$w;
+    height: $h;
+}
+@mixin position-top-center() {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+  
+////////* 共用 *////////
+
+html,body{
+    font-size: 16px;
+    height: 100%;
+}
+body{
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', 'Open Sans';
+    color: $text-color;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: $background-color;
+}
+
+.structure1{
+   
+    .title-bar{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        position: sticky;
+        top:0rem;
+        color:$header-text;
+        background-color: $header-background-color;
+        padding:4px 10px;
+        margin-bottom: 0px;
+        z-index: 2;
+        box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1);
+        &.vertical{
+            line-height: 2;
+        }
+        .title-bar-text{
+            padding:0rem;
+            width: auto;
+            .h4{
+                color:$header-text;
+            }
+        }
+        .sub-title{
+            color:$header-suv-text;
+            font-size: 1rem;
+            font-weight: normal;
+        }
+        .title-bar-text,.mobile-fixed{
+            flex: 0 1 auto;
+            max-width: none;
+        }
+        .input-group-append .btn{
+            margin-left: 0rem !important;
+        }
+    }
+    /*按鈕*/
+    .btn-main{
+        background-color: $btn-main !important;
+        border-color:$btn-main-border !important;
+        color:$btn-main-text !important;
+        white-space: nowrap;
+        &:not(:disabled):not(.disabled){
+            &:hover,&:focus,&:active{
+                box-shadow:none !important;
+            }
+        }
+        &:not(:disabled):not(.disabled):hover{
+            background-color: $btn-main-hover !important;
+            color:$btn-main-hover-text !important;;
+            box-shadow:none;
+        }
+        i{
+            color:$btn-main-text;
+        }
+        span{
+            color:$btn-main-text;
+            padding: 0rem 0.25rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+        }
+    }
+    .btn-sub{
+        background-color: $btn-sub !important;
+        border-color:$btn-sub-border !important;
+        color:$btn-sub-text !important;
+        white-space: nowrap;
+        &:not(:disabled):not(.disabled){
+            &:hover,&:focus,&:active{
+                box-shadow:none !important;
+            }
+        }
+        &:not(:disabled):not(.disabled):hover{
+            background-color: $btn-sub-hover !important;
+            color:$btn-sub-hover-text !important;;
+            box-shadow:none;
+        }
+        i{
+            color:$btn-sub-text;
+        }
+        span{
+            color:$btn-sub-text;
+            padding: 0rem 0.25rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+        }
+    }
+    .btn-other{
+        background-color: $btn-other !important;
+        border-color: $btn-other-border !important;
+        color:$btn-other-text !important;
+        white-space: nowrap;
+        &:not(:disabled):not(.disabled){
+            &:hover,&:focus,&:active{
+                color:$btn-other-hover-text  !important;
+                background-color: $btn-other-hover !important;
+                border-color: $btn-other-hover !important;
+                box-shadow:none;
+                i{
+                    color:$btn-other-hover-text;
+                }
+                span{
+                    color:$btn-other-hover-text;
+                }
+            }
+        }
+        i{
+            color:$btn-other-text;
+        }
+        span{
+            color:$btn-other-text;
+            padding: 0rem 0.25rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+        }
+    }
+    .btn-disabled{
+        background-color: $btn-disabled !important;
+        border-color: $btn-disabled-border !important;
+        color:$btn-disabled-text !important;
+        white-space: nowrap;
+        &:not(:disabled):not(.disabled){
+            cursor:no-drop;
+            &:hover,&:focus,&:active{
+                box-shadow:none;
+                i{
+                    color:$btn-disabled-hover-text;
+                }
+                span{
+                    color:$btn-disabled-hover-text;
+                }
+            }
+        }
+        i{
+            color:$btn-disabled-text;
+        }
+        span{
+            color:$btn-disabled-text;
+            padding: 0rem 0.25rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+        }
+    }
+    /*mobile fixed btn*/
+    .mobile-fixed{
+        display: inline-flex;
+        flex-wrap: wrap;
+        .btn-main{
+            min-width: 5rem;
+        }
+        .btn{
+            margin:0.125rem;
+        }
+    }
+
+    /*頁籤樣式 tab*/
+    .tab-content-block{
+        padding:1rem;
+        .tab-content{
+            position: relative;
+            z-index: 0;
+        }
+        .tab-pane{
+            padding:1rem;
+            border: 1px solid;
+            border-color: transparent $tab-menu-border-color $tab-menu-border-color $tab-menu-border-color;
+        }
+    }
+
+    .tab-menu{
+        position: relative;
+        padding-right: 2rem;
+        padding-top: 2.625rem;
+        z-index: 1;
+        &.fixed{
+            position: fixed;
+            width: 100%;
+            left: 0;
+            box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1);
+            padding-top: 2rem;
+            .tab-menu-toggle{
+                top:0rem;
+            }
+            .nav-item{
+                max-width: none !important;
+                .nav-link{
+                    background-color: $tab-menu-fixed-background;
+                    &.active{
+                        padding: 0.25rem 1rem;
+                        border-radius: 0rem;
+                        border: none;
+                        background-color:  $tab-menu-fixed-active-background;
+                        color: $tab-menu-fixed-active-text;
+                        &:hover,&:active{
+                            background-color: $tab-menu-fixed-active-background;
+                            color: $tab-menu-fixed-active-text;
+                        }
+                    }
+                }
+                
+            }
+        }
+        &.active{
+            padding-top: 2rem;
+            .tab-menu-toggle{
+                top:0rem;
+                i{
+                    display: inline-block;
+                    transform: rotate(180deg);
+                    transition:all 1s;
+                }
+            }
+            .nav-tabs{
+                top:0.625rem;
+                flex-wrap: wrap;
+            }
+            .nav-item{
+                &.active{
+                    .nav-link.active{
+                        border:none;
+                        border-radius:0rem;
+                        padding:0.25rem 1rem;
+                        background-color:  $tab-menu-fixed-active-background;
+                        color:  $tab-menu-fixed-active-text;
+                    }
+                }
+            }
+        }
+        &+.tab-content{
+            .tab-pane{
+                border-radius: 0rem 0rem 0.375rem 0.375rem;
+                background-color: $card-background-color;
+            }
+        }
+        //*是否顯示向下展開按鈕
+        .tab-menu-toggle{
+            display: none;
+            position: absolute;
+            min-width: 2rem;
+            right: 0rem;
+            top:0.625rem;
+            color: #ffffff;
+            background-color: $click-color;
+            padding:0.25rem 0rem;
+            text-align: center;
+            transition:all 1s;
+            &.show{
+                display: inline-block;
+                &+.nav-tabs{
+                    min-width: auto;
+                    width: calc(100% - 2rem);
+                    top: 0rem;
+                }
+                
+            }
+        }
+    }
+    .nav-tabs{
+        position: absolute;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        min-width: 100%;
+        top: 0rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        &::-webkit-scrollbar {
+            height: 0;
+        }
+        &.hide{
+            &+.tab-content{
+                .tab-pane{
+                    border-radius: 0.375rem;
+                    background-color: $card-background-color;
+                }
+            }
+        }
+    
+    }
+
+
+
+
+    .nav-item{
+        flex:1 1 auto;
+        text-align: center;
+        white-space: nowrap;
+        //*僅單選向
+        &:nth-child(1):nth-last-child(1){
+             max-width: 14rem;
+        }
+        //*僅兩個選項
+        &:nth-child(2):nth-last-child(1) {
+            max-width: 14rem;
+        }
+    
+        &:first-child:nth-last-child(2) {
+            max-width: 14rem;
+        }
+       //*僅三個選項{
+        &:nth-child(3):nth-last-child(1) {
+            max-width: 14rem;
+        }
+        &:nth-child(2):nth-last-child(2) {
+            max-width: 14rem;
+        }
+        &:first-child:nth-last-child(3) {
+            max-width: 14rem;
+        }
+        .nav-link{
+            position: relative;
+            color:$text-color;
+            border: none;
+            border-radius: 0px;
+            background-color: $tab-menu-background;
+            padding: 0.25rem 1rem;
+            &:focus,&:hover{
+                border:none;
+                background-color: $tab-menu-background-hover;
+                
+            }
+            &:after{
+                @include position-top-center();
+                content:"";
+                left:0px;
+                width: 1px;
+                height: 60%;
+                background-color: $tab-menu-border-color;
+                z-index: 1;
+            }
+            &:before{
+                content: "";
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                width: 100%;
+                height: 1px;
+                background-color: $tab-menu-border-color;
+                z-index: 1;
+            }
+            &.active{
+                border:1px solid;
+                border-color:$tab-menu-active-background;
+                border-radius: 0.375rem 0.375rem 0rem 0rem;
+                padding: 0.5rem 1rem;
+                background-color: $tab-menu-active-background;
+                &::before,&:after{
+                    display: none;
+                }
+                &:focus,&:hover{
+                    background-color: $tab-menu-active-background;
+                }
+            }
+        }
+        &.add-nav-item{
+            flex:none;
+            .nav-link{
+                display: inline-block;
+            }
+        }
+    }
+    /*表格控制*/
+    .rejectedItem{
+        margin-right: 0.25rem;
+        &:last-child{
+            margin-right: 0rem;
+        }
+    }
+    /*表單table*/
+    .table{
+        table-layout: fixed;
+        background-color: #ffffff;
+        thead{
+            th,td{
+                background-color: $table-title;
+            }
+            //*排序
+            .tablesorter-header{
+                cursor: pointer;
+                &.show{
+                    .feather-arrow-down{
+                        display: inline-block;
+                    }
+                    &.rotate{
+                        .feather-arrow-down{
+                            transform: rotate(-180deg);
+                        }
+                    }
+                }
+                .feather-arrow-down{
+                    display: none;
+                    transition: all 1s;
+                    font-size: 0.875rem;
+                    color:$table-title-icon;
+                }
+            }
+        }
+        th,td{
+            padding:0.5rem 0.75rem;
+            label{
+                margin-bottom: 0rem;
+            }
+        }
+        .table-bordered{
+            border:none;
+            
+        } 
+        tbody tr{
+            &:nth-of-type(odd){
+            background-color:transparent;
+            }
+            td{
+                &.table-data-title{
+                    background:$table-title;
+                }
+                &.table-sub-title{
+                    position: relative;
+                    padding:0.35rem 3rem 0.35rem 1.25rem;
+                    background-color: $table-sub-title;
+                    color:$table-sub-title-text;
+                    &.table-sub-title-toggle{
+                        cursor: pointer;
+                        &.active .toggle-btn::before{
+                            content: "\e9b1";
+                        }
+                        .toggle-btn{
+                            display: inline-block;
+                            @include position-top-center();
+                            font-size: 1.5rem;
+                            right: 1rem;
+                        
+                        }
+                    }
+                    label{
+                        line-height: 2;
+                        font-weight: bold;
+                        letter-spacing: 1px;
+                    }
+                    .form-row-div{
+                        width: auto;
+                        .btn{
+                            margin:0rem 0.25rem;
+                            border:none;
+                            background-color: $table-sub-btn;
+                            color:$table-sub-btn-text;
+                            &:hover{
+                                opacity: 0.95;
+                            }
+                        }
+                    }
+                    .toggle-btn{
+                        display: none;
+                    }
+                }
+                &.nurstr1{
+                    background-color: $table-nurstr1;
+                }
+            }
+        }
+
+        
+    }
+    /*列表示table*/
+    .table-list{
+        table-layout: auto;
+        .btn{
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0.25rem;
+            padding: 0.125rem 0.25rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
+        th,td{
+            position: relative;
+            line-height: 2;
+        }
+        td{
+            font-weight: normal;
+        }
+        tbody tr:nth-of-type(even){
+            background-color: rgba(0,0,0,0.05);
+        }
+        .table-btn-block{
+            display: flex;
+            justify-content: center;
+            .btn{
+                margin:0.125rem 0.125rem 0.125rem 0.25rem;
+                &:not(:first-child){
+                    margin-left: 0rem !important;
+                }
+            }
+        }
+        .table-more{
+            display: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            i{
+                color:$click-color;
+            }
+            &.active{
+                &+ .table-btn-mobile-hide{
+                    display: inline-flex;
+                }
+            }
+        }
+    }
+    /*定盤表單控制*/
+    .rejectedItem{
+        border-width: 2px;
+    }
+    .form-row-div{
+        width: 100%;
+        margin:0px;
+        overflow: initial;
+    }
+    .form-group.pFormItem{
+        width: 100%;
+    }
+    .divInlineBlock-group{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        .divInlineBlock .txDivFormItem{
+            display: flex;
+        }
+    }
+    .form-control{
+        display: block;
+        width: 100%;
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: $form-control-text-color;
+        background-color: $form-control-background;
+        background-clip: padding-box;
+        border: 1px solid $form-control-border;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        &:focus,&:active{
+            color: $form-control-text-color;
+            background-color: $form-control-background;
+            border-color: $form-control-focus;
+            outline: 0;
+            box-shadow:$form-control-focus-box-shadow;
+        }
+        &:disabled,&[readonly]{
+            background-color:$form-control-disabled;
+        }
+    }
+    //*輸入框
+    .txDivFormItem{
+        width: 100%;
+        .textFormItem{
+            @extend .form-control;
+        }
+    }
+    //*向下展開
+    .divVerFormItem{
+        &[data-upload="true"]{
+            display: flex !important;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .replaceVerFormItemOk{
+            display: inline-flex;
+            flex:1 1 auto;
+        }
+        .isVerDivFormItem{
+            display: inline-flex !important;
+            align-items: center;
+            .isVerFormItem {
+                width: auto !important;
+                margin: 0.25rem;
+                flex: 1 1 auto;
+            }
+            label{
+                white-space: nowrap;
+            }
+        }
+    }
+    //*橫向展開
+    .divHorFormItem{
+        &[data-upload="true"]{
+            display: inline-flex !important;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .replaceHorFormItemOk{
+            display: inline-flex;
+            flex:1 1 auto;
+        }
+        .isHorDivFormItem{
+            display: inline-flex !important;
+            align-items: center;
+            .isHorFormItem {
+                width: auto;
+                margin: 0.25rem;
+                flex: 1 1 auto;
+            }
+            label{
+                white-space: nowrap;
+            }
+        }
+    }
+    //*備註框
+    .taDivFormItem{
+        width: 100%;
+        .textareaFormItem{
+            width: 100%;
+        }   
+    }
+    //*單選區
+    .radioFormItem{
+        display: none;
+        &[data-horizontalformitem]+.rdLabelFormItem{
+            min-width: auto;
+        }
+        &+.rdLabelFormItem{
+            cursor: pointer;
+            position: relative;
+            padding-left: 30px;
+            margin: 2px 5px 2px 0px;
+            text-align: left;
+            min-width: 8rem;
+            &:before{
+                content:"";
+                position: absolute;
+                top:2px;
+                left: 5px;
+                width: 20px;
+                height: 20px;
+                border-radius: 10px;
+                background-color: $choose-background-color;
+                border:1px solid $choose-border;
+            }
+            
+        }
+        &:checked{
+            &+.rdLabelFormItem{
+                &:before{
+                    border:1px solid $choose-color;
+                    box-shadow: $form-control-focus-box-shadow;
+                }
+                &:after{
+                    content: "";
+                    position: absolute;
+                    top: 6px;
+                    left: 9px;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 6px;
+                    background-color: $choose-color;
+                }
+            }
+            &:disabled+.rdLabelFormItem:before{
+                border: 1px solid $choose-border;
+                box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.2);
+            }
+        }
+        &:disabled+.rdLabelFormItem{
+            &:after{
+                background-color: $disabled-color;
+            }
+        }
+    }
+    .radio-default:not(.checkbox-radio-style-1){
+        display: none;
+        &+.radio-label-default{
+            cursor: pointer;
+            position: relative;
+            padding-left: 30px;
+            margin: 2px 5px 2px 0px;
+            text-align: left;
+            &:before{
+                content:"";
+                position: absolute;
+                top:2px;
+                left: 5px;
+                width: 20px;
+                height: 20px;
+                border-radius: 10px;
+                border:1px solid $choose-border;
+            }
+        }
+        &:checked{
+            &+.radio-label-default{
+                &:before{
+                    border:1px solid $choose-color;
+                    background-color: $choose-background-color;
+                    box-shadow: $form-control-focus-box-shadow;
+                }
+                &:after{
+                    content: "";
+                    position: absolute;
+                    top: 6px;
+                    left: 9px;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 6px;
+                    background-color: $choose-color;
+                }
+            }
+            &:disabled+.radio-label-default:before{
+                border: 1px solid $choose-border;
+                box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.2);
+            }
+        }
+        &:disabled+.radio-label-default{
+            &:after{
+                background-color: $disabled-color
+            }
+        }
+    }
+    //*多選區
+    .checkboxFormItem:not(.checkbox-radio-style-1){
+        display: none;
+        &+.ckLabelFormItem{
+            position: relative;
+            cursor: pointer;
+            background-color: transparent;
+            text-align: left;
+            min-width: auto;
+            padding-left: 2rem;
+            // min-height: 2rem;
+            &:before{
+                content: "";
+                position: absolute;
+                left: 5px;
+                top: 3px;
+                width: 20px;
+                height: 20px;
+                border-radius: 3px;
+                border: 1px solid $choose-border;
+                background-color: $choose-background-color;
+            }
+        }
+        &:checked{
+            &+label:after {
+                content: "";
+                position: absolute;
+                left: 11px;
+                width: 9px;
+                height: 15px;
+                top: 4px;
+                border-radius: 3px;
+                border: 4px solid $choose-color;
+                border-top: none;
+                border-left: none;
+                transform: rotate(45deg);
+            }
+            &:disabled+label:after{
+                border-color: $disabled-color;
+            }
+        }
+    }
+    //*下拉選單
+    .slDivFormItem{
+        width: 100%;
+        .selectFormItem{
+            @extend .form-control;
+        }
+    }
+
+
+    /*搜尋區*/
+    .toggle-block{
+        padding: 0.5rem 1rem 0rem 1rem;
+        .navbar{
+            flex-direction: column;
+            justify-items: normal;
+            padding: 0rem;
+            box-shadow: none;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+        .toggle-title{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $table-sub-title;
+            padding: 0.25rem 1rem;
+            
+            &.collapsed i:before{
+                content:"\e9b1"
+            }
+            .navbar-brand{
+                display: inline-flex;
+                align-items: center;
+                max-width: calc(100% - 1rem);
+                font-weight: bold;
+                margin:0rem;
+                padding: 0rem;
+                color:$table-sub-title-text;
+                span{
+                    display: inline-block;
+                    font-weight: normal;
+                    font-size: 1rem;
+                    color:$table-sub-title-text-sub;
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            i{
+                color:$table-sub-title-text;
+            }
+        }
+        .search-toggle-block{
+            width: 100%;
+            background-color: $card-background-color;
+            .toggle-content{
+                display: flex;
+                flex-wrap: wrap;
+                padding:0.5rem 1.25rem;
+            }
+            .form-row-div{
+                width: auto;
+            }
+        }
+        .search-list{
+            display:inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            flex:1 1 auto;
+            margin: 0.25rem 0rem;
+            
+            label{
+                margin-bottom: 0rem;
+            }
+            .form-group{
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                flex: 1 1 auto;
+                .date-list{
+                    display: inline-flex;
+                    flex-wrap: nowrap;
+                    flex:1 1 auto;
+                }
+            
+                .dateInput{
+                    min-width: 8rem;
+                    width: auto !important;
+                    flex: 2 1 auto;
+                }
+                .timeInput{
+                    max-width: 5rem;
+                    width: auto !important;
+                    flex: 1 1 auto;
+                }
+            }
+            
+            .form-control{
+                margin:0.125rem;
+            }
+            .btn{
+                flex:1 1 auto;
+                margin: 0rem 0.125rem !important;
+            }
+            .form-check{
+                width: auto;
+            }
+        }
+    }
+    /*搜尋內容*/
+    .card-content{
+        padding:0rem 1rem 1rem 1rem;
+        .card{
+            border-radius: 0.5rem;
+            padding:1rem;
+            background-color: $card-background-color;
+        }
+    }
+    .add-table-block{
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+    .page-block{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        .page-info{
+            display: inline-flex;
+            align-items: center;
+            label{
+                margin: 0rem 0.125rem;
+                span{
+                    color:$click-color;
+                }
+            }
+            .form-control{
+                height: calc(1.25em + 0.75rem + 2px);
+                padding:0.25rem 0.75rem;
+            }
+        }
+        .pagination-block{
+            width: auto;
+            text-align: center;
+            .pagination{
+                justify-content: center;
+                margin-bottom: 0;
+            }
+            .form-control{
+                border-radius: 0rem;
+                min-width: 5rem;
+                height: calc(1.25em + 0.75rem + 2px);
+                padding:0.25rem 0.75rem;
+            }
+        }
+    }
+   
+}
+
+
+@media (max-width:1199px) {
+    .structure1{
+        //*table
+        .table{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            tbody{
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+                tr td.table-sub-title{
+                    padding: 0.35rem 1.5rem 0.35rem 0.5rem;
+                }
+            }
+            tr,th,td{
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            .table-data-title{
+                width: 30%;
+                &+td{
+                    width: 70%;
+                }
+            }
+            td.nurstr1{
+                width: 100%;
+                flex: 1 1 auto;
+                max-width: none;
+            }
+        }
+        //*列表示表格
+        .table-list{
+            border:none;
+            thead{
+                display: none;
+            }
+            tbody{
+                tr{
+                    position: relative;
+                    border-bottom: 1px solid #eeeeee;
+                    padding: 2rem 0rem 1.5rem 0rem;
+                    margin-bottom: 1rem;
+                    &:nth-of-type(even){
+                        background-color: transparent;
+                    }
+                    &:last-child{
+                        border-bottom: none;
+                        margin-bottom: 0rem;
+                    }
+                    td,th{
+                        position: relative;
+                        line-height: 1.5;
+                        border:none;
+                        padding: 0.25rem 0rem;
+                        text-align: left;
+                        &::before{
+                            content:attr(data-mobile-title)"：";
+                            position: relative;
+                            left: 0rem;
+                            font-weight: bold;
+                            min-width: 7rem;
+                            text-align: right;
+                            background-color: $table-title;
+                            padding: 0.125rem 0.5rem;
+                            margin-right: 0.5rem;
+                            border-radius: 0.25rem;
+                        }
+                    }
+                    .table-td-number{
+                        display: none;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: auto;
+                        padding:0.25rem 0.5rem;
+                        font-weight: bold;
+                        &::before{
+                            content:"";
+                            display: none;
+                        }
+                    }
+                    .table-td-btn{
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: auto;
+                        &::before{
+                            content:"";
+                            display: none;
+                        }
+                        .table-btn-mobile-show{
+                            .btn{
+                                border: none;
+                                color:$click-color;
+                                background-color: transparent;
+                                &:hover,&:active,&:focus{
+                                    background-color: transparent !important;
+                                }   
+                                i{
+                                    font-size: 1.25rem;
+                                    color:$click-color;
+                                }
+                                span{
+                                    display: none;
+                                }
+                            }
+                        }
+                       
+                        
+                    }
+                    .table-more{
+                        &.show{
+                            display: inline-block;
+                        }
+                      
+                    }
+                    .table-btn-block{
+                        .table-btn-mobile-hide{
+                            display: none;
+                            position: absolute;
+                            top: 2rem;
+                            right: 0rem;
+                            flex-direction: column;
+                            justify-items: center;
+                            box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
+                            border-radius: 0.25rem;
+                            .btn{
+                                display: inline-flex;
+                                min-width: 5rem;
+                                margin-left:0rem !important;
+                                border-radius: 0rem;
+                                border:none;
+                                border-bottom: 1px solid;
+                                border-color:#eeeeee !important ;
+                                padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+                                &:last-child{
+                                    border-bottom: none;
+                                }
+                                &:hover,&:active,&:focus{
+                                    background-color: transparent !important;
+                                    i{
+                                        color:$click-color;
+                                    }
+                                }   
+                                span{
+                                    color:$click-color !important;
+                                    display: inline-block;
+                                    font-size: 0.75rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .add-table-block{
+            padding-bottom: 0.5rem;
+            border-bottom:1px solid #eeeeee;
+        }
+        //*頁碼
+        .page-block{
+            padding-bottom:0.5rem;
+            border-bottom: 1px solid #eeeeee;
+        }
+    }
+   
+    
+}
+@media (max-width:767px) {
+   
+    .structure1{
+        
+        /*共用*/
+        .mobile-fixed{
+            position: fixed;
+            background-color: $header-background-color;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            border-top:1px solid #dee2e6;
+            z-index: 1;
+            .btn{
+                flex:1 1 auto;
+            }
+            .btn-main{
+                flex:2 1 auto;
+            }
+        }
+         /*header*/
+        .nav-item{
+            flex:1 1 auto;
+            min-width: auto;
+        }
+        .tab-content-block{
+            padding:0.5rem 0rem 0.5rem 0rem;
+        }
+        //*table
+        .table{
+            .table-data-title{
+                width: 100%;
+                &+td{
+                    width: 100%;
+                }
+            }
+        }
+
+        /*toggle-block*/
+        .toggle-block{
+            padding: 0rem;
+            .toggle-title{
+                .navbar-brand{
+                    font-size: 0.875rem;
+                    span{
+                        font-size: 0.875rem;
+                    }
+                }
+            }
+            .navbar{
+                border-radius: 0rem;
+            }
+        }
+        .date-block{
+            width: 100%;
+            .form-group{
+                flex-direction: column;
+            }
+            .date-list{
+                width: 100%;
+            }
+            .span-default{
+                transform: rotate(90deg);
+            }
+        }
+        .button-block{
+            width: 100%;
+        }
+
+        /*card-content*/
+        .card-content{
+            padding:0rem;
+            .card{
+                border-radius: 0rem;
+                padding: 1rem 0.5rem;
+            }
+        }
+            
+        //*備註框
+        .taDivFormItem{
+            .textareaFormItem{
+                width: 100% !important;
+            }   
+        }
+        /*頁碼*/
+        .page-block{
+            display: flex;
+            flex-wrap: wrap;
+            .page-info{
+              flex:1 1 auto;
+              margin:0.25rem 0rem;
+                .form-control{
+                    width: auto !important;
+                }
+            }
+            .pagination-block{
+                margin:0.25rem 0rem;
+                justify-content:flex-end;
+            }
+        }
+    }
+    
+}
+
+@media (max-width:400px) {
+    .structure1{
+        /*頁碼*/
+        .page-block{
+            padding-bottom: 1rem;
+            .page-info .form-control{
+                flex:1 1 auto;
+            }
+            .pagination-block{
+                flex:1 1 auto;
+                .page-item:not(:first-child).page-item:not(:last-child){
+                    flex:1 1 auto;
+                }
+            }
+        }
+    }
+}

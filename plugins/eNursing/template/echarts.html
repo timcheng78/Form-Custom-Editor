@@ -1,0 +1,19 @@
+<div
+        class="formItem"
+        type="{{$data.controlType}}"
+        data-bean=		"{{$data.name}}"
+        id=				"{{$data.name}}"
+        data-parent=	"{{$data.parent}}"
+        data-required=	"{{$data.required}}"
+        data-upload="{{$data.show}}"
+        data-prompttips="{{if $data.promptTips}}{{$data.promptTips}}{{else}}請輸入「{{$data.title}}」{{/if}}"
+        data-echarttype="{{$data.controlMode}}"
+        {{if $data.defaultValue!=null }}
+        data-option="{{$data.defaultValue}}"
+        {{else}}
+        data-option=""
+        {{/if}}
+
+        style="border-radius: 4px;{{if $data.width!=undefined}}width:{{$data.width}};height:{{$data.width}}{{/if}}"
+
+></div>

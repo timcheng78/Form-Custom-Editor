@@ -1,0 +1,109 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem dateFontFormItem"
+			id=				"font_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem dateLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem dateDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem dateFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+	<input
+		type=			"text"
+		class=			"formItem dateFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		autocomplete=	"off"
+		placeholder=	"{{$data.placeholder}}"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-datetime=  "date"
+		data-dateformat="{{$data.dateFormat}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		data-typeformat='{{$data.typeFormat}}'
+		data-minlimit=  '{{if $data.minLimit}}{{$data.minLimit}}{{else}}{"default":true,"date":"-0y-0m-0d"}{{/if}}'
+		data-maxlimit=  '{{if $data.maxLimit}}{{$data.maxLimit}}{{else}}{"default":true,"date":"+0y+0m+0d"}{{/if}}'
+		{{if isHor||isVer}}
+			data-upload="false"
+		{{else if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		{{if $data.controlMode=="disabled"}}
+			disabled=	"disabled"
+		{{/if}}
+		style=			"border-radius: 4px;{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+		onclick=		"{{$data.click}}"
+		{{if $data.blur != "" && $data.blur != undefined}}
+			onblur=		'checkDateFormat(this);ruleTools.showElement(this);ruleTools.viryElement(this);{{@$data.blur}}'
+		{{else}}
+			onblur=		'checkDateFormat(this);ruleTools.showElement(this);ruleTools.viryElement(this);'
+		{{/if}}
+	>
+	</input>
+	{{if $data.backTitle}}
+	<label
+		class=			"dateBkFormItem"
+		id=				"label_backTitle_{{$data.name}}"
+	>
+	{{$data.backTitle}}
+	</label>
+	{{/if}}
+	</div>
+	<script>
+	    //初始化datetimepicker的日期時間
+	    var $dtpicker = $('#{{$data.name}}');
+	    $dtpicker.mousedown(function(event) {
+	    	setDatetime_TypeformatLimit(this);
+	    	$(this).datetimepicker(JSON.parse(getDataset(this).typeformat).date);
+	    	$(this).datetimepicker('setStartDate', JSON.parse(getDataset(this).typeformat).date.startDate);
+	    	$(this).datetimepicker('setEndDate', JSON.parse(getDataset(this).typeformat).date.endDate);
+	    	$(this).datetimepicker('show');
+	    });
+	    {{if $data.defaultValue}}
+	    	setDatetimeDafaultValue($dtpicker[0], {{@$data.defaultValue}}, {{@$data.typeFormat}}.date);
+		{{/if}}
+    	setDatetimeLimit($dtpicker[0]);
+    	$dtpicker.change();
+	</script>
+{{/if}}

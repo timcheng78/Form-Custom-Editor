@@ -1,0 +1,192 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem ckFontFormItem"
+			id=				"font_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem ckLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set udi=($data.uiDescItem==undefined) ? true : $data.uiDescItem}}
+	{{set uvi=($data.uiValueItem==undefined) ? true : $data.uiValueItem}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set horArr=($data.horizontalFormItem) ? $data.horizontalFormItem.split("|,|") : undefined}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	{{set verArr=($data.verticalFormItem) ? $data.verticalFormItem.split("|,|") : undefined}}
+	<div
+			class=			"divFormItem ckDivFormItem{{if !(udi===true && uvi===true)}} multiId div_{{$data.name}}{{/if}}{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem ckFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+	{{if isHor}} <label class="labelHorLeftBracket">(</label> {{if $data.displayMode=="vertical"}}<br/>{{/if}}{{/if}}
+	{{each $data.uiDesc uiDesc i2}}
+		{{if (udi===true && uvi===true) || (udi!==true && udi.indexOf(uiDesc)>-1) || (uvi!==true && uvi.indexOf($data.uiValue[i2])>-1)}}
+			<input
+				type=			 "checkbox"
+				class=			 "formItem checkboxFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+				id=				 "{{$data.name}}_{{i2}}"
+				name=			 "{{$data.name}}"
+				value=			 "{{$data.uiValue[i2]}}"
+				data-title=		 "{{$data.title}}"
+				data-bean=		 "{{$data.name}}"
+				data-id=		 "{{$data.name}}_{{i2}}"
+				data-parent=	 "{{$data.parent}}"
+				data-uiscore=	 "{{if $data.uiScore}}{{$data.uiScore[i2]}}{{/if}}{{if !$data.uiScore}}0{{/if}}"
+				data-required=	 "{{$data.required}}"
+				data-prompttips= "{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+				{{if isHor||isVer}}
+					data-upload= "false"
+				{{else if $data.upload}}
+					data-upload= "{{$data.upload}}"
+				{{else}}
+					data-upload= "{{$data.show}}"
+				{{/if}}
+				{{if horArr}}
+					{{if horArr[i2]!=""}}
+						data-horizontalformitem= "{{horArr[i2]}}"
+			    	{{/if}}
+			    {{/if}}
+				{{if verArr}}
+					{{if verArr[i2]!=""}}
+						data-verticalformitem=   "{{verArr[i2]}}"
+			    	{{/if}}
+			    {{/if}}
+				{{if $data.controlMode=="disabled"}}
+					disabled=	 "disabled"
+				{{/if}}
+				data-maxitemtotalscore=	"{{if $data.maxItemTotalScore}}{{$data.maxItemTotalScore}}{{/if}}"
+				{{if $data.hasOther && $data.hasOther[i2]==true}}data-hasother="true"{{/if}}
+				{{if $data.otherTitle && $data.otherTitle[i2]}}data-othertitle="true"{{/if}}
+				{{if $data.otherBackTitle && $data.otherBackTitle[i2]}}data-otherbacktitle="true"{{/if}}
+				style=			 ""
+				onclick=		 "showOther(this);ruleTools.showElement(this);ruleTools.viryElement(this);{{if horArr}}showHor(this);{{/if}}{{if verArr}}showVer(this);{{/if}}{{$data.click}};formToolClickEvent(this);"
+			/>
+
+			<label
+				for=			 "{{$data.name}}_{{i2}}"
+				class=			 "ckLabelFormItem"
+				id=				 "label_{{$data.name}}_{{i2}}"
+			>{{uiDesc}}</label>
+
+			{{if $data.hasOther && $data.hasOther[i2]==true}}
+			<label
+				class=			 "oCkHdFormItem"
+				id=				 "label_otherTitle_{{$data.name}}_{{i2}}"
+				style=			 "display: none;"
+			>
+				{{if $data.otherTitle && $data.otherTitle[i2]}}
+					{{$data.otherTitle[i2]}}
+				{{/if}}
+			</label>
+			<input
+				type=			 "text"
+				class=			 "oCkTextFormItem"
+				id=				 "{{$data.name}}_{{i2}}_otherText"
+				disabled=		 "disabled"
+				data-upload=	 "false"
+				style=			 "display: none;{{if $data.otherWidth && $data.otherWidth[i2]!=""}}width:{{$data.otherWidth[i2]}};{{/if}}border-radius: 4px;"
+			/>
+			<label
+				class=			 "oCkBkFormItem"
+				id=				 "label_otherBackTitle_{{$data.name}}_{{i2}}"
+				style=			 "display: none;"
+			>
+				{{if $data.otherBackTitle && $data.otherBackTitle[i2]}}
+					{{$data.otherBackTitle[i2]}}
+				{{/if}}
+			</label>
+			{{/if}}
+
+			{{if horArr}}
+			<!-- 橫向展開其他項 horizontalFormItem start -->
+				{{if horArr[i2]!=""}}
+					{{set hors=horArr[i2].split(",")}}
+					<div
+						class=   "divHorFormItem"
+						id=      "div_hor_{{$data.name}}_{{i2}}"
+						style=   "display:inline;display: none;"
+					>
+					{{each hors hor i3}}
+						{{if i3!=0}}，{{/if}}
+						<div
+							class=     "pFormItem replaceHorFormItem"
+							id=        "div_hor_{{$data.name}}_{{i2}}_{{hor}}"
+							data-bean= "{{hor}}"
+							style=   "display:inline;"
+						></div>
+					{{/each}}
+					</div>
+		    	{{/if}}
+			<!-- 橫向展開其他項 horizontalFormItem end -->
+		    {{/if}}
+
+		    {{if $data.displayMode=="vertical"}}
+		    	<br/>
+		    {{/if}}
+		{{/if}}
+	{{/each}}
+	{{if isHor}} <label class="labelHorRightBracket">)</label>{{/if}}
+	{{each $data.uiDesc uiDesc i2}}
+		{{if (udi===true && uvi===true) || (udi!==true && udi.indexOf(uiDesc)>-1) || (uvi!==true && uvi.indexOf($data.uiValue[i2])>-1)}}
+			{{if verArr}}
+			<!-- 向下展開其他項 verticalFormItem start -->
+				{{if verArr[i2]!=""}}
+					{{set vers=verArr[i2].split(",")}}
+					<div
+						class=   "divVerFormItem"
+						id=      "div_ver_{{$data.name}}_{{i2}}"
+						style=   "display: none;"
+					>
+					{{each vers ver i3}}
+						<div
+							class=     "pFormItem replaceVerFormItem"
+							id=        "div_ver_{{$data.name}}_{{i2}}_{{ver}}"
+							data-bean= "{{ver}}"
+						></div>
+					{{/each}}
+					</div>
+		    	{{/if}}
+			<!-- 向下展開其他項 verticalFormItem end -->
+		    {{/if}}
+
+			{{if $data.checked && $data.checked[i2]==true}}
+				<script>
+					if (thisTimeIsAddTime && !thisTimeIsDittoTime){
+						$("#{{$data.name}}_{{i2}}").click();
+						showOther($("#{{$data.name}}_{{i2}}")[0]);
+					}
+				</script>
+			{{/if}}
+		{{/if}}
+	{{/each}}
+	</div>
+{{/if}}

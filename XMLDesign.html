@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定磐XML中間表設計工具 (XML)</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bstreeview.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="plugins/datetimepicker/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="plugins/contextMenu/css/jquery.contextMenu.css">
+	<link rel="stylesheet" href="css/form.css">
+	<script src="js/config.js?version=0"></script>
+	<script src="META-JS/properties.js"></script>
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bstreeview.min.js"></script>
+    <script src="plugins/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+	<script src="plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js"></script>
+    <script src="plugins/contextMenu/js/jquery.contextMenu.js"></script>
+	<script src="plugins/x2js/xml2json.js"></script>
+    <!-- 動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+	<script src="plugins/eNursing/DateTime.js"></script>
+    <script src="plugins/eNursing/lz-string.min.js"></script>
+	<script src="plugins/eNursing/eNursing.js"></script>
+	<script src="plugins/eNursing/dynamicForm.js"></script>
+	<script src="plugins/eNursing/gForm.js"></script>
+	<script src="plugins/eNursing/apiModule.js"></script>
+    <script src="plugins/eNursing/database.js"></script>
+	<script src="plugins/eNursing/eNursing.init.js"></script>
+</head>
+<body>
+    <div class="mask hide"></div>
+	<div class="loading-mask fade hide"></div>
+	<div class="spinner-container fade hide">
+		<div class="spinner-border m-5 loading-spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <a class="navbar-brand" href="#">XML</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarFileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            檔案
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarFileDropdown">
+                            <a class="dropdown-item" href="#" onclick="newFile()">開新表單</a>
+                            <!-- <a class="dropdown-item" href="#" onclick="openForm(document.getElementById('queryPage')); return false">開啟舊檔</a> -->
+                            <!-- <a class="dropdown-item" href="#" onclick="saveForm(document.getElementById('queryPage'), true); return false">儲存表單</a> -->
+                            <!-- <a class="dropdown-item" href="#" onclick="viewForm(document.getElementById('queryPage')); return false">預覽表單</a> -->
+                            <a class="dropdown-item" href="#" onclick="importFile()">匯入表單</a>
+                            <a class="dropdown-item" href="#" onclick="exportFile()">匯出表單</a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarEditDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            編輯
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarEditDropdown">
+                            <a class="dropdown-item" href="#" onclick="addXmlMainFile(); return false">加入主檔</a>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+            <!-- <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="headSwitch">
+                <label class="custom-control-label text-white" for="headSwitch">表頭</label>
+            </div>
+            <form class="form-inline my-2 my-lg-0">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="onlineMode">
+                    <label class="text-white" for="onlineMode">線上模式</label>
+                </div>
+                <select class="form-control onlineMode hide" name="dynamicPort" id="dynamicPort">
+                    <option value="default">預設</option>
+                    <option value="http://172.16.100.22:8081/minsheng/services/DynamicFormService">民生</option>
+                    <option value="http://172.16.100.22:8081/xindian/services/DynamicFormService">新店耕莘</option>
+                </select>
+                <button class="btn btn-danger" type="button" id="cleanLocalBtn">清空暫存數據</button>
+            </form> -->
+        </nav>
+		<div class="main-page container-fluid row d-flex flex-fill border no-padding">
+			<div class="left-block xml-design active" id="leftMenu">
+				<div class="left-top-box">
+                    <ul class="nav nav-tabs" id="bean-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="step-tab-1" data-toggle="tab" href="#step-1" role="tab" draggable="false" aria-controls="step-1" aria-selected="true">步驟一</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" id="step-tab-2" data-toggle="tab" href="#step-2" role="tab" draggable="false" aria-controls="step-2" aria-selected="true">步驟二</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" id="step-tab-3" data-toggle="tab" href="#step-3" role="tab" draggable="false" aria-controls="step-3" aria-selected="true">步驟三</a>
+						</li>
+					</ul>
+                    <div class="tab-content border flex-fill" id="bean-tabContent">
+						<div class="tab-pane fade no-padding show active" id="step-1" role="tabpanel" aria-labelledby="step-tab-1">
+                            <nav class="navbar navbar-expand-lg no-padding">
+                                <div class="col-12 search-box row">
+                                    <button class="btn btn-primary col-12" id="add-main-table-btn">添加主查詢<i class="bi bi-plus"></i></button>
+                                    <!-- <button class="btn btn-success" id="table-tree-import-btn"><i class="bi bi-arrow-repeat"></i></button> -->
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="tab-pane fade no-padding" id="step-2" role="tabpanel" aria-labelledby="step-tab-2">
+                            <nav class="navbar navbar-expand-lg no-padding">
+                                <div class="col-12 search-box row justify-content-start">
+                                    <button class="btn btn-primary col" id="add-sub-table-btn">添加次查詢<i class="bi bi-plus"></i></button>
+                                    <button class="btn btn-secondary" id="skip-btn">跳過<i class="bi bi-plus"></i></button>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="tab-pane fade no-padding" id="step-3" role="tabpanel" aria-labelledby="step-tab-3">
+                            <nav class="navbar navbar-expand-lg no-padding">
+                                <div class="col-12 search-box row">
+                                    <button class="btn btn-primary col-12" id="add-result-btn">添加結果集<i class="bi bi-plus"></i></button>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+				</div>
+                <div class="left-bottom-box active">
+					<div class="tree-group h-100">
+                        <span class="h6">資料庫</span>
+                        <div class="tree-list sql-tree-list" id="sqlTree"></div>
+                        <span class="h6">表單</span>
+                        <div class="tree-list form-tree-list" id="formTree"></div>
+                    </div>
+				</div>
+			</div>
+			<div class="right-block">
+				<div class="col-12 h-100 d-flex flex-column" id="queryPage">
+                    <div class="col-12 main-search-title">
+                        <span class="h5">主要查詢區域</span>
+                        <button class="btn btn-info" style="margin-left: 1rem;" onclick="collapse(this)">收起</button>
+                        <button class="btn btn-outline-primary" style="margin-left: 1rem;" onclick="addBeforeDelete(this)" id="addBeforeDelete">添加查詢前刪除</button>
+                        <button class="btn btn-outline-info join-connect-table-button hide" style="margin-left: 1rem;" onclick="joinConnectTable(this)">引入相關表</button>
+                    </div>
+                    <div class="col-12 flex-column main-search-block" data-role="drag-drop-container" data-type="main">
+                        <span class="drop-text">請將需要作為主要查詢的表拖入此處</span>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="js/method.js?version=1"></script>
+<script src="js/create-utils.js?version=0"></script>
+<script src="js/shared-utils.js?version=0"></script>
+<script src="js/formFile.js?version=0"></script>
+<script src="js/xmlDesignModule/init-xml-component.js" type="module"></script>
+<script src="js/xmlDesign.js?version=0"></script>
+<script>
+    function newFile() {
+        const factory = window.ComponentFactory
+        const queryPage = document.querySelector('#queryPage')
+        const step1 = document.querySelector('#step-tab-1')
+        const htmlString = `<div class="col-12 main-search-title">
+                                <span class="h5">主要查詢區域</span>
+                                <button class="btn btn-info" style="margin-left: 1rem;" onclick="collapse(this)">收起</button>
+                                <button class="btn btn-outline-primary" style="margin-left: 1rem;" onclick="addBeforeDelete(this)" id="addBeforeDelete">添加查詢前刪除</button>
+                                <button class="btn btn-outline-info join-connect-table-button hide" style="margin-left: 1rem;" onclick="joinConnectTable(this)">引入相關表</button>
+                            </div>
+                            <div class="col-12 flex-column main-search-block" data-role="drag-drop-container" data-type="main">
+                                <span class="drop-text">請將需要作為主要查詢的表拖入此處</span>
+                            </div>`
+        factory.resetComponent()
+        queryPage.innerHTML = htmlString
+        reloadSql()
+        initButton()
+        initDrawPageEvent()
+        stepTrigger()
+        step1.click()
+    }
+    function importFile() {
+        if ($('#import-file').length > 0) $('#import-file').remove()
+        const inputNode = {
+            'input': {
+                class: 'hide',
+                type: 'file',
+                id: 'import-file',
+                accept: '.xml'
+            }
+        }
+        const inputElement = inputNode.createElemental()[0]
+        $('body').append(inputElement)
+        inputElement.addEventListener('change', function() {
+            const fileList = this.files
+            let isInValid = false
+            for (let i = 0, numFiles = fileList.length; i < numFiles; i++) {
+                const file = fileList[i]
+                let fileType = file.type
+                if (fileType !== 'text/xml') {
+                    isInValid = true
+                    break
+                }
+            }
+            if (isInValid) {
+                CreateUtils.createModal(`alert`, {body: '上傳檔案不合法，只能上傳xml檔案。'})
+                this.remove()
+                return
+            }
+            const promiseArray = []
+            for (let file of fileList) {
+                promiseArray.push(SharedUtils.readFile(file))
+            }
+            Promise.all(promiseArray)
+                .then(result => {
+                    const factory = window.ComponentFactory
+                    for (let xmlString of result) {
+                        factory.importXML(xmlString)
+                    }
+                    this.remove()
+                })
+                .catch(error => {
+                    CreateUtils.createModal(`alert`, {body: `讀取檔案發生錯誤!錯誤原因：${ error }`})
+                    console.error(`讀取檔案發生錯誤!錯誤原因：${ error }`)
+                    this.remove()
+                })
+        })
+        inputElement.click()
+    }
+
+    function exportFile() {
+        const factory = window.ComponentFactory
+        const queryPage = document.querySelector('#queryPage')
+        let successCallback = 0
+        if (Object.keys(factory.registerComponent).length === 0) {
+            CreateUtils.createModal(`alert`, {body: '目前無任何資料可以匯出'})
+            return false
+        }
+        const xmlString = factory.exportXML()
+        console.log(xmlString)
+        CreateUtils.createModal(`prompt`, {
+			'title':    `檔案名稱`,
+			'body':     `請輸入檔案名稱`,
+			'callback': function(index, result) {
+				if (index) {
+					console.log(result)
+                    SharedUtils.downloadFile(xmlString, `${ result }.xml`)
+					return true
+				}
+			}
+		})
+    }
+</script>
+</html>

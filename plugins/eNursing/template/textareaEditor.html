@@ -1,0 +1,72 @@
+{{if $data.controlMode=="readOnly"}}
+	<iframe
+		frameborder="0"
+		src="../customFormV3/plugins/TinyMCE-Online-Editor-master/index.html"
+		type=			"textareaEditor"
+		class=			"formItem taEditorLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if isHor||isVer}}
+			data-upload= "false"
+		{{else if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		{{if $data.controlMode=="disabled"}}
+			disabled=		"disabled"
+		{{/if}}
+		style=			"margin: 0px;{{if $data.width!=undefined && $data.width!=""}} width:{{$data.width}};{{else}} width: 100%;{{/if}} height:100%;"
+	></iframe>
+	<script type="text/javascript">
+		$("#{{$data.name}}")[0].src = "data:text/html;charset=utf-8," + '{{@$data.defaultValue.replace(/\'/g, "\\'")}}';
+	</script>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem taEditorDivFormItem"
+			id=				"div_{{$data.name}}"
+			style=			"height:100%; {{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+    	<iframe
+    		frameborder="0"
+    		src="../customFormV3/plugins/TinyMCE-Online-Editor-master/index.html"
+			type=			"textareaEditor"
+			class=			"formItem textareaEditorFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+			id=				"{{$data.name}}"
+			name=			"{{$data.name}}"
+			data-title=		"{{$data.title}}"
+			data-bean=		"{{$data.name}}"
+			data-id=		"{{$data.name}}"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=		"disabled"
+			{{/if}}
+			style=			"margin: 0px;{{if $data.width!=undefined && $data.width!=""}} width:{{$data.width}};{{else}} width: 100%;{{/if}} height:100%;"
+
+    	></iframe>
+    	<script>
+    		var textareaEditor_setDefaultValue_{{$data.name}} = function(){
+    			{{if $data.defaultValue}}
+    			$("#{{$data.name}}")[0].contentWindow.$("#file_content").val('{{@$data.defaultValue.replace(/\'/g, "\\'")}}').change();
+    			{{/if}}
+    		};
+    	</script>
+	</div>
+{{/if}}

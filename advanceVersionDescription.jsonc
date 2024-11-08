@@ -1,0 +1,37 @@
+/**
+ *  ================= 任何註解寫在此區塊內 =================
+ *  屬性進版結構描述
+ *  依照對應結構與敘述
+ *  調整匯入即開啟的表單
+ *  範例說明：
+ *      外層結構：
+    {
+        advance: Object[]   更版元件內容描述,
+        description: String 說明(必須要填寫，否則不進版),
+        version: number     版本號(++),
+        available: number   啟用狀態(1:啟用, 9:未啟用) 
+    }
+        更版內容結構：
+    {
+        controlType: String     元件類型
+        action: String          進版類型(add, upd)
+        attributeName: String   屬性名稱
+        attributeValue: String  屬性值(目前只能固定值)
+        originValue: String     屬性原始值(For upd)(目前只能固定值)
+    }
+ */
+[
+    {
+        "advance": [
+            {
+                "controlType": "input",
+                "action": "upd",
+                "attributeName": "controlType",
+                "attributeValue": "text"
+            }
+        ],
+        "description": "初次測試，調整新增屬性、修改屬性、移除屬性",
+        "version": 1,
+        "available": 1
+    }
+]

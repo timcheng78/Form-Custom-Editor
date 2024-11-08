@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>定磐表單設計工具 (Form Tool)</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bstreeview.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="plugins/datetimepicker/css/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" href="css/form.css">
+	<script src="js/config.js?version=0"></script>
+	<script src="META-JS/properties.js"></script>
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bstreeview.min.js"></script>
+	<script src="plugins/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+	<script src="plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js"></script>
+	<!-- 動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+	<script src="plugins/eNursing/DateTime.js"></script>
+	<script src="plugins/eNursing/lz-string.min.js"></script>
+	<script src="plugins/eNursing/eNursing.js"></script>
+	<script src="plugins/eNursing/dynamicForm.js"></script>
+    <script src="plugins/eNursing/gForm.js"></script>
+    <script src="plugins/eNursing/eNursing.init.js"></script>
+	<script src="js/echarts.min.js" charset="UTF-8"></script>
+	<script src="js/jquery.serializejson.js"></script>
+	<script src="js/editEcharts.js"></script>
+
+</head>
+<body class="body">
+	<div class="mask hide"></div>
+	<div class="loading-mask fade hide"></div>
+	<div class="spinner-container fade hide">
+		<div class="spinner-border m-5 loading-spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<div class="d-flex flex-column h-100">
+	  	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  		<a class="navbar-brand" href="#">Form Tool</a>
+	  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			</button>
+	  	</nav>
+		<div class="main-page container-fluid row d-flex flex-fill border no-padding">
+
+				<div class="col-12 h-100 d-flex flex-column" id="drawPage">
+                    <table>
+                        <tr>
+                            <td  style="width: 0%;">
+                                <div class="tab-content border flex-fill " style="display: none;" id="bean-tabContent">
+                                    <ul class="nav nav-tabs" id="bean-tabs" role="tablist">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link line" data-toggle="tab" data-show-type="add" href="#line"  echartType="line">折線圖</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link bar" data-toggle="tab" data-show-type="add" href="#bar" echartType="bar">柱狀圖</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link pie" data-toggle="tab" data-show-type="add" href="#pie" echartType="pie">扇形圖</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-pane no-padding fade active" style="width: 500px;height: 500px;" id="line" role="tabpanel" aria-labelledby="bean-tree"></div>
+                                    <div class="tab-pane no-padding fade" style="width: 500px;height: 500px;" id="bar" role="tabpanel" aria-labelledby="bean-tree"></div>
+                                    <div class="tab-pane no-padding fade" style="width: 500px;height: 500px;" id="pie" role="tabpanel" aria-labelledby="bean-tree"></div>
+
+                                </div>
+                            </td>
+                            <td class="col-12 border">
+                                <button type="button" class="btn btn-dark" onclick="$.editEchartsTools.showEchartsModal()">創建圖表</button>
+                                <button type="button" class="btn btn-success" onclick="$.editEchartsTools.init()">顯示圖表清單</button>
+                                <div  id="gformData" style="height: 500px;">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+		</div>
+	</div>
+</body>
+<script>
+    var gForm_Title;
+    var thisPageStatus="add";
+    $(function(){
+        $.editEchartsTools.init($("#gformData"),"6f04c863-8019-4619-b424-c4d97ad70b6b");
+        var axisData=$(".axisData");
+        $(".xa").click(function(){
+            if(this.checked){
+                if(this.value=="category"){
+                    $(".ya[value='value']")[0].checked=true;
+                    $(".yAxis").find(".axisData").remove();
+                    $(".xAxis").append(axisData);
+                }else{
+                    $(".ya[value='category']")[0].checked=true;
+                    $(".xAxis").find(".axisData").remove();
+                    $(".yAxis").append(axisData);
+                }
+            }
+        })
+        $(".ya").click(function(){
+            if(this.checked){
+                if(this.value=="category"){
+                    $(".xa[value='value']")[0].checked=true;
+                    $(".xAxis").find(".axisData").remove();
+                    $(".yAxis").append(axisData);
+                }else{
+                    $(".xa[value='category']")[0].checked=true;
+                    $(".yAxis").find(".axisData").remove();
+                    $(".xAxis").append(axisData);
+                }
+            }
+        })
+        $("#xyModal").on('hidden.bs.modal', '.modal', function () {
+            $(this).removeData('bs.modal');
+        });
+    });
+</script>
+</html>

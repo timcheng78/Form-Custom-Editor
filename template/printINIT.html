@@ -1,0 +1,110 @@
+<script>
+    //頁面載入完成
+    function pageReady(){
+        $("#loadeffect").hide();
+        if (window.console) console.log("頁面載入完成...");
+        if (window.console) console.log(gForms);
+        $('[draggable="true"]').attr('draggable', 'false');
+
+        printModule.start()
+    }
+
+
+    //基礎數
+    var basicParam = null;
+    //動態表單
+    var dynamicForm = null;
+    //gForm
+    var gFormJS = null;
+
+    var gForm = null;
+    var gForms = {};
+    var gFormJson = {};
+    var completeCount=0;
+
+    //在動態表單都會用到的JS、CSS在這邊一併引入
+    includeHead(function(){
+        //在動態表單都會共用的JS程式，在這邊統一執行
+        includeFoot(completeFoot);
+    }, 'default');
+
+    //foot運行完了之後再執行
+    function completeFoot() {
+        //病患資料
+        patient=nursing.getPatient().getCurrent();
+
+        //基礎數
+        basicParam = nursing.createBasicParam();
+        //動態表單
+        dynamicForm = nursing.createDynamicForm();
+        //gForm
+        gFormJS = nursing.getGForm();
+
+
+        //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+        dynamicForm.searchParamDF.formType = formType;
+        dynamicForm.searchParamDF.frameModel = frameModel;
+        if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+            window.localStorage.removeItem("loadEditorFrame_Frame");
+            successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+            window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+            $.ajax({url: "frame/gFormMultiLayerWebLIST_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表單模板...");});
+        }else{//讀取資料庫frame
+            //測試區
+            // $.ajax({url: "frame/gFormWebPRINT2_onlineTest_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表單模板...");});
+            // successCall();
+            basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+        }
+        //查詢formFrame(表單外框)
+        var call = false;
+        function successCall (formFrame) {
+            if (call) return; else call=true;
+            //沒有模板資料
+            if (formFrame==null){
+                $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表單模板未配對...</div></div>');
+                $("#loadeffect").hide();
+            }else{
+                //將資料庫的formFrame 引入到body裡面的#targetForm
+                $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+                successCall2();
+            }
+        }
+
+        //查詢動態表單
+        function successCall2 () {
+            printModule.setApiResultTable(completeCall2, function(e){
+                alert("取得api資料發生錯誤")
+            })
+            function completeCall2 () {
+                let count = 0
+                const resultTableRow = document.querySelector('.resultTable')
+                if (resultTableRow && resultTableRow.classList.contains('report')) {
+                    const resultTableRows = resultTableRow.querySelectorAll('tbody tr')
+                    resultTableRows.forEach(tr => {
+                        let tempCount = 0
+                        Array.from(tr.children).forEach(td => {
+                            if (!td) return
+                            if (!td.classList.contains('print-title-col')) tempCount++
+                        })
+                        if (count < tempCount) count = tempCount
+                    })
+                }
+                //顯示gForm上的打印結果(each tbody)
+                printModule.listGformPrintResult_eachTbody(successCall3, function(e){
+                    alert("取得資料發生錯誤")
+                }, null, count)
+            }
+        }
+
+        function successCall3(){
+            //轉譯所有formItemValue為FormItemDesc
+            list_gFormTransefer(pageReady, errorTransefer);
+        }
+
+        function errorTransefer(err){
+            if (window.console) console.log(err);
+            $("#loadeffect").hide();
+        }
+    }
+</script>

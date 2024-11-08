@@ -1,0 +1,694 @@
+{
+    "database": [
+		{
+			"text": "NIS",
+			"type": "schema",
+			"value": "NIS_DP_CTH",
+			"nodes": [
+				{
+					"text": "CICCASE",
+					"type": "table",
+					"value": "CICCASE",
+					"description": "個案總表",
+					"nodes": [
+						{
+							"text": "ID",
+							"type": "column",
+							"value": "ID",
+							"description": "個案編號"
+						},
+						{
+							"text": "SOURCEID",
+							"type": "column",
+							"value": "SOURCEID",
+							"description": "表單來源編號"
+						},
+						{
+							"text": "FORMID",
+							"type": "column",
+							"value": "FORMID",
+							"description": "表單編號"
+						},
+						{
+							"text": "POID",
+							"type": "column",
+							"value": "POID",
+							"description": "轉紀錄編號"
+						},
+						{
+							"text": "PCASENO",
+							"type": "column",
+							"value": "PCASENO",
+							"description": "住院號"
+						},
+						{
+							"text": "PHISTNUM",
+							"type": "column",
+							"value": "PHISTNUM",
+							"description": "病歷號"
+						},
+						{
+							"text": "APTIME",
+							"type": "column",
+							"value": "APTIME",
+							"description": "申請日期"
+						},
+						{
+							"text": "NOTETEAM",
+							"type": "column",
+							"value": "NOTETEAM",
+							"description": "照會團隊"
+						},
+						{
+							"text": "STATIONID",
+							"type": "column",
+							"value": "STATIONID",
+							"description": "申請單位(護理站)"
+						},
+						{
+							"text": "HADMDT",
+							"type": "column",
+							"value": "HADMDT",
+							"description": "入院日期"
+						},
+						{
+							"text": "PDIAGTXT",
+							"type": "column",
+							"value": "PDIAGTXT",
+							"description": "入院診斷"
+						},
+						{
+							"text": "HVMDNO",
+							"type": "column",
+							"value": "HVMDNO",
+							"description": "主治醫師編號"
+						},
+						{
+							"text": "HVDOCNM",
+							"type": "column",
+							"value": "HVDOCNM",
+							"description": "主治醫師姓名"
+						},
+						{
+							"text": "BEDNO",
+							"type": "column",
+							"value": "BEDNO",
+							"description": "床號"
+						},
+						{
+							"text": "PATNAME",
+							"type": "column",
+							"value": "PATNAME",
+							"description": "病人姓名"
+						},
+						{
+							"text": "REUSERID",
+							"type": "column",
+							"value": "REUSERID",
+							"description": "回覆人員編號"
+						},
+						{
+							"text": "REUSERNAME",
+							"type": "column",
+							"value": "REUSERNAME",
+							"description": "回覆人員姓名"
+						},
+						{
+							"text": "RETM",
+							"type": "column",
+							"value": "RETM",
+							"description": "回覆時間"
+						},
+						{
+							"text": "RESUGG",
+							"type": "column",
+							"value": "RESUGG",
+							"description": "建議會診復科(復健師查詢時需顯示)"
+						},
+						{
+							"text": "RECLIST",
+							"type": "column",
+							"value": "RECLIST",
+							"description": "轉收案清單"
+						},
+						{
+							"text": "TANSLIST",
+							"type": "column",
+							"value": "TANSLIST",
+							"description": "轉長趙轉介清單"
+						},
+						{
+							"text": "FORMDN",
+							"type": "column",
+							"value": "FORMDN",
+							"description": "來源初篩表"
+						},
+						{
+							"text": "CASETYPE",
+							"type": "column",
+							"value": "CASETYPE",
+							"description": "案件類型"
+						},
+						{
+							"text": "CASESTATUS",
+							"type": "column",
+							"value": "CASESTATUS",
+							"description": "個案狀態"
+						},
+						{
+							"text": "USERID",
+							"type": "column",
+							"value": "USERID",
+							"description": "建立者編號"
+						},
+						{
+							"text": "USERNAME",
+							"type": "column",
+							"value": "USERNAME",
+							"description": "建立者姓名"
+						},
+						{
+							"text": "CREATETIME",
+							"type": "column",
+							"value": "CREATETIME",
+							"description": "建立時間"
+						},
+						{
+							"text": "MODIFYID",
+							"type": "column",
+							"value": "MODIFYID",
+							"description": "異動者編號"
+						},
+						{
+							"text": "MODIFYNAME",
+							"type": "column",
+							"value": "MODIFYNAME",
+							"description": "異動者姓名"
+						},
+						{
+							"text": "MODIFYTIME",
+							"type": "column",
+							"value": "MODIFYTIME",
+							"description": "異動時間"
+						},
+						{
+							"text": "TRANSFORMID",
+							"type": "column",
+							"value": "TRANSFORMID",
+							"description": "轉介表單編號"
+						},
+						{
+							"text": "CLOSEDT",
+							"type": "column",
+							"value": "CLOSEDT",
+							"description": "結案日期"
+						},
+						{
+							"text": "NOTEREASON",
+							"type": "column",
+							"value": "NOTEREASON",
+							"description": "照會原因"
+						}
+					]
+				}
+			]
+		},
+		{
+			"text": "HIS",
+			"type": "schema",
+			"value": "HIS021",
+			"nodes": [
+				{
+					"text": "DB_CURSVCL",
+					"type": "table",
+					"value": "DB_CURSVCL",
+					"description": "科別",
+					"nodes": [
+						{
+							"text": "HCURSVCL",
+							"type": "column",
+							"value": "HCURSVCL",
+							"description": "科別代碼"
+						},
+						{
+							"text": "HCURSVCLNM",
+							"type": "column",
+							"value": "HCURSVCLNM",
+							"description": "科別中文名稱"
+						},
+						{
+							"text": "ZONE_ID",
+							"type": "column",
+							"value": "ZONE_ID",
+							"description": "院區"
+						}
+					]
+				},
+				{
+					"text": "DB_NURSTA",
+					"type": "table",
+					"value": "DB_NURSTA",
+					"description": "護理站",
+					"nodes": [
+						{
+							"text": "HNURSTA",
+							"type": "column",
+							"value": "HNURSTA",
+							"description": "護理站代碼"
+						},
+						{
+							"text": "HNURSTANM",
+							"type": "column",
+							"value": "HNURSTANM",
+							"description": "護理站名稱"
+						},
+						{
+							"text": "TYPE",
+							"type": "column",
+							"value": "TYPE",
+							"description": "護理站類型"
+						},
+						{
+							"text": "ZONE_ID",
+							"type": "column",
+							"value": "ZONE_ID",
+							"description": "院區"
+						}
+					]
+				},
+				{
+					"text": "DB_BED",
+					"type": "table",
+					"value": "DB_BED",
+					"description": "病床",
+					"nodes": [
+						{
+							"text": "STATION_UUID",
+							"type": "column",
+							"value": "STATION_UUID",
+							"description": "護理站代碼"
+						},
+						{
+							"text": "ID",
+							"type": "column",
+							"value": "ID",
+							"description": "病床號"
+						},
+						{
+							"text": "DEGREE",
+							"type": "column",
+							"value": "DEGREE",
+							"description": "病床等級"
+						}
+					]
+				},
+				{
+					"text": "PAT_BASIC",
+					"type": "table",
+					"value": "PAT_BASIC",
+					"description": "病人基本資料",
+					"nodes": [
+						{
+							"text": "HHISNUM",
+							"type": "column",
+							"value": "HHISNUM",
+							"description": "病歷號"
+						},
+						{
+							"text": "HNAMEC",
+							"type": "column",
+							"value": "HNAMEC",
+							"description": "中文姓名"
+						},
+						{
+							"text": "HNAME",
+							"type": "column",
+							"value": "HNAME",
+							"description": "英文姓名"
+						},
+						{
+							"text": "HIDNO",
+							"type": "column",
+							"value": "HIDNO",
+							"description": "身分證字號"
+						},
+						{
+							"text": "HBLDTYPE",
+							"type": "column",
+							"value": "HBLDTYPE",
+							"description": "血型"
+						},
+						{
+							"text": "HSEX",
+							"type": "column",
+							"value": "HSEX",
+							"description": "性別"
+						},
+						{
+							"text": "HBIRTHDT",
+							"type": "column",
+							"value": "HBIRTHDT",
+							"description": "出生日期"
+						},
+						{
+							"text": "HPATADR",
+							"type": "column",
+							"value": "HPATADR",
+							"description": "住家地址1"
+						},
+						{
+							"text": "HPATADR2",
+							"type": "column",
+							"value": "HPATADR2",
+							"description": "住家地址2"
+						},
+						{
+							"text": "HPHONHM1",
+							"type": "column",
+							"value": "HPHONHM1",
+							"description": "住家電話號碼"
+						},
+						{
+							"text": "HPHONHM2",
+							"type": "column",
+							"value": "HPHONHM2",
+							"description": "行動電話號碼"
+						},
+						{
+							"text": "CPERSONNAME",
+							"type": "column",
+							"value": "CPERSONNAME",
+							"description": "緊急聯絡人姓名"
+						},
+						{
+							"text": "CPERSONPHONE",
+							"type": "column",
+							"value": "CPERSONPHONE",
+							"description": "緊急聯絡人電話"
+						}
+					]
+				},
+				{
+					"text": "PAT_ADM_CASE",
+					"type": "table",
+					"value": "PAT_ADM_CASE",
+					"description": "住院就診紀錄",
+					"nodes": [
+						{
+							"text": "HCASENO",
+							"type": "column",
+							"value": "HCASENO",
+							"description": "住院號"
+						},
+						{
+							"text": "HHISNUM",
+							"type": "column",
+							"value": "HHISNUM",
+							"description": "病歷號"
+						},
+						{
+							"text": "HNAMEC",
+							"type": "column",
+							"value": "HNAMEC",
+							"description": "中文名字"
+						},
+						{
+							"text": "HSEX",
+							"type": "column",
+							"value": "HSEX",
+							"description": "性別代號"
+						},
+						{
+							"text": "HADMDT",
+							"type": "column",
+							"value": "HADMDT",
+							"description": "住院日期"
+						},
+						{
+							"text": "HADMTM",
+							"type": "column",
+							"value": "HADMTM",
+							"description": "住院時間"
+						},
+						{
+							"text": "HDISDT",
+							"type": "column",
+							"value": "HDISDT",
+							"description": "出院日期"
+						},
+						{
+							"text": "HDISTM",
+							"type": "column",
+							"value": "HDISTM",
+							"description": "出院時間"
+						},
+						{
+							"text": "HINCURSVCL",
+							"type": "column",
+							"value": "HINCURSVCL",
+							"description": "入院科別代碼"
+						},
+						{
+							"text": "HPATFROM",
+							"type": "column",
+							"value": "HPATFROM",
+							"description": "病患來源"
+						},
+						{
+							"text": "HINSUNO",
+							"type": "column",
+							"value": "HINSUNO",
+							"description": "病患身份一"
+						},
+						{
+							"text": "HINDIAG",
+							"type": "column",
+							"value": "HINDIAG",
+							"description": "入院診斷"
+						},
+						{
+							"text": "HINDIAGDESC",
+							"type": "column",
+							"value": "HINDIAGDESC",
+							"description": "入院診斷中文"
+						},
+						{
+							"text": "HNURSTA",
+							"type": "column",
+							"value": "HNURSTA",
+							"description": "護理站"
+						},
+						{
+							"text": "HBED",
+							"type": "column",
+							"value": "HBED",
+							"description": "床號"
+						},
+						{
+							"text": "HVMDNO",
+							"type": "column",
+							"value": "HVMDNO",
+							"description": "主治醫師ID"
+						},
+						{
+							"text": "HVDOCNM",
+							"type": "column",
+							"value": "HVDOCNM",
+							"description": "主治醫師Name"
+						},
+						{
+							"text": "HRDOCNO",
+							"type": "column",
+							"value": "HRDOCNO",
+							"description": "住院醫師ID"
+						},
+						{
+							"text": "HRDOCNM",
+							"type": "column",
+							"value": "HRDOCNM",
+							"description": "住院醫師Name"
+						},
+						{
+							"text": "HPATSTAT",
+							"type": "column",
+							"value": "HPATSTAT",
+							"description": "住院狀態"
+						},
+						{
+							"text": "HCASENO_N",
+							"type": "column",
+							"value": "HCASENO_N",
+							"description": "切帳前的就診號"
+						},
+						{
+							"text": "HDNR",
+							"type": "column",
+							"value": "HDNR",
+							"description": "DNR"
+						},
+						{
+							"text": "HUNNAMED",
+							"type": "column",
+							"value": "HUNNAMED",
+							"description": "隱名"
+						},
+						{
+							"text": "HPREFERIDEN",
+							"type": "column",
+							"value": "HPREFERIDEN",
+							"description": "優待身分"
+						}
+					]
+				},
+				{
+					"text": "DB_ICD9_BASIC",
+					"type": "table",
+					"value": "DB_ICD9_BASIC",
+					"description": "ICD9基本資料",
+					"nodes": [
+						{
+							"text": "ICD9NO",
+							"type": "column",
+							"value": "ICD9NO",
+							"description": "ICD9編號"
+						},
+						{
+							"text": "ICD9CNAME",
+							"type": "column",
+							"value": "ICD9CNAME",
+							"description": "中文診斷名稱"
+						},
+						{
+							"text": "ICD9ENAME",
+							"type": "column",
+							"value": "ICD9ENAME",
+							"description": "英文診斷名稱"
+						}
+					]
+				},
+				{
+					"text": "PAT_ADM_ICD9",
+					"type": "table",
+					"value": "PAT_ADM_ICD9",
+					"description": "入院診斷",
+					"nodes": [
+						{
+							"text": "HCASENO",
+							"type": "column",
+							"value": "HCASENO",
+							"description": "住院號"
+						},
+						{
+							"text": "HHISNUM",
+							"type": "column",
+							"value": "HHISNUM",
+							"description": "病歷號"
+						},
+						{
+							"text": "HINDIAG",
+							"type": "column",
+							"value": "HINDIAG",
+							"description": "入院診斷"
+						},
+						{
+							"text": "HINDIAGCDESC",
+							"type": "column",
+							"value": "HINDIAGCDESC",
+							"description": "入院診斷中文"
+						},
+						{
+							"text": "HINDIAGEDESC",
+							"type": "column",
+							"value": "HINDIAGEDESC",
+							"description": "入院診斷英文"
+						}
+					]
+				},
+				{
+					"text": "PAT_ADM_IPDDIAG",
+					"type": "table",
+					"value": "PAT_ADM_IPDDIAG",
+					"description": "住院診斷",
+					"nodes": [
+						{
+							"text": "HCASENO",
+							"type": "column",
+							"value": "HCASENO",
+							"description": "住院號"
+						},
+						{
+							"text": "HHISNUM",
+							"type": "column",
+							"value": "HHISNUM",
+							"description": "病歷號"
+						},
+						{
+							"text": "IPDDIAG",
+							"type": "column",
+							"value": "IPDDIAG",
+							"description": "住院診斷代碼"
+						},
+						{
+							"text": "IPDDIAGCDESC",
+							"type": "column",
+							"value": "IPDDIAGCDESC",
+							"description": "住院診斷中文"
+						},
+						{
+							"text": "IPDDIAGEDESC",
+							"type": "column",
+							"value": "IPDDIAGEDESC",
+							"description": "住院診斷英文"
+						},
+						{
+							"text": "IPDDATE",
+							"type": "column",
+							"value": "IPDDATE",
+							"description": "診斷開立日期時間"
+						}
+					]
+				}
+			]
+		}
+	],
+    "form": [
+		{
+			"text": "CTHNoteApply",
+			"type": "form",
+			"value": "CTHNoteApply",
+			"description": "照會申請",
+			"nodes": [
+				{
+					"text": "formId",
+					"type": "text",
+					"value": "formId",
+					"description": "表單編號"
+				},
+				{
+					"text": "sourceId",
+					"type": "text",
+					"value": "sourceId",
+					"description": "表單來源編號"
+				},
+				{
+					"text": "recordDate",
+					"type": "datetime",
+					"value": "recordDate",
+					"description": "紀錄日期"
+				},
+				{
+					"text": "NoteTeam",
+					"type": "datetime",
+					"value": "NoteTeam",
+					"description": "照會團隊"
+				},
+				{
+					"text": "reason",
+					"type": "datetime",
+					"value": "reason",
+					"description": "照會原因"
+				}
+			]
+		}
+	]
+}

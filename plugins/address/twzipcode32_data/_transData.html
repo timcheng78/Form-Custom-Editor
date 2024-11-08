@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<!--
+  資料來源：           政府資料開放平台 https://data.gov.tw/dataset/5948
+  資    料：           3+2碼郵遞區號
+  檔案格式：           JSON
+  上架日期：           2016-08-22
+  資料資源品質檢測時間：2021-02-03 17:46:35
+
+  程式撰寫日期：     2021-02-09  02:29
+  原始程式開發人員：  jhengjyun
+  程式最後修改日期：  2021-02-09  02:29
+  最後修改人員：     jhengjyun
+  資料擷取時間：     2021-02-08  15:41
+  檔案名稱：         _data.json
+
+
+  操作說明：
+    1. 產生 twzipcode32_data 後，將json貼至 ../jquery.twzipcode32.beta.js 的變數 twzipcode32_data
+    2. 點選 全部下載 按鈕後，將檔案一個個下載至同級目錄並覆蓋
+-->
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=11;IE=10;IE=9;IE=8;IE=7" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <META http-equiv="Expires" content="Mon, 26 Jul 1997 05:00:00 GMT" />
+    <META http-equiv="Last-Modified" content="Sat, 10 Nov 1997 09:08:07 GMT" />
+    <META http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <META http-equiv="Pragma" content="no-cache" />
+    <script src="../../../customFormV3/js2/jquery.js"></script>
+    <title>政府資料開發平台3+2碼郵遞區號 to twzipcode32_data</title>
+</head>
+
+<body>
+    <h3>政府資料開發平台3+2碼郵遞區號 to twzipcode32_data</h3>
+    縣市：<input id="cityTest" value="新北市" />代碼：<input id="codeTest" value="F" />
+    <button onclick="btnClick(false);">測試</button>
+    <button onclick="btnClick(true, 'level_2');">下載</button>
+
+    <br/>
+    <button onclick="create_Twzipcode32_data();">產生 twzipcode32_data</button>
+    <button onclick="downloadAll();">全部下載</button>
+    <br/>
+    <br/>
+    <label id="label_Twzipcode32_data"></label>
+</body>
+
+</html>
+<script>
+  var aaa;
+  var bigNum = ["１０","１","２","３","４","５","６","７","８","９"],
+      chineseNum = ["十","一","二","三","四","五","六","七","八","九"];
+  if (localStorage.cityTest){
+    $("#cityTest").val(localStorage.cityTest);
+    $("#codeTest").val(localStorage.codeTest);
+  }
+  function getData(){
+    var rs = [];
+    $.ajax({
+      url: "_data.json",
+      cache: true,
+      async: false
+    }).done(function(data) {
+      console.log(data);
+      rs = data;
+    }).fail(function(err) { /*error*/ });
+    return rs;
+  }
+  function create_Twzipcode32_data(){
+    var arr = getData();
+    var ascii = 65;
+    var json = {};
+    for (var i=0, len=arr.length; i<len; ++i){
+      var City = arr[i].City;
+      var Area = arr[i].Area;
+      if (!json[City]){
+        json[City] = {};
+        json[City].CODE = String.fromCharCode(ascii++);
+      }
+      if (!json[City][Area]){
+        json[City][Area] = arr[i].Zip5.substr(0,3);
+      }
+    }
+    console.log(json);
+    console.log(JSON.stringify(json));
+    $("#label_Twzipcode32_data").html(JSON.stringify(json));
+    return json;
+  }
+  function downloadAll(){
+    var arr = getData();
+    var Twzipcode32_data = create_Twzipcode32_data();
+    var json = {};
+    var n=0;
+    for (var City in Twzipcode32_data){
+      ++n;
+      json = transData(arr, City, Twzipcode32_data[City].CODE, "level_2");
+      //清理原始的次級資料，只留"set裡的"
+      len = bigNum.length;
+      for (var Area in json){
+        for (var Road in json[Area]){
+          for (var i=json[Area][Road].length-1; i>=0; --i){
+            if (json[Area][Road][i].set){
+              json[Area][Road][i] = json[Area][Road][i].set;
+            }else{
+              delete json[Area][Road][i];
+            }
+          }
+        }
+      }
+      console.log(json);
+      download(City, Twzipcode32_data[City].CODE+".js", "["+JSON.stringify(json)+"]");
+    }
+    console.log("總共 " + n + " 個縣市");
+  }
+  function btnClick(isDownload, level){
+    var city=$("#cityTest").val();
+    var code=$("#codeTest").val();
+    localStorage.cityTest = city;
+    localStorage.codeTest = code;
+
+    var data = getData();
+    var json = transData(data, city, "F", level);
+
+    if (level){
+      //清理原始的次級資料，只留"set裡的"
+      len = bigNum.length;
+      for (var Area in json){
+        for (var Road in json[Area]){
+          for (var i=json[Area][Road].length-1; i>=0; --i){
+            if (json[Area][Road][i].set){
+              json[Area][Road][i] = json[Area][Road][i].set;
+            }else{
+              delete json[Area][Road][i];
+            }
+          }
+        }
+      }
+      console.log("==json");
+      console.log(json);
+      if (isDownload){
+        download(city, "F.js", JSON.stringify("["+json+"]"));
+      }
+    }
+  }
+  function download(city, filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    $(element).append(city + " (" + filename + ")");
+    $("#label_Twzipcode32_data").before(element);
+    $("#label_Twzipcode32_data").before("<br/>");
+
+    // element.style.display = 'none';
+    // document.body.appendChild(element);
+
+    // element.click();
+
+    // document.body.removeChild(element);
+  }
+  function transData(data, city, code, level){
+    var arr=[];
+    for (var i=0, len=data.length; i<len; ++i){
+      var City = data[i].City;
+      if (City==city){
+        arr.push(data[i]);
+      }
+    }
+    console.log(arr);
+    if (level=="level_1"){
+      return transData_level_1(arr, city, code);
+    }else if (level=="level_2"){
+      return transData_level_2(arr, city, code);
+    }else{
+      transData_level_1(arr, city, code);
+      transData_level_2(arr, city, code);
+    }
+  }
+  function transData_level_1(arr, city, code){
+    var json = {};
+    json[city] = {};
+    json[city].CODE = code;
+    for (var i=0, len=arr.length; i<len; ++i){
+      var Area = arr[i].Area;
+      if (!json[city][Area]){
+        json[city][Area] = arr[i].Zip5.substr(0,3);
+      }
+    }
+    console.log(json);
+    $("#label_Twzipcode32_data").html(JSON.stringify(json));
+    return json;
+  }
+  function transData_level_2(arr, city, code){
+    /*
+    [
+      {
+        "三重區":{
+          "正義南路":[
+            [[2,0,0,0,0],"24142"],
+            [[1,0,"NO",105,0],"24142"],
+            [[1,109,"NO",0,0],"24142"],
+            [[0,107,"NO",107,0],"24102"]
+          ]
+        }
+      },
+      {
+        "新莊區":{
+          "雙鳳路":[
+            [[1,0,"NO",71,0],"24256"],
+            [[2,0,"NO",100,0],"24256"],
+            [[0,73,"LN",[2,20,0],"NO"],"24261"],
+            [[2,102,"NO",0,0],"24261"],
+            [[0,73,"LN",[2,0,18],"NO"],"24256"],
+            [[0,73,"LN",[1,19,0],"NO"],"24261"],
+            [[0,73,"LN",[1,0,17],"NO"],"24256"],
+            [[1,75,"NO",0,0],"24261"]
+          ]
+        }
+      }
+    ]
+    [2,0,0,0,0]     -> 依Scope而定
+      Scope分 [很多!] 種    -> "　", "全", "單全", "雙全", "單", "連", "雙", "　  XX巷單", "　  XX巷雙"
+      "　"          -> "　   107號"           -> [0,107,"NO",107,0]
+      "全"          -> "全"                   -> [0,0,0,0,0]
+      "單全"        -> "單全"                 -> [1,0,0,0,0]
+      "雙全"        -> "雙全"                 -> [2,0,0,0,0]
+      "單"          -> "單 173號以下"         -> [1,0,"NO",173,0]
+      "單"          -> "單 175號以上"         -> [1,175,"NO",0,0]
+      "連"          -> "連 111號以下"         -> [0,0,"NO",111,0]
+      "雙"          -> "雙 80號以下"          -> [2,0,"NO",80,0]
+      "雙"          -> "雙 82號以上"          -> [2,82,"NO",0,0]
+      "　  XX巷單"  -> "　  73巷單  17號以下"  -> [0,73,"LN",[1,0,17],"NO"]
+      "　  XX巷單"  -> "　  73巷單  19號以上"  -> [0,73,"LN",[1,19,0],"NO"]
+      "　  XX巷雙"  -> "　  73巷雙  18號以下"  -> [0,73,"LN",[2,0,18],"NO"]
+      "　  XX巷雙"  -> "　  73巷雙  20號以上"  -> [0,73,"LN",[2,20,0],"NO"]
+      "　  XX巷連  弄"  -> "　  29巷連   3弄以下"  -> [0,29,"LN",[0,0,3],"ALY"]
+     */
+    var json = {}; //先轉json最後再轉arr
+    var test = {};
+    var Area, Road, i, i2, len, len2;
+    //初步整理資料
+    for (i=0, len=arr.length; i<len; ++i){
+      Area = arr[i].Area;
+      Road = arr[i].Road;
+      if (!json[Area]){
+        json[Area]={};
+      }
+      if (!json[Area][Road]){
+        json[Area][Road]=[];
+      }
+      json[Area][Road].push(arr[i]);
+    }
+
+    //將大寫的數字１２３替換為國字一二三
+    len = bigNum.length;
+    for (Area in json){
+      for (Road in json[Area]){
+        // console.log(Road);
+        for (i=0; i<len; ++i){
+        // console.log(bigNum[i]);
+          var idx = Road.indexOf(bigNum[i]);
+          if (idx>-1){
+            var newRoad = Road.replace(bigNum[i], chineseNum[i]);
+            json[Area][newRoad] = json[Area][Road];
+            delete json[Area][Road];
+            break;
+          }
+        }
+      }
+    }
+
+    //正式轉換
+    for (Area in json){
+      for (Road in json[Area]){
+        var recs = json[Area][Road];
+        for (i=0, len=recs.length; i<len; ++i){
+          //[[[0,0,0,0,0],"23743"]]
+          var temp, num;
+          var rec = recs[i];
+          var Zip5 = rec.Zip5;
+          var Scope = rec.Scope;
+          var isScopeError = false;
+          var trans = scopeTrans(Scope);
+          if (trans==="scopeError"){
+            isScopeError = true;
+          }else{
+            json[Area][Road][i].set = [trans, Zip5];
+          }
+          if (isScopeError){
+            console.error("Scope發生例外!!");
+            console.error(json[Area][Road]);
+            console.error(json[Area][Road][i]);
+          }
+        }
+      }
+    }
+    console.log(json);
+    aaa=json;
+    return json;
+  }
+
+  /**
+   * [轉換scope]
+   * @param  {[scope]} scope [scope]
+   * @return {[type]}      [description]
+   */
+
+  function scopeTrans(Scope){
+      if (Scope.indexOf("199號 4至 5樓")>0){
+        console.log("==========efsdfs");
+      }
+    //[0,0,0,0,0]
+    //[0,73,"LN",[1,0,17],"NO"]
+    //[typeA, minA, status1, maxA || [typeB, minB, maxB], status2]
+    this.isScopeError = false;
+    var isSkip = false;
+    var typeA=-1, minA=-1, status1="NO", maxA=-1, status2=0;
+    var typeB=-1, minB=-1, maxB=-1;
+    var st = Scope.substr(0,2), st2="", json={}, num=-1, idx;
+    if (st=="全"){
+      typeA=0, minA=0, status1=0, maxA=0, status2=0;
+      isSkip=true;
+    }else if (st=="單全"){
+      typeA=1, minA=0, status1=0, maxA=0, status2=0;
+      isSkip=true;
+    }else if (st=="雙全"){
+      typeA=2, minA=2, status1=0, maxA=0, status2=0;
+      isSkip=true;
+    }else if (st.trim()=="單"){
+      typeA=1;
+    }else if (st.trim()=="連"){
+      typeA=0;
+    }else if (st.trim()=="雙"){
+      typeA=2;
+    }else{
+      typeA=0;
+    }
+    if (!isSkip){
+      Scope = Scope.substr(2).trim();
+      //刪除"\d樓以上"
+      if ((idx = Scope.indexOf("樓以上")) && idx>-1 && idx == Scope.length-3){
+        //"　  33號 2樓以上"
+        //"單   3號以下 2樓以上"
+        Scope = Scope.split(Scope.match(/[\d]+樓以上$/)[0]);
+        Scope.splice(-1);
+        Scope = Scope.join(" ");
+      }
+      //刪除"\d樓以下"
+      else if ((idx = Scope.indexOf("樓以下")) && idx>-1 && idx == Scope.length-3){
+        //"　  33號 8樓以下"
+        //"單   3號以下 8樓以下"
+        Scope = Scope.split(Scope.match(/[\d]+樓以下$/)[0]);
+        Scope.splice(-1);
+        Scope = Scope.join(" ");
+      }
+      //刪除"\d樓"
+      else if ((idx = Scope.indexOf("樓")) && idx>-1 && idx == Scope.length-1){
+        if (/[\d]+至[\s]+[\d]+樓$/.test(Scope)){
+          //"　 199號 4至 5樓"
+          Scope = Scope.split(Scope.match(/[\d]+至[\s]+[\d]+樓$/)[0]);
+        }else if (/地下[\d]+樓$/.test(Scope)){
+          //"　  97號地下1樓"
+          Scope = Scope.split(Scope.match(/地下[\d]+樓$/)[0]);
+        }else{
+          //"　  33號 2樓"
+          //"單   3號以下 2樓"
+          Scope = Scope.split(Scope.match(/[\d]+樓$/)[0]);
+        }
+        Scope.splice(-1);
+        Scope = Scope.join(" ");
+      }
+      //刪除 "(臺南市政府稅務局)"
+      else if ((st2="(臺南市政府稅務局)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(臺南市政府民治市中心)"
+      else if ((st2="(臺南市政府民治市中心)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(彰化地方法院檢察署)"
+      else if ((st2="(彰化地方法院檢察署)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(彰化地方法院)"
+      else if ((st2="(彰化地方法院)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(臺灣港務公司)"
+      else if ((st2="(臺灣港務公司)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "（沙鹿區公所）"
+      else if ((st2="（沙鹿區公所）") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "（地方稅務局）"
+      else if ((st2="（地方稅務局）") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(國研院科技政策研究中心)"
+      else if ((st2="（地方稅務局）") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(科技部)"
+      else if ((st2="(科技部)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      //刪除 "(國研院科技政策研究中心)"
+      else if ((st2="(國研院科技政策研究中心)") && (idx = Scope.indexOf(st2)) && idx>-1 && idx == Scope.length-st2.length){
+        Scope = Scope.split(st2)[0].trim();
+      }
+      var arr = Scope.trim().split(" ");
+      if (arr.length==1){
+        num = arr[0];
+        if (num.indexOf("號至")>-1){
+          arr = num.split("號至");
+          minA = parseInt(arr[0].substring(0, arr[0].length-2), 10);
+          status1 = "NO";
+          json = this.getLastWordTrans(arr[arr.length-1]);
+          maxA = json.max;
+        }else if (num.indexOf("巷至")>-1){
+          arr = num.split("巷至");
+          minA = parseInt(arr[0].substring(0, arr[0].length-2), 10);
+          status1 = "LN";
+          maxA = -1;
+          typeB = typeA;
+          minB = 0;
+          maxB = 0;
+        }else{
+          json = this.getLastWordTrans(arr[0]);
+          minA = json.min;
+          maxA = json.max;
+          status1 = json.status;
+        }
+      }else if (arr.length>=2 && arr[0].indexOf("之")==arr[0].length-1){
+        //"單  39之  33號"
+        //"單  39之  33號至  39之  55號"
+        arr = Scope.split("至");
+        if (arr.length==1){
+          //"連  12之   5號以下"
+          json = this.getLastWordTrans(arr[0].trim());
+          minA = json.min;
+          maxA = json.max;
+          status1 = json.status;
+        }else if (arr.length==2){
+          //"31號至  63之   1號"
+          //"　 110之   1至之   2號"
+          //"單  39之  33號至  39之  55號"
+          //"單   3之   1號至 351號"
+          json = this.getLastWordTrans(arr[0]);
+          minA = (json.min==0) ? json.max : json.min;
+          status1 = json.status;
+          if (Scope.indexOf("至之")>-1 && arr[1].indexOf("之")===0) {
+            //"　  18之   1至之   5號"
+            arr[1] = arr[0].split("之")[0] + arr[1];
+          }
+          json = this.getLastWordTrans(arr[1]);
+          maxA = (json.max==0) ? json.min : json.max;
+        }else{
+          this.isScopeError = true;
+        }
+      }else if (arr.length>=2 && arr[0].indexOf("號至")==arr[0].length-2){
+        minA = parseInt(arr[0].substring(0, arr[0].length-2), 10);
+        status1 = "NO";
+        json = this.getLastWordTrans(Scope.split("號至")[1]);
+        maxA = json.max;
+      }else if (arr.length>=2 && arr[0].indexOf("巷至")==arr[0].length-2){
+        minA = parseInt(arr[0].substring(0, arr[0].length-2), 10);
+        status1 = "LN";
+        maxA = -1;
+        typeB = typeA;
+        minB = 0;
+        maxB = 0;
+      }else if (arr.length>=2 && arr[0].indexOf("弄至")==arr[0].length-2){
+        minA = parseInt(arr[0].substring(0, arr[0].length-2), 10);
+        status1 = "ALY";
+        typeB = typeA;
+        json = this.getLastWordTrans(Scope.split("弄至")[1]);
+        maxA = json.max;
+      }else if (arr.length>=2 && 
+        (
+          arr[0].indexOf("巷單")==arr[0].length-2 || arr[0].indexOf("巷雙")==arr[0].length-2 || arr[0].indexOf("巷連")==arr[0].length-2
+          || arr[0].indexOf("弄單")==arr[0].length-2 || arr[0].indexOf("弄雙")==arr[0].length-2 || arr[0].indexOf("弄連")==arr[0].length-2
+        )){
+        //"巷連   2號至   2之   1號"
+        //"73巷單  17號以下"
+        //"     4弄雙 102號以上"
+        //"　   4弄單  35之   1號以上"
+        minA = parseInt(arr[0].substring(0, arr[0].length-2), 10);
+        maxA = -1;
+        if (arr[0].indexOf("巷單")>-1){
+          status1 = "LN";
+          typeB = 1;
+          arr = Scope.split("巷單")[1];
+        }else if (arr[0].indexOf("巷雙")>-1){
+          status1 = "LN";
+          typeB = 2;
+          arr = Scope.split("巷雙")[1];
+        }else if (arr[0].indexOf("巷連")>-1){
+          status1 = "LN";
+          typeB = 0;
+          arr = Scope.split("巷連")[1];
+        }else if (arr[0].indexOf("弄單")>-1){
+          status1 = "ALY";
+          typeB = 1;
+          arr = Scope.split("弄單")[1];
+        }else if (arr[0].indexOf("弄雙")>-1){
+          status1 = "ALY";
+          typeB = 2;
+          arr = Scope.split("弄雙")[1];
+        }else if (arr[0].indexOf("弄連")>-1){
+          status1 = "ALY";
+          typeB = 0;
+          arr = Scope.split("弄連")[1];
+        }
+        arr = arr.split("至");
+        if (arr.length==1){
+          json = this.getLastWordTrans(arr[0]);
+          minB = json.min;
+          maxB = json.max;
+          status2 = json.status;
+        }else if (arr.length==2){
+          json = this.getLastWordTrans(arr[0]);
+          minB = (json.min==0) ? json.max : json.min;
+          json = this.getLastWordTrans(arr[1]);
+          maxB = (json.max==0) ? json.min : json.max;
+          status2 = json.status;
+        }else{
+          this.isScopeError = true;
+        }
+      }else if (arr.length>=2 && arr[0].indexOf("巷")==arr[0].length-1){
+        minA = arr[0].substring(0, arr[0].length-1);
+        status1 = "LN";
+        maxA = -1;
+        json = this.getLastWordTrans(arr[arr.length-1]);
+        typeB = typeA;
+        minB = json.min;
+        maxB = json.max;
+        status2 = json.status;
+      }else{
+        this.isScopeError = true;
+      }
+      // if(Scope.indexOf("弄")>-1 && this.isScopeError==false){
+      //   console.log("==========");
+      //   console.log(Scope);
+      //   // this.isScopeError = true;
+      // }
+    }
+    this.getLastWordTrans = function(num){
+      var json = {type:-1, min:0, max:0, status: "NO"};
+      var idx = -1, dirtyNum = 0;
+      num = num.trim();
+      if (num.indexOf("之")>-1){
+        //39之  55號 = min = max =39.55
+        //39之  55號以上 = min = 39.55
+        //39之  55號以下 = max = 39.55
+        var arr = num.split("之");
+        dirtyNum = parseInt(arr[0].trim(), 10);
+        num = arr[1].trim();
+      }
+      if (/^[\d]+$/.test(num)){
+        //18之   1
+        num += "號";
+      }
+      if ((idx=num.indexOf("號以上")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = 0;
+      }else if ((idx=num.indexOf("號以下")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = 0;
+        json.max = num;
+      }else if ((idx=num.indexOf("號")) && idx>-1 && idx==num.length-1){
+        num = num.substring(0, num.length-1);
+        json.min = num;
+        json.max = num;
+      }else if ((idx=num.indexOf("號南棟")) && idx>-3 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+      }else if ((idx=num.indexOf("號北棟")) && idx>-3 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+      }else if ((idx=num.indexOf("號及以上附號")) && idx>-1 && idx==num.length-6){
+        num = num.substring(0, num.length-6);
+        json.min = num;
+        json.max = 0;
+      }else if ((idx=num.indexOf("號含附號全")) && idx>-1 && idx==num.length-5){
+        num = num.substring(0, num.length-5);
+        json.min = num;
+        json.max = num;
+      }else if ((idx=num.indexOf("號含附號")) && idx>-1 && idx==num.length-4){
+        num = num.substring(0, num.length-4);
+        json.min = num;
+        json.max = num;
+      }else if ((idx=num.indexOf("附號全")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+      }else if ((idx=num.indexOf("巷全")) && idx>-1 && idx==num.length-2){
+        num = num.substring(0, num.length-2);
+        json.min = num;
+        json.max = num;
+        json.status = "LN";
+      }else if ((idx=num.indexOf("巷單全")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+        json.status = "LN";
+      }else if ((idx=num.indexOf("巷雙全")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+        json.status = "LN";
+      }else if ((idx=num.indexOf("巷以上")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = 0;
+        json.status = "LN";
+      }else if ((idx=num.indexOf("巷以下")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = 0;
+        json.max = num;
+        json.status = "LN";
+      }else if ((idx=num.indexOf("巷")) && idx>-1 && idx==num.length-1){
+        num = num.substring(0, num.length-1);
+        json.min = num;
+        json.max = num;
+        json.status = "LN";
+      }else if ((idx=num.indexOf("弄全")) && idx>-1 && idx==num.length-2){
+        num = num.substring(0, num.length-2);
+        json.min = num;
+        json.max = num;
+        json.status = "ALY";
+      }else if ((idx=num.indexOf("弄單全")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+        json.status = "ALY";
+      }else if ((idx=num.indexOf("弄雙全")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = num;
+        json.status = "ALY";
+      }else if ((idx=num.indexOf("弄以上")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = num;
+        json.max = 0;
+        json.status = "ALY";
+      }else if ((idx=num.indexOf("弄以下")) && idx>-1 && idx==num.length-3){
+        num = num.substring(0, num.length-3);
+        json.min = 0;
+        json.max = num;
+        json.status = "ALY";
+      }else if ((idx=num.indexOf("弄")) && idx>-1 && idx==num.length-1){
+        num = num.substring(0, num.length-1);
+        json.min = num;
+        json.max = num;
+        json.status = "ALY";
+      }else{
+        this.isScopeError = true;
+      }
+
+      json.min = parseInt(json.min, 10);
+      json.max = parseInt(json.max, 10);
+      //39之  55號 = min = max =39.55
+      //39之  55號以上 = min = 39.55
+      //39之  55號以下 = max = 39.55
+      json.min = (json.min != 0 && dirtyNum!=0) ? parseFloat(dirtyNum + "." + json.min) : json.min;
+      json.max = (json.max != 0 && dirtyNum!=0) ? parseFloat(dirtyNum + "." + json.max) : json.max;
+      return json;
+    };
+
+    if (this.isScopeError){
+      return "scopeError";
+    }
+    if (maxA!==-1){
+      return [typeA, minA, status1, maxA, status2];
+    }else{
+      return [typeA, minA, status1, [typeB, minB, maxB], status2];
+    }
+  }
+</script>

@@ -1,0 +1,971 @@
+<body>
+	<table align="center"  class="Noprint">
+	  <tr><td>
+		<input class="clsButton" type="button" onMouseOver="buttonOnMouseOver()" onMouseOut="buttonOnMouseOut()"  name="print1"  value="列印" class="clsButton" onClick="doPrint()">
+		<input class="clsButton" type="button" onMouseOver="buttonOnMouseOver()" onMouseOut="buttonOnMouseOut()"  name="btnExit" value="離開" class="clsButton" onClick="window.close();">
+	  </td></tr>
+	</table>  
+	<span id="content">
+	
+		<form id="appletPrintForm" style="display: none;">
+			<input type="hidden" name="printURL" value="<%=queryString %>&extURL=adminssion10_64Form/printForm"/>
+		</form>
+		<table width="90%" class="etable" align="center">
+			<THEAD>
+				<tr>
+					<td colspan="17" align="center">
+						<table width="100%" border="0">
+						  <tr align="center">
+							<td rowspan="3" align="center" width="1%"></td>
+							<td><h3><div class='c-out'  value='${unitTitle}'>${unitTitle}</div></h3></td>
+						  </tr>
+						  <tr align="center">
+							<td><h3>入院護理評估記錄：成人(18歲以上)</h3></td>
+						  </tr>
+						  <tr align="left">
+							<td nowrap align="left">
+								<table  width="100%">
+									<tr>
+										<td colspan="2" align="left" nowrap><h4>病房：<label class='{occ.station}'>{occ.station}</label>-<label class='{occ.bed}'>{occ.bed}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										病歷號：<label class='{ occ.hisNum}'>{ occ.hisNum}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										姓名：<label class='{ occ.chinName}'>{ occ.chinName}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										</h4></td>
+									</tr>
+								</table>
+							</td>	
+						 </tr>
+						</table>
+						<table width="100%"  cellpadding="0" cellspacing="0" >
+							<tr align="right">
+								<td>
+									<div class='fmt-format-date' pattern='yyyy/MM/dd HHmm' value='${start}'>yyyy/MM/dd HHmm</div>~<div class='fmt-format-date' pattern='yyyy/MM/dd HHmm' value='${end}'>yyyy/MM/dd HHmm</div>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</THEAD>
+			
+			<div class='c-for-each' var='form' items='${formList }' varStatus='formIndex'>
+	
+		<tr>
+			<th colspan="4"><h3><b>基本資料</b></h3></th>
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			教育程度:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admEducation&formId=${form.formId}'></div>
+				</span>
+				</td>
+		</tr>
+	
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			入院日期:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					 <div class='fmt-format-date' pattern='yyyy/MM/dd HHmm' value='<label class='{form.evaluationTime }'>{form.evaluationTime }</label>'>yyyy/MM/dd HHmm</div>
+					<div class='fmt-format-date' pattern='yyyy/MM/dd HHmm' value='<label class='{form.evaluationTime }'>{form.evaluationTime }</label>'>yyyy/MM/dd HHmm</div>
+				</span>
+				</td>
+	
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			入院TPR:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admTradio&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admT&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admP&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admR&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSystolic&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSystolic1&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSPO2&formId=${form.formId}'></div>
+				</span>
+				</td>
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			入院原因:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admReason&formId=${form.formId}'></div>
+				</span>
+				</td>
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			入院來源:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admIdentity&formId=${form.formId}'></div>
+				</span>
+				</td>
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			入院方式:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admWay&formId=${form.formId}'></div>
+				</span>
+				</td>
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" rowspan="3" >
+			生活習慣:</th>
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			抽菸(含電子煙):</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSmoking&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSmokingDay&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSmokingYear&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admQuitYear&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			喝酒:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDrink&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDrinkDay&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDrinkYear&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDrinkQuitYear&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			檳榔:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBinglang&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBinglangDay&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBinglangYear&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBinglangQuitYear&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" rowspan="3" >
+			家庭狀況:</th>
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			婚姻狀況:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admMarry&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			居住狀況:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admLive&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			子女狀況:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFamilyNot&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSon&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDaughter&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+	
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			聯絡者(1):</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="2">
+			<span style="font-weight: 400">
+	 
+					
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactName1&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactRelation1&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel1&formId=${form.formId}'></div> 
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel12&formId=${form.formId}'></div>
+					
+	
+				</span>
+				</td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			聯絡者(2):</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+	 
+	
+					
+					
+					
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactName2&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactRelation2&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel2&formId=${form.formId}'></div> 
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel22&formId=${form.formId}'></div>
+					
+	
+				</span>
+				</td>
+	
+		</tr>
+		<tr >
+		  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			聯絡者(3):</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+	 
+	
+					
+	
+				
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactName3&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactRelation3&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel3&formId=${form.formId}'></div> 
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel32&formId=${form.formId}'></div>
+	
+				</span>
+				</td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			聯絡者(4):</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+	
+	
+					
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactName4&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactRelation4&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel4&formId=${form.formId}'></div> 
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admContactTel42&formId=${form.formId}'></div>
+				</span>
+				</td>
+	
+		</tr>
+		<tr>
+			<th colspan="4"><h3><b>疾病史</b></h3></th>
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			先天疾病:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDisease0&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			曾患疾病:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDisease1&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmDisease1&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			住院經驗:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admExperience&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			手術情形:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admOp&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			孕產史:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admGp&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasadmGp&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="150" style="background-color: #FFFFFF" colspan="2">
+			待產婦:</th>
+		  <td class="etd_executeA" width="86%" height="150" >
+			<span style="font-weight: 400">
+			<table>
+				<tr>
+				<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=Expectantmother&formId=${form.formId}'></div>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherSelfcold&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherSelfcoldop&formId=${form.formId}'></div>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherFamilycold&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherFamilycoldop&formId=${form.formId}'></div>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherBrosisdisease&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherBrosisdiseaseop&formId=${form.formId}'></div>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherCaregiver&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherCaregiverop&formId=${form.formId}'></div>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherDatasource&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherDsname&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=ExpectantmotherDsrelation&formId=${form.formId}'></div>
+				</td>
+				</tr>
+			</table>
+				
+			</span>
+		  </td>
+	
+		</tr>
+		
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			輸血經驗:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBlood&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBloodType&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmBlood&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			過敏史:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAllergy&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAllergyMed&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAllergyFood&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			現有特殊用藥:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSpecialmedication&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+	
+		<tr>
+			<th colspan="4"><h3><b>日常生活型態</b></h3></th>
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			營養不良篩檢:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<table>
+					<tr>
+						<td>體位測量：</td>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admHeight&formId=${form.formId}'></div>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admWeight&formId=${form.formId}'></div>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBMI&formId=${form.formId}'></div>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admCancer&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>步驟1 BMI分數：</td>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admCancer1&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>步驟2 過去3~6個月非計畫性體重喪失%;</td>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admCancer2&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>步驟3 如果病人正處於急性疾病狀態或>5天不會有營養攝入;</td>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admCancer3&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>步驟1+步驟2+步驟3(加總分數2分(含)以上轉介營養師)：</td>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admCancer1Score&formId=${form.formId}'></div>
+						</td>
+					</tr>
+	
+				</table>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			睡眠:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSleep1&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSleep2&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" rowspan="2">
+			排泄:</th>
+		<th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" >
+			排尿:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admUrine&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		<th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" >
+			排便:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<table>
+						<tr>
+							<td colspan="2">
+								<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFaeces&formId=${form.formId}'></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFaecesDays&formId=${form.formId}'></div>
+							</td>
+							<td>
+								<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFaecesTimes&formId=${form.formId}'></div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFaecesType&formId=${form.formId}'></div>
+							</td>
+						</tr>
+					</table>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			活動:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admCareSelf&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=notAdmCareSelf1&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=notAdmCareSelf2&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=notAdmCareSelf3&formId=${form.formId}'></div>
+			</span>
+		  </td>
+	
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			運動:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admExercise&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmExercise&formId=${form.formId}'></div>
+				
+			</span>
+		  </td>
+	
+		</tr>
+	
+		 <tr>
+			<th colspan="4"><h3><b>身體評估</b></h3></th>
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			簡式健康量表:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS5Not&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS51&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS52&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS53&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS54&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS55&formId=${form.formId}'></div>
+					  <div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS51Score&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS56&formId=${form.formId}'></div>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBSRS57&formId=${form.formId}'></div>
+				
+			</span>
+		  </td>
+		</tr>
+		<tr >
+		 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" rowspan="4">
+			皮膚:</th>
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			顏色:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admSkin&formId=${form.formId}'></div>			
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			性質:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admExterior&formId=${form.formId}'></div>			
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			壓力性損傷:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admPressure&formId=${form.formId}'></div>			
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			壓力性損傷評估:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<table>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admPerceptionImg&formId=${form.formId}'></div>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admMoistureImg&formId=${form.formId}'></div>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admActivityImg&formId=${form.formId}'></div>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admMobilityImg&formId=${form.formId}'></div>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admNutritionImg&formId=${form.formId}'></div>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFrictionImg&formId=${form.formId}'></div>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							總分:<div class='pFormItem jsp-include' page='printItem.jsp?tag=admPerceptionImgScore&formId=${form.formId}'></div>
+						</td>
+					</tr>
+				</table>
+					
+			</span>
+		  </td>
+		</tr>
+		 <tr >
+		 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" rowspan="2">
+			感官:</th>
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			視力:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admEyeLeft&formId=${form.formId}'></div>	
+	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admEyeRight&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmEyeLeft&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmEyeRight&formId=${form.formId}'></div>		
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			聽力:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admEarLeft&formId=${form.formId}'></div>	
+				
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admEarRight&formId=${form.formId}'></div>		
+			</span>
+		  </td>
+		</tr>
+		<th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" rowspan="3">
+			口咽:</th>
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			黏膜:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admMucosa&formId=${form.formId}'></div>		
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			牙齒:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admDenture&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmDentureLeft&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmDentureTop&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasAdmDentureBelow&formId=${form.formId}'></div>	
+				
+				
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			咽喉:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admThroat&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+		 <tr >
+			 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			呼吸:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admBreathingType&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+		 <tr >
+			 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			心血管:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admHeartRhythm&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			腸胃:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admPeristalsis&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+		<tr>
+		 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" rowspan="7">
+			肌肉骨骼:</th>
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			肌力:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admRightArm&formId=${form.formId}'></div>		
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admRightLeg&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admLeftArm&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admLeftLeg&formId=${form.formId}'></div>	
+			</span>
+		  </td>
+		</tr>
+		<tr>
+	
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			活動情形:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admA1&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasadmA11&formId=${form.formId}'></div>	
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=hasadmA12&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+	
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			自我照顧能力:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admA2&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admA3&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admA4&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admA5&formId=${form.formId}'></div>
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admA6&formId=${form.formId}'></div>	
+			</span>
+		  </td>
+		</tr>
+		<tr>
+	
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			關節活動度:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admJoint&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+	
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			外觀:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAids&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+	
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			建議會診復健科:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admHolder&formId=${form.formId}'></div>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+	
+			 <th class="nurstr1"  width="7%" align="left" height="34" style="background-color: #FFFFFF" >
+			跌倒評估:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<table>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble1&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble8&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble2&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble3&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble4&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble5&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble6&formId=${form.formId}'></div>
+						</td>
+					</tr>
+													<tr>
+						<td>
+							<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble7&formId=${form.formId}'></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							跌倒評估總分:<div class='pFormItem jsp-include' page='printItem.jsp?tag=admFallTumble1Score&formId=${form.formId}'></div>
+						</td>
+					</tr>
+				</table>
+				
+			</span>
+		  </td>
+		</tr>
+	<tr>
+			  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			神經</th>
+			  <td class="etd_executeA" width="100%" height="34">
+				<span style="font-weight: 400">
+				<table>
+								<tr>
+									<td>意識：GCS:</td>
+									<td>
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=nerveE&formId=${form.formId}'></div></jsp:include></td>
+					
+				   <td> <div class='pFormItem jsp-include' page='printItem.jsp?tag=nerveM&formId=${form.formId}'></div></jsp:include></td>
+					 <td><div class='pFormItem jsp-include' page='printItem.jsp?tag=nerveV&formId=${form.formId}'></div></jsp:include></td>
+					   <td> &nbsp; &nbsp; &nbsp; &nbsp;</td>
+					
+				  <td><div class='pFormItem jsp-include' page='printItem.jsp?tag=achenum&formId=${form.formId}'></div></jsp:include></td></tr></table>
+					  <table>
+				 <tr> 
+				 <td colSpan="4"><div class='pFormItem jsp-include' page='printItem.jsp?tag=foot&formId=${form.formId}'></div></jsp:include></td></tr>
+				<tr> <td colSpan="4"> <div class='pFormItem jsp-include' page='printItem.jsp?tag=language&formId=${form.formId}'></div></jsp:include></td></tr>
+					<tr> <td colSpan="4"> <div class='pFormItem jsp-include' page='printItem.jsp?tag=perceive&formId=${form.formId}'></div></jsp:include></td></tr>
+					</table>
+				</span>
+			</td>
+	
+		</tr>
+		  <tr>
+			  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			泌尿</th>
+			  <td class="etd_executeA" width="86%" height="34">
+				<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=Urinary&formId=${form.formId}'></div></jsp:include>
+	
+				
+				</span>
+			</td>
+	
+		</tr>
+		  <tr>
+			  <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			生殖</th>
+			  <td class="etd_executeA" width="86%" height="34">
+				<span style="font-weight: 400">
+					<div class='pFormItem jsp-include' page='printItem.jsp?tag=reproduction&formId=${form.formId}'></div></jsp:include>
+				   
+				
+				</span>
+			</td>
+	
+		</tr>
+		 <tr>
+			<th colspan="4"><h3><b>出院準備服務初篩項目</b></h3></th>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			出院準備服務初篩項目:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAgeExit0&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			通知個管師:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAgeExit1&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+		<tr>
+			<th colspan="4"><h3><b>入院護理指導</b></h3></th>
+		</tr>
+		<tr >
+			 <th class="nurstr1"  width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+			入院護理指導:</th>
+		  <td class="etd_executeA" width="86%" height="34" colspan="3">
+			<span style="font-weight: 400">
+				<div class='pFormItem jsp-include' page='printItem.jsp?tag=admAgeExit2&formId=${form.formId}'></div>		
+				
+			</span>
+		  </td>
+		</tr>
+	
+	
+	
+	
+	
+	
+		
+	
+		<tr >		  
+			  <th class="nurstr1" width="14%" align="left" height="34" style="background-color: #FFFFFF" colspan="2">
+				評估者</th>
+			  <td class="etd_executeA"  height="86" colspan="3" >
+				<span style="font-weight: 400">
+					<label class='{form.createUserName }'>{form.createUserName }</label>
+				</span>	
+			  </td>
+			</tr> 		
+	
+	
+			
+			
+		
+					
+		
+					
+			
+			
+			
+			
+			
+	
+	
+			
+			
+	</div>
+	</table>
+	</span>
+	
+	
+	<table align="center"  class="Noprint">
+	  <tr><td>
+		<input class="clsButton" type="button" onMouseOver="buttonOnMouseOver()" onMouseOut="buttonOnMouseOut()"  name="print2"  value="列印" class="clsButton" onClick="doPrint()">
+		<input class="clsButton" type="button" onMouseOver="buttonOnMouseOver()" onMouseOut="buttonOnMouseOut()"  name="btnExit" value="離開" class="clsButton" onClick="window.close();">
+	  </td></tr>
+	</table>  
+	</body>
+	

@@ -1,0 +1,209 @@
+{{if $data.fileMode=="fileDefaultMultiple"}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+		<input
+			type=			"hidden"
+			class=			"formItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+			id=				"{{$data.name}}"
+			name=			"{{$data.name}}"
+			data-title=		"{{$data.title}}"
+			data-bean=		"{{$data.name}}"
+			data-id=		"{{$data.name}}"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+			{{if isHor||isVer}}
+				data-upload="false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="true"
+			{{/if}}
+			onchange=		"fileTool.fileDefaultMultiple_show('{{$data.name}}');"
+		>
+		</input>
+		<input
+			type=			"file"
+			class=			"fileFormItem"
+			id=				"file_{{$data.name}}"
+			name=			"file_{{$data.name}}"
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			"display: inline;{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+			onclick=		""
+		/>
+		
+		<input
+			type=			"button"
+			class=			"fileBtnFormItem"
+			id=				"fileBtn_{{$data.name}}"
+			name=			"fileBtn_{{$data.name}}"
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			""
+			onclick=		"fileTool.doUpload('{{$data.name}}', null, '{{$data.fileMode}}', null, null);"
+			value=			"{{if languageMode=="Traditional Chinese"}}上傳{{else if languageMode=="Simplified Chinese"}}上传{{else}}上传{{/if}}"
+		/>
+        {{if fileSizeDesc!=null && fileSizeDesc!=""}}<font color="red">{{fileSizeDesc}}</font>{{/if}}
+		<br
+			class=			"fileBrFormItem"
+			id=				"fileBr_{{$data.name}}"
+			name=			"fileBr_{{$data.name}}"
+		/>
+		<div
+			class=			"fileDivFormItem"
+			id=				"fileDiv_{{$data.name}}"
+			style=			""
+		>
+		</div>
+	</div>
+{{else if  $data.fileMode == 'fileManageUpload'}}
+<button id="uiBtn_{{$data.name}}" class="btn btn-primary" type="button"  onclick="fileTool.showFileListBox('{{$data.name}}');">
+	{{$data.title}}
+</button>
+<input
+		type=			"hidden"
+		class=			"formItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if isHor||isVer}}
+		data-upload="false"
+		{{else if $data.upload}}
+		data-upload="{{$data.upload}}"
+		{{else}}
+		data-upload="true"
+		{{/if}}
+onchange=		"fileTool.fileManageUpload_show('{{$data.name}}');"
+/>
+<div class="Layer fileListLayer"
+	 id="fileListLayer_{{$data.name}}"
+></div>
+<div class="fileBox fileListBox"
+	 id="fileListBox_{{$data.name}}" >
+	<div style="height: 130px;">
+		<table class="table" >
+			<tr>
+				<th style="text-align: left" ><h3>{{ $data.title}} ~ {{if $data.backTitle}}{{$data.backTitle}}{{/if}}</h3></th>
+			</tr>
+		</table>
+		<div style="margin-left: 5px;width: 40%">
+			<button type="button" class="btn btn-primary" name="" onclick="fileTool.showAddFileBox('{{$data.name}}');">
+				{{if languageMode=="Traditional Chinese"}}新增檔案{{else if languageMode=="Simplified Chinese"}}新增档案{{else}}新增档案{{/if}}
+			</button>
+		</div>
+	</div>
+	<div style="overflow-y: scroll;height: calc(80vh - 200px);max-height: calc(80vh - 205px);margin-top: 5px;">
+		<table class="table"  >
+			<thead>
+			<tr>
+				<th>{{if languageMode=="Traditional Chinese"}}順序{{else if languageMode=="Simplified Chinese"}}顺序{{else}}顺序{{/if}}</th>
+				<th>{{if languageMode=="Traditional Chinese"}}檔案標題{{else if languageMode=="Simplified Chinese"}}档案标题{{else}}档案标题{{/if}}</th>
+				<th>{{if languageMode=="Traditional Chinese"}}調整{{else if languageMode=="Simplified Chinese"}}调整{{else}}调整{{/if}}</th>
+				<th>{{if languageMode=="Traditional Chinese"}}查閱{{else if languageMode=="Simplified Chinese"}}查阅{{else}}查阅{{/if}}</th>
+				<th>{{if languageMode=="Traditional Chinese"}}刪除{{else if languageMode=="Simplified Chinese"}}删除{{else}}删除{{/if}}</th>
+			</tr>
+			</thead>
+			<tbody id="fileDatas_{{$data.name}}">
+
+			</tbody>
+
+		</table>
+	</div>
+	<table class="table" style="height: 70px;">
+		<tr>
+			<td  style="text-align: center">
+				<button type="button" class="btn btn-primary" onclick="fileTool.saveFileSort('{{$data.name}}');">
+					{{if languageMode=="Traditional Chinese"}}儲存{{else if languageMode=="Simplified Chinese"}}保存{{else}}保存{{/if}}
+				</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-danger" onclick="fileTool.hideFileListBox('{{$data.name}}');">
+					{{if languageMode=="Traditional Chinese"}}離開{{else if languageMode=="Simplified Chinese"}}关闭{{else}}关闭{{/if}}
+				</button>
+			</td>
+		</tr>
+	</table>
+
+	<div class="Layer addFileLayer" id="addFileLayer_{{$data.name}}"  >
+
+	</div>
+	<div class="fileBox addFileBox" id="addFileBox_{{$data.name}}">
+		<table class="table" >
+			<tr>
+				<th style="text-align: left"><h3>{{if languageMode=="Traditional Chinese"}}新增檔案{{else if languageMode=="Simplified Chinese"}}新增档案{{else}}新增档案{{/if}}</h3></th>
+			</tr>
+		</table>
+		<table class="table" >
+			<tr>
+				<th style="width: calc(10vw);">{{if languageMode=="Traditional Chinese"}}檔案說明{{else if languageMode=="Simplified Chinese"}}新增档案{{else}}新增档案{{/if}}</th>
+				<td style="width: calc(30vw);"><input type="text" id="addFileInfo_{{$data.name}}" name="addFileInfo_{{$data.name}}" style="width: calc(29vw);"/></td>
+				<td style="width: calc(10vw);"></td>
+			</tr>
+			<tr>
+				<th>{{if languageMode=="Traditional Chinese"}}檔案位置{{else if languageMode=="Simplified Chinese"}}新增档案{{else}}新增档案{{/if}}</th>
+				<td>
+
+					<input type="text" readonly disabled id="addFilePath_{{$data.name}}" name="addFilePath_{{$data.name}}" style="width: calc(29vw);" />
+				</td>
+				<td>
+					<input
+							type=	"file"
+							class=	"fileFormItem"
+							id=		"file_{{$data.name}}"
+							name=	"file_{{$data.name}}"
+							style=	"display: inline;width: 0px;height: 0px; "
+					/>
+					<label for="file_{{$data.name}}"  class="btn btn-primary"  >
+						{{if languageMode=="Traditional Chinese"}}選取檔案{{else if languageMode=="Simplified Chinese"}}选择文件{{else}}选择文件{{/if}}
+					</label>
+
+
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="text-align: center">
+					<button
+							type=			"button"
+							class=			"fileBtnFormItem btn btn-primary"
+							id=				"fileBtn_{{$data.name}}"
+							name=			"fileBtn_{{$data.name}}"
+							{{if $data.controlMode=="disabled"}}
+							disabled=	"disabled"
+							{{/if}}
+					style=			""
+					onclick=		"fileTool.doUpload('{{$data.name}}', null, '{{$data.fileMode}}', null, null);"
+					>
+					{{if languageMode=="Traditional Chinese"}}上傳{{else if languageMode=="Simplified Chinese"}}上传{{else}}上传{{/if}}
+					</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="btn btn-danger" onclick="fileTool.hideAddFileBox('{{$data.name}}');">
+						{{if languageMode=="Traditional Chinese"}}取消{{else if languageMode=="Simplified Chinese"}}取消{{else}}取消{{/if}}
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</div>
+
+{{/if}}

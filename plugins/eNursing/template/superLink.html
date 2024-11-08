@@ -1,0 +1,46 @@
+<div
+        class="formItem"
+        data-bean=		"{{$data.name}}"
+        id=				"{{$data.name}}"
+        data-required=	"false"
+        data-upload="false"
+        data-typeformat='{{$data.typeFormat}}'
+     >
+<img id="img{{$data.name}}" src="" style="width: 50px;height: 50px;"/>
+</div>
+<script>
+    //初始化datetimepicker的日期時間
+    var $superLink = $('#{{$data.name}}');
+    var typeformat=JSON.parse(getDataset($superLink[0]).typeformat);
+    var icon = typeformat.superLinkIcon;
+    $("#img{{$data.name}}").attr("src",icon);
+    $superLink.click(function(event) {
+
+
+        var linkModel = typeformat.superLinkModel;//链接模式；特定網址、或當前系統下的路徑、系統內已上傳檔案的檔案
+        var linkUrl = typeformat.superLinkUrl;//链接地址
+        var openModel = typeformat.superLinkOpenModel;//打开方式 _blank
+        if(linkModel=="1"){
+            window.open(linkUrl,openModel);
+        }else if(linkModel=="2"){
+            window.open(processUrl(linkUrl),openModel);
+        }
+
+    });
+    function processUrl(url) {
+        var params = /(\w+)=([^{}=&]+)/g, matches;
+        if (matches = url.match(params)) {
+            for (var i = 0; i < matches.length; i++) {
+                var kv = matches[i].split("=");
+                if (kv[1]) {
+                    localStorage[kv[0]] = kv[1];
+                }
+            }
+        }
+        var regExp = /=({(\w+)})/;
+        while (regExp.test(url)) {
+            url = url.replace(RegExp.$1, localStorage[RegExp.$2] || "")
+        }
+        return url;
+    }
+</script>

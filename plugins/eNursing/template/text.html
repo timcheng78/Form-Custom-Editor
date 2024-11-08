@@ -1,0 +1,107 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem txFontFormItem"
+			id=				"title_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem roLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload!=null&&$data.upload!=undefined}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+	{{if $data.backTitle}}
+	<label
+			class=			"txBkFormItem"
+			id=				"backTitle_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.backTitle}}
+	</label>
+{{/if}}
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem txDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem txFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+	<input
+		type=			"text"
+		class=			"formItem textFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+        {{if $data.width==undefined}}
+        size=			"{{$data.textSize}}"
+        {{/if}}
+		maxlength=		"{{$data.maxlength}}"
+		placeholder=	"{{$data.placeholder}}"
+		autocomplete=	"off"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips}}{{$data.promptTips}}{{else}}請輸入「{{$data.title}}」{{/if}}"
+		{{if isHor||isVer}}
+			data-upload= "false"
+		{{else if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		{{if $data.controlMode=="disabled"}}
+			disabled=	"disabled"
+		{{/if}}
+		style=			"border-radius: 4px;{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+		onclick=		"{{$data.click}}"
+		{{if $data.onkeydown != ""  && $data.onkeydown != undefined}}
+			onkeyup=	'{{@$data.onkeydown}}'
+		{{/if}}
+		{{if $data.change != ""  && $data.change != undefined}}
+			onchange=	'{{@$data.change}}'
+		{{/if}}
+		{{if $data.blur != "" && $data.blur != undefined}}
+			onblur=		'ruleTools.showElement(this);ruleTools.viryElement(this);{{@$data.blur}}'
+		{{else}}
+			onblur=		'ruleTools.showElement(this);ruleTools.viryElement(this);'
+		{{/if}}
+		value=			"{{$data.defaultValue}}"
+	>
+	</input>
+	{{if $data.backTitle}}
+	<label
+		class=			"txBkFormItem"
+		id=				"label_backTitle_{{$data.name}}"
+	>
+		{{$data.backTitle}}
+	</label>
+	{{/if}}
+	</div>
+{{/if}}

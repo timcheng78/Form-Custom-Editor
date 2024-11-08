@@ -1,0 +1,352 @@
+{
+    "database": [
+        {
+            "text": "NIS",
+            "type": "schema",
+            "value": "NIS_DP_CTH",
+            "nodes": [
+                {
+                    "text": "取卵紀錄",
+                    "type": "table",
+                    "value": "EGG_COLL_RECORD",
+                    "join": ["PAT_ADM_CASE_COURSES"],
+                    "nodes": [
+                        {
+                            "text": "流水號",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "36",
+                            "value": "ID",
+                            "primaryKey": "true",
+                            "description": "PRIMARY KEY"
+                        },
+                        {
+                            "text": "療程-記錄流水號",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "36",
+                            "value": "COURSES_ID",
+                            "foreignKey": "true",
+                            "connectTable": "PAT_ADM_CASE_COURSES",
+                            "connectColumn": "COURSES_NO",
+                            "description": "FOREIGN KEY"
+                        },
+                        {
+                            "text": "取卵次數",
+                            "type": "column",
+                            "columnType": "NUMBER",
+                            "columnLength": "22",
+                            "value": "EGG_RET_TIMES",
+                            "description": ""
+                        },
+                        {
+                            "text": "卵子NO",
+                            "type": "column",
+                            "columnType": "NUMBER",
+                            "columnLength": "22",
+                            "value": "REG_RET_NO",
+                            "description": ""
+                        },
+                        {
+                            "text": "受精日",
+                            "type": "column",
+                            "columnType": "TIMESTAMP",
+                            "columnLength": "11",
+                            "value": "IMIS_TIME",
+                            "description": ""
+                        },
+                        {
+                            "text": "發育分類",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "20",
+                            "value": "DEVELOP_TYPE",
+                            "description": ""
+                        },
+                        {
+                            "text": "入庫時間",
+                            "type": "column",
+                            "columnType": "TIMESTAMP",
+                            "columnLength": "11",
+                            "value": "IN_TIME",
+                            "description": ""
+                        },
+                        {
+                            "text": "培養中止時間",
+                            "type": "column",
+                            "columnType": "TIMESTAMP",
+                            "columnLength": "11",
+                            "value": "SUSPENSION_TIME",
+                            "description": ""
+                        },
+                        {
+                            "text": "狀態",
+                            "type": "column",
+                            "columnType": "CHAR",
+                            "columnLength": "1",
+                            "value": "STATUS",
+                            "description": "1: 冷凍    2: 入庫    3: 植入   4: 移出   5: 廢棄"
+                        },
+                        {
+                            "text": "創建者",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "20",
+                            "value": "CREATERID",
+                            "description": ""
+                        },
+                        {
+                            "text": "創建者名稱",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "20",
+                            "value": "CREATERNAME",
+                            "description": ""
+                        },
+                        {
+                            "text": "創建時間",
+                            "type": "column",
+                            "columnType": "TIMESTAMP",
+                            "columnLength": "11",
+                            "value": "CREATERTIME",
+                            "description": ""
+                        },
+                        {
+                            "text": "異動者",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "20",
+                            "value": "MODIFYID",
+                            "description": ""
+                        },
+                        {
+                            "text": "異動者名稱",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "20",
+                            "value": "MODIFYNAME",
+                            "description": ""
+                        },
+                        {
+                            "text": "異動時間",
+                            "type": "column",
+                            "columnType": "TIMESTAMP",
+                            "columnLength": "11",
+                            "value": "MODIFYTM",
+                            "description": ""
+                        }
+                    ]
+                },
+                {
+                    "text": "門診療程清單",
+                    "type": "table",
+                    "value": "PAT_ADM_CASE_COURSES",
+                    "nodes": [
+                        {
+                            "text": "療程編號",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "36",
+                            "value": "COURSES_NO",
+                            "description": "病歷號+3碼流水號"
+                        },
+                        {
+                            "text": "就診號",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "16",
+                            "value": "HCASENO",
+                            "description": ""
+                        },
+                        {
+                            "text": "病歷號",
+                            "type": "column",
+                            "columnType": "VARCHAR2",
+                            "columnLength": "16",
+                            "value": "HHISNUM",
+                            "description": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "form": [
+        {
+            "text": "LIMS記錄_取卵紀錄",
+            "type": "form",
+            "value": "LIMS_EggRetrieval",
+            "nodes": [
+                {
+                    "text": "施術者(助理)",
+                    "type": "text",
+                    "value": "base_text_150505",
+                    "description": ""
+                },
+                {
+                    "text": "破卵針方法",
+                    "type": "text",
+                    "value": "base_text_150554",
+                    "description": ""
+                },
+                {
+                    "text": "取卵方式",
+                    "type": "text",
+                    "value": "base_text_150612",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_150703",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_150718",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_150739",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_150916",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_150948",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151016",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151043",
+                    "description": ""
+                },
+                {
+                    "text": "卵子合計",
+                    "type": "text",
+                    "value": "base_text_151144",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151236",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151311",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151351",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151451",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151505",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_151542",
+                    "description": ""
+                },
+                {
+                    "text": "文字方塊",
+                    "type": "textarea",
+                    "value": "base_textarea_151651",
+                    "description": ""
+                },
+                {
+                    "text": "找卵者",
+                    "type": "text",
+                    "value": "Ovaharvester",
+                    "description": ""
+                },
+                {
+                    "text": "找卵數",
+                    "type": "text",
+                    "value": "OvumQuantity",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_130049",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_130112",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_130141",
+                    "description": ""
+                },
+                {
+                    "text": "輸入方塊",
+                    "type": "text",
+                    "value": "base_text_130211",
+                    "description": ""
+                },
+                {
+                    "text": "取卵日期",
+                    "type": "datetime",
+                    "value": "base_datetime_130734",
+                    "description": ""
+                },
+                {
+                    "text": "破卵針時間",
+                    "type": "datetime",
+                    "value": "base_datetime_130855",
+                    "description": ""
+                },
+                {
+                    "text": "下針時間",
+                    "type": "datetime",
+                    "value": "base_datetime_130857",
+                    "description": ""
+                },
+                {
+                    "text": "結束時間",
+                    "type": "datetime",
+                    "value": "base_datetime_130859",
+                    "description": ""
+                }
+    
+            ]
+        }
+    ]
+}

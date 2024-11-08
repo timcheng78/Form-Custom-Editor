@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定磐查詢清單設計工具 (Query List)</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bstreeview.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="plugins/datetimepicker/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="plugins/contextMenu/css/jquery.contextMenu.css">
+	<link rel="stylesheet" href="css/form.css">
+	<script src="js/config.js?version=0"></script>
+	<script src="META-JS/properties.js"></script>
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bstreeview.min.js"></script>
+    <script src="plugins/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+	<script src="plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js"></script>
+    <script src="plugins/contextMenu/js/jquery.contextMenu.js"></script>
+    <!-- 動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+	<script src="plugins/eNursing/DateTime.js"></script>
+    <script src="plugins/eNursing/lz-string.min.js"></script>
+	<script src="plugins/eNursing/eNursing.js"></script>
+	<script src="plugins/eNursing/dynamicForm.js"></script>
+	<script src="plugins/eNursing/gForm.js"></script>
+	<script src="plugins/eNursing/apiModule.js"></script>
+    <script src="plugins/eNursing/database.js"></script>
+	<script src="plugins/eNursing/eNursing.init.js"></script>
+</head>
+<body>
+    <div class="mask hide"></div>
+	<div class="loading-mask fade hide"></div>
+	<div class="spinner-container fade hide">
+		<div class="spinner-border m-5 loading-spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">Query List</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarFileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            檔案
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarFileDropdown">
+                            <a class="dropdown-item" href="#" onclick="newForm(document.getElementById('queryPage')); return false">開新表單</a>
+                            <a class="dropdown-item" href="#" onclick="openForm(document.getElementById('queryPage')); return false">開啟舊檔</a>
+                            <a class="dropdown-item" href="#" onclick="saveForm(document.getElementById('queryPage'), true); return false">儲存表單</a>
+                            <a class="dropdown-item" href="#" onclick="viewForm(document.getElementById('queryPage')); return false">預覽表單</a>
+                            <a class="dropdown-item" href="#" onclick="importFile(); return false">匯入表單</a>
+                            <a class="dropdown-item" href="#" onclick="exportFile(); return false">匯出表單</a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarEditDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            編輯
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarEditDropdown">
+                            <a class="dropdown-item" href="#" onclick="addXmlMainFile(); return false">加入主檔</a>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+            <!-- <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="headSwitch">
+                <label class="custom-control-label text-white" for="headSwitch">表頭</label>
+            </div> -->
+            <form class="form-inline my-2 my-lg-0">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="onlineMode">
+                    <label class="text-white" for="onlineMode">線上模式</label>
+                </div>
+                <select class="form-control onlineMode hide" name="dynamicPort" id="dynamicPort">
+                    <option value="default">預設</option>
+                    <option value="http://172.16.100.22:8081/minsheng/services/DynamicFormService">民生</option>
+                    <option value="http://172.16.100.22:8081/xindian/services/DynamicFormService">新店耕莘</option>
+					<option value="http://172.16.100.22:8081/HY/services/DynamicFormService">華育</option>
+                </select>
+                <button class="btn btn-danger" type="button" id="cleanLocalBtn">清空暫存數據</button>
+            </form>
+        </nav>
+		<div class="main-page container-fluid row d-flex flex-fill border no-padding">
+			<div class="left-block query-list active" id="leftMenu">
+				<div class="left-top-box">
+                    <ul class="nav nav-tabs" id="bean-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="step-tab-1" data-toggle="tab" href="#step-1" role="tab" draggable="false" aria-controls="step-1" aria-selected="true">步驟一</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" id="step-tab-2" data-toggle="tab" href="#step-2" role="tab" draggable="false" aria-controls="step-2" aria-selected="true">步驟二</a>
+						</li>
+						<!-- <li class="nav-item">
+							<a class="nav-link disabled" id="step-tab-3" data-toggle="tab" href="#step-3" role="tab" draggable="false" aria-controls="step-3" aria-selected="true">步驟三</a>
+						</li> -->
+					</ul>
+                    <div class="tab-content border flex-fill" id="bean-tabContent">
+						<div class="tab-pane fade no-padding show active" id="step-1" role="tabpanel" aria-labelledby="step-tab-1">
+                            <nav class="navbar navbar-expand-lg no-padding">
+                                <div class="col-12 search-box row">
+                                    <button class="btn btn-success" id="table-tree-import-btn" onclick="return false"><i class="bi bi-arrow-repeat"></i></button>
+                                </div>
+                            </nav>
+                            <div class="h-100">
+                                <span class="h6">資料庫</span>
+                                <div class="tree-list" id="sql-tree-list"></div>
+                                <span class="h6">表單</span>
+                                <div class="tree-list" id="form-tree-list"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade no-padding" id="step-2" role="tabpanel" aria-labelledby="step-tab-2">
+                            <nav class="navbar navbar-expand-lg no-padding">
+                                <form class="col-12 search-box row">
+                                    <!-- <div class="col-xl-7 col-lg-12 no-padding">
+                                        <input type="text" class="form-control" name="table-tree-search" id="table-tree-search" placeholder="搜尋..">
+                                    </div>
+                                    <button class="btn btn-primary" id="table-tree-search-btn" onclick="return false">查詢</button> -->
+                                    <button class="btn btn-primary" id="table-tree-add-rule" onclick="return false">添加條件</button>
+                                    
+                                </form>
+                            </nav>
+                            <div class="h-100">
+                                <span class="h6">主表</span>
+                                <div class="tree-list" id="selected-main-list"></div>
+                                <span class="h6">次表</span>
+                                <div class="tree-list" id="selected-sub-list"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade no-padding" id="step-3" role="tabpanel" aria-labelledby="step-tab-3">
+                        </div>
+                    </div>
+     
+				</div>
+                <div class="left-bottom-box">
+					<div class="materialTitle container row no-padding">
+						<div class="col-3 bg-dark text-white attributeTitle">參數</div>
+						<div class="col-9 bg-dark text-white attributeTitle">值</div>
+					</div>
+					<div class="row attributeContent flex-fill" id="materialList">
+							
+					</div>
+				</div>
+			</div>
+			<div class="right-block">
+				<div class="col-12 h-100 d-flex flex-column" id="queryPage"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="js/method.js?version=1"></script>
+<script src="js/create-utils.js?version=0"></script>
+<script src="js/shared-utils.js?version=0"></script>
+<script src="js/formFile.js?version=0"></script>
+<script src="js/componentModule/init-component.js?version=0" type="module"></script>
+<script src="js/queryList.js?version=0"></script>
+<script>
+    
+    function importFile() {
+        if ($('#import-file').length > 0) $('#import-file').remove()
+        const inputNode = {
+            'input': {
+                class: 'hide',
+                type: 'file',
+                id: 'import-file',
+                accept: '.json'
+            }
+        }
+        const inputElement = inputNode.createElemental()[0]
+        $('body').append(inputElement)
+        inputElement.addEventListener('change', function() {
+            const fileList = this.files
+            let isInValid = false
+            for (let i = 0, numFiles = fileList.length; i < numFiles; i++) {
+                const file = fileList[i]
+                let fileType = file.type
+                if (fileType !== 'application/json') {
+                    isInValid = true
+                    break
+                }
+            }
+            if (isInValid) {
+                CreateUtils.createModal(`alert`, {body: '上傳檔案不合法，只能上傳json檔案。'})
+                this.remove()
+                return
+            }
+            const promiseArray = []
+            for (let file of fileList) {
+                promiseArray.push(SharedUtils.readFile(file))
+            }
+            Promise.all(promiseArray)
+                .then(result => {
+                    for (let jsonString of result) {
+                        try {
+                            const json = JSON.parse(jsonString)
+                            if (json.frame) {
+                                const queryPage = document.querySelector('#queryPage')
+                                queryPage.innerHTML = json.frame
+                                const searchBar = queryPage.querySelector('#search-bar')
+                                const dropNode = {
+                                    'div': {
+                                        'class':        'flex border not-export',
+                                        'style':        'min-width: 5rem',
+                                        'data-role':    'drag-drop-container-search',
+                                        'text':         'drop here'
+                                    }
+                                }
+                                searchBar.prepend(dropNode.createElemental[0])
+                                initButton()
+                                initDrawPageEvent()
+                                initEditDiv()
+                            }
+                        } catch (e) { console.error(e) }
+                    }
+                    this.remove()
+                })
+                .catch(error => {
+                    CreateUtils.createModal(`alert`, {body: `讀取檔案發生錯誤!錯誤原因：${ error }`})
+                    console.error(`讀取檔案發生錯誤!錯誤原因：${ error }`)
+                    this.remove()
+                })
+        })
+        inputElement.click()
+    }
+
+    function exportFile() {
+        const basicParam = nursing.createBasicParam()
+        const dynamicForm = nursing.createDynamicForm()
+        const data = $('#queryPage')
+        let successCallback = 0
+        if (data.children().length === 0) {
+            CreateUtils.createModal(`alert`, {body: '目前無任何表單可以匯出'})
+            return false
+        }
+        if (data.find('div').first().data('formType') === 'query') {
+            const formData = data.find('div').first().data()
+            const drawPageJson = data[0].convertToJson()
+            const sqlObject = processSQL()
+            if (sqlObject === false) return
+            processPage(drawPageJson)
+            const ele = drawPageJson.createElemental()
+            const buttons = ele[0].querySelectorAll('[data-type="qlButton"], [data-type="button"]')
+            $(ele[0]).find('.not-export').remove()
+            $(ele[0]).find('[readonly="readonly"]').attr('readonly', null)
+            $(ele[0]).find('#search-button').attr('onclick', 'queryListSearchEvent(event)')
+            $(ele[0]).find('#reset-button').attr('onclick', 'queryListResetEvent(event)')
+            buttons.forEach(button => {
+                if (!button.getAttribute('onclick')) button.setAttribute('onclick', 'queryListButtonEvent(event)')
+            })
+            let timestamp = new Date().format('HHmmsss')
+            const formVersion = {
+                "DynamicFormTemplate": {
+                    "formName": formData.formTitle,
+                    "formType": formData.formName,
+                    "formModel": formData.formName,
+                    "apiStructure": JSON.stringify(sqlObject),
+                    "ditto": true,
+                    "version": 0
+                }
+            }
+            const formFrame = SharedUtils.style_html(ele[0].innerHTML)
+            console.log(sqlObject, formVersion.toXml(), formFrame)
+            if (onlineMode) {
+                var version = eNursing.extend({}, nursing.createFormVersion())
+                    version.formType = formData.formName
+                    version.content = formVersion.toXml()
+                    version.creatorId = 'toolAuto'
+                    version.creatorName = 'toolAuto'
+                    version.modifyUserId = 'toolAuto'
+                    version.modifyUserName = 'toolAuto'
+                    basicParam.addFormVersion(version, addOrUpdSuccess, addOrUpdError)
+                // formFrame
+                var frame = eNursing.extend({}, nursing.createFormFrame());
+                    frame.formType = formData.formName
+                    frame.frameModel = 'gFormWebLIST'
+                    frame.content = formFrame
+                    frame.note = 'auto create'
+                    frame.creatorId = 'toolAuto'
+                    frame.creatorName = 'toolAuto'
+                    frame.modifyUserId = 'toolAuto'
+                    frame.modifyUserName = 'toolAuto'
+                    basicParam.addFormFrame(frame, addOrUpdSuccess, addOrUpdError)
+
+                var frameInit = eNursing.extend({}, nursing.getFormFrame())
+                    frameInit.formType = formData.formName
+                    frameInit.frameModel = 'gFormWebLIST_INIT'
+                    frameInit.content = queryInit
+                    frameInit.note = 'auto create'
+                    frameInit.creatorId = 'toolAuto'
+                    frameInit.creatorName = 'toolAuto'
+                    frameInit.modifyUserId = 'toolAuto'
+                    frameInit.modifyUserName = 'toolAuto'
+                    basicParam.addFormFrame(frameInit, addOrUpdSuccess, addOrUpdError)
+            }
+        } else if (data.find('div').first().data('formType') === 'xmlTemplate') {
+            let xmlObject = ""
+            xmlObject += `<ResultTable NAME="${ data.find('div').first().data('formName') }" Description="${ data.find('div').first().data('formTitle') }">\n`
+            $('#tableData tr').each(function() {
+                const labelElement = $(this).find('td').eq(1).find('label')
+                const name = $(this).find('td').eq(0).text()
+                xmlObject += `\t<Field NAME="${ name }">${ labelElement.data('script') }</Field>\n`
+            })
+            xmlObject += '</ResultTable>'
+            console.log(xmlObject)
+        }
+        
+
+        function addOrUpdSuccess(result) {
+            console.log(result)
+            if (++successCallback < 3) return
+            CreateUtils.createModal(`alert`, {body: '匯出成功！'})
+        }
+        
+        function addOrUpdError(result) {
+            console.error(result)
+            if (++successCallback < 3) return
+            CreateUtils.createModal(`alert`, {body: '匯出失敗，查看 F12 錯誤進行回報。'})
+        }
+	    
+        function processSQL() {
+            const result = {
+                database: [],
+                form: [
+                    {
+                        schema: "formSchema",
+                        tables: []
+                    }
+                ]
+            }
+            if (window.mainTable) {
+                if (window.mainTable[0].type === 'form') {
+                    result.form[0].tables.push({
+                        table: window.mainTable[0].value,
+                        where: qlSQLCondition[window.mainTable[0].value] ? qlSQLCondition[window.mainTable[0].value].where : undefined,
+                        order: qlSQLCondition[window.mainTable[0].value] ? qlSQLCondition[window.mainTable[0].value].order : undefined
+                    })
+                } else {
+                    const schema = {
+                        schema: window.mainTable[0].schema,
+                        tables: [
+                            {
+                                table: window.mainTable[0].value,
+                                where: qlSQLCondition[window.mainTable[0].value] ? qlSQLCondition[window.mainTable[0].value].where : undefined,
+                                order: qlSQLCondition[window.mainTable[0].value] ? qlSQLCondition[window.mainTable[0].value].order : undefined
+                            }
+                        ]
+                    }
+                    result.database.push(schema)
+                }
+            } else {
+                CreateUtils.createModal(`alert`, {body: '匯出失敗，發生錯誤，錯誤代碼：EP0000'})
+                return false
+            }
+            if (window.subTable) {
+                for (let i = 0, len = window.subTable.length; i < len; ++i) {
+                    let schemaString = window.subTable[i].schema
+                    if (schemaString) {
+                        // database
+                        let schemaNew = true
+                        let schema = {
+                            schema: schemaString,
+                            tables: []
+                        }
+                        for (let i = 0, len = result.database.length; i < len; ++i) {
+                            if (result.database[i].schema === schemaString) {
+                                schema = result.database[i]
+                                schemaNew = false
+                                break
+                            }
+                        }
+                        const table = {
+                            table: window.subTable[i].value,
+                            where: qlSQLCondition[window.subTable[i].value] ? qlSQLCondition[window.subTable[i].value].where : undefined,
+                            order: qlSQLCondition[window.subTable[i].value] ? qlSQLCondition[window.subTable[i].value].order : undefined,
+                            join: []
+                        }
+                        for (let j = 1; j < 6; ++j) {
+                            let joinText = ''
+                            if ($('#leftMenu').find(`.join-color-${ j }`).length === 2) {
+                                let joinTableName = ''
+                                const firstElement = $('#leftMenu').find(`.join-color-${ j }`)[0]
+                                joinText += $(firstElement).attr('id') + ','
+                                $('#leftMenu').find(`.join-color-${ j }`).each(function() {
+                                    if (this === firstElement) return
+                                    joinTableName = $(this).data('nodeParent')
+                                    joinText += $(this).attr('id')
+                                })
+                                if (joinTableName !== '' && joinTableName === window.subTable[i].value)
+                                    table.join.push(joinText)
+                            }
+                        }
+                        schema.tables.push(table)
+                        if (schemaNew)
+                            result.database.push(schema)
+                    } else {
+                        // form
+                        const table = {
+                            table: window.subTable[i].value,
+                            where: qlSQLCondition[window.subTable[i].value] ? qlSQLCondition[window.subTable[i].value].where : undefined,
+                            order: qlSQLCondition[window.subTable[i].value] ? qlSQLCondition[window.subTable[i].value].order : undefined,
+                            join: []
+                        }
+                        for (let j = 1; j < 6; ++j) {
+                            let joinText = ''
+                            if ($('#leftMenu').find(`.join-color-${ j }`).length > 0) {
+                                let joinTableName = ''
+                                const firstElement = $('#leftMenu').find(`.join-color-${ j }`)[0]
+                                joinText += $(firstElement).attr('id') + ','
+                                $('#leftMenu').find(`.join-color-${ j }`).each(function() {
+                                    if (this === firstElement) return
+                                    joinTableName = $(this).data('nodeParent')
+                                    joinText += $(this).attr('id')
+                                })
+                                if (joinTableName !== '' && joinTableName === window.subTable[i].value)
+                                    table.join.push(joinText)
+                            }
+                        }
+                        result.form[0].tables.push(table)
+                    }
+                }
+            }
+            if (result.form[0].tables.length === 0) delete result.form
+            return result
+        }
+
+        function processPage(jsonObject) {
+            if (Array.isArray(jsonObject)) {
+                for (let i = 0, len = jsonObject.length; i < len; ++i) {
+                    processPage(jsonObject[i])
+                }
+            } else {
+                for (let node in jsonObject) {
+                    switch(node) {
+                        case 'children':
+                            if (jsonObject[node].length > 0) processPage(jsonObject[node])
+                            break
+                        default:
+                            break
+                    }
+                }
+            }
+        }
+    }
+
+    function addXmlMainFile() {
+        CreateUtils.createModal(`custom`, {
+            'title':    `新增主表查詢`,
+            'body':     $('<form><div class="form-group row"><label class="col-sm-3 col-form-label">主表查詢xml</label><div class="col-sm-9"><textarea name="xmlMainFile" style="width: 100%" rows="20"></textarea></div></div></form>')[0].convertToJson(),
+            'btn': [
+                {
+                    'class':        'btn btn-secondary',
+                    'data-dismiss': 'modal',
+                    'text':         '取消',
+                },
+                {
+                    'class': 'btn btn-success',
+                    'text':  '確定'
+                }
+            ],
+            'callback': function(index, result) {
+                if (index === 1) {
+                    
+                    return true
+                }
+            }
+        })
+    }
+</script>
+</html>

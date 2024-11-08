@@ -1,0 +1,65 @@
+<div
+		class=			"divFormItem"
+		id=				"div_{{$data.name}}"
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+>
+{{if $data.showTitle==true}}
+	<font
+		class=			"fontFormItem"
+		id=				"font_{{$data.name}}"
+	>
+		{{$data.title}}：
+	</font>
+{{/if}}
+<textarea
+	class=			"formItem"
+	id=				"{{$data.name}}"
+	name=			"{{$data.name}}"
+	type=			"textarea"
+	data-title=		"{{$data.title}}"
+	data-bean=		"{{$data.name}}"
+	data-id=		"{{$data.name}}"
+	data-parent=	"{{$data.parent}}"
+	data-required=	"{{$data.required}}"
+	data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==''}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+	data-upload="{{$data.upload||$data.show}}"
+	disabled=	"{{$data.controlMode=='disabled'?'disabled':''}}"
+	data-totalScoreCons=	"{{$data.totalScoreCons}}"
+	style="display: none"
+></textarea>
+<input type="button" onclick="signature(this)" value="签名">
+<label
+	id=				"label_{{$data.name}}"
+>
+</label>
+
+</div>
+<script>
+	if (!window.signature) {
+		function signature(tar) {
+			var width=screen.width*0.7,height=screen.height*0.4,left=screen.width*0.3/2,top=screen.height*0.6/2
+			var args = "width="+width+",height="+height+",resizable=1,scrollbars=1,left="+left+",top="+top;
+			var url=window.location.href.split("/");
+			var domain=url[0]+"//"+url[2]+"/"+url[3]+"/";
+			domain+=(url[0]==="file:")?url[4]+"/":"";
+			var signOpen = window.open(domain+'iq-nurs/nursing/customFormV3/signature/sign.html', "signOpen", args);
+			signOpen.focus();
+			signOpen.writeData = function () {
+				console.log('signData',arguments)
+				var showArea=$(tar).next()
+				showArea.html('');
+				var data = '';
+				for (var i = 0; i < arguments.length; i++) {
+					var image = new Image()
+					image.style.width='200px'
+					if (i > 0) {
+						data += '@';
+					}
+					data +=image.src = arguments[i];
+					$(image).appendTo(showArea)
+				}
+				$(tar).prev().val(data);
+			};
+		}
+	}
+</script>

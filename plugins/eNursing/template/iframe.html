@@ -1,0 +1,14 @@
+<iframe
+		type=			"iframe"
+		class=			"iframeFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		data-title=		"{{$data.title}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		src=			"{{$data.typeFormat.url}}"
+		{{each $data.datasetJson v key}}
+		data-{{key}}=   "{{v}}"
+		{{/each}}
+></iframe>

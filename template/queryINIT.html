@@ -1,0 +1,129 @@
+<script>
+    //頁面載入完成
+    function pageReady(){
+        $("#loadeffect").hide();
+        if (window.console) console.log("頁面載入完成...");
+        if (window.console) console.log(gForms);
+        $('[draggable="true"]').attr('draggable', 'false');
+    }
+
+
+    //基礎數
+    var basicParam = null;
+    //動態表單
+    var dynamicForm = null;
+    // 資料庫模組
+    var databaseModule = null;
+    var dataResultSet = null
+    var scriptHtml = null;
+    //gForm
+    var gFormJS = null;
+    var queryListStructure = null;
+
+    var gForm = null;
+    var gForms = null;
+    var completeCount=0;
+
+    //在動態表單都會用到的JS、CSS在這邊一併引入
+    includeHead(function(){
+        //在動態表單都會共用的JS程式，在這邊統一執行
+        includeFoot(completeFoot);
+    }, 'CSForm_QueryList');
+
+    //foot運行完了之後再執行
+    function completeFoot() {
+        //病患資料
+        patient=nursing.getPatient().getCurrent();
+
+        //基礎數
+        basicParam = nursing.getBasicParam();
+        //動態表單
+        dynamicForm = nursing.getDynamicForm();
+        //資料庫模組
+        databaseModule = nursing.createDBQueryModule();
+        //gForm
+        gFormJS = nursing.getGForm();
+        gForms = null;
+
+        //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+        dynamicForm.searchParamDF.formType = formType;
+        dynamicForm.searchParamDF.frameModel = frameModel;
+        if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+            window.localStorage.removeItem("loadEditorFrame_Frame");
+            successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+            window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+            $.ajax({url: "frame/gFormWebLIST_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表單模板...");});
+        }else{//讀取資料庫frame
+            basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+        }
+        //查詢formFrame(表單外框)
+        var call = false;
+        function successCall (formFrame) {
+            if (call) return; else call=true;
+            //沒有模板資料
+            if (formFrame==null){
+                $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表單模板未配對...</div></div>');
+                $("#loadeffect").hide();
+            }else{
+                //將資料庫的formFrame 引入到body裡面的#targetForm
+                $("#targetForm").html($('<div id="pageResult">'+formFrame.content+'</div>'));
+                successCall3();
+            }
+        }
+        /*查詢動態表單模板*/
+        dynamicForm.searchParamDF.formType = formType;
+        if (window.localStorage["loadEditorFrame_formVersion"]){/*以管理介面導入頁面*/
+            window.localStorage.removeItem("loadEditorFrame_formVersion");
+            successCall2(JSON.parse(window.localStorage["loadEditorFrame_formVersion_dFTemplate"]));
+            window.localStorage.removeItem("loadEditorFrame_formVersion_dFTemplate");
+        }else{/*讀取資料庫formVersion*/
+            basicParam.getCurrDynamicFormTemplateV3(dynamicForm, successCall2, function() {});
+        }
+        /*查詢動態表單*/
+        var call2 = false;
+        function successCall2 (dFTemplate) {
+            if (call2) return; else call2=true;
+            /*顯示XML模板*/
+            dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+            try {
+                queryListStructure = JSON.parse(dynamicFormTemplate.apiStructure);
+                databaseModule.getResultSetList(JSON.parse(dynamicFormTemplate.apiStructure), successCall4, function(e) {console.error(e)});
+            } catch (e) {
+                console.error(e)
+            }
+            successCall3();
+        }
+        function successCall3() {
+            if (++completeCount<3) return;
+            scriptHtml = buildScript($('#tableData tbody tr').eq(1))
+            $('#tableData').prepend('<thead></thead>')
+            $('#tableData thead').append($($('#tableData tbody tr').eq(0)))
+            console.log(scriptHtml)
+            var cxt = template.compile(scriptHtml);
+            var html = cxt(dataResultSet);
+            gForms = [];
+            $('#tableData tbody').html(html);
+            // $('#tableData').tablesorter();
+            $('.dateTimeTool').each(function() {
+                datetimeToolRefresh(this);
+            })
+            new TableSortModule(document.querySelector('#tableData')).init()
+            //轉譯所有formItemValue為FormItemDesc
+            list_gFormTransefer(pageReady, errorTransefer);
+        }
+
+        var call4 = false;
+        function successCall4(result) {
+            if (call4) return; else call4 = true;
+            dataResultSet = result;
+            console.log(dataResultSet);
+            successCall3();
+        }
+
+        function errorTransefer(err){
+            if (window.console) console.log(err);
+            $("#loadeffect").hide();
+        }
+    }
+</script>

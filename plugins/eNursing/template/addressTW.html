@@ -1,0 +1,216 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem addrTWFontFormItem"
+			id=				"font_{{$data.name}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem addrTWLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem addrTWDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem addrTWFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+		<input
+			type=			"hidden"
+			class=			"formItem addrTWFormItem addrTWFullFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+			id=				"{{$data.name}}"
+			name=			"{{$data.name}}"
+			data-title=		"{{$data.title}}"
+			data-bean=		"{{$data.name}}"
+			data-id=		"{{$data.name}}"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips}}{{$data.promptTips}}{{else}}請輸入「{{$data.title}}」{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			""
+			onclick=		""
+			{{if $data.change != ""  && $data.change != undefined}}
+				onchange=	'{{$data.change}}'
+			{{/if}}
+			value=			"{{$data.defaultValue}}"
+		>
+		</input>
+		<input
+			type=			"{{if $data.hasZipcode}}text{{else}}hidden{{/if}}"
+			class=			"{{if $data.hasZipcode}}formItem addrTWFormItem addrTWZipcodeFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}{{/if}}"
+			id=				"{{$data.name}}_Zipcode"
+			name=			"{{$data.name}}_Zipcode"
+			maxlength=		"5"
+			placeholder=	"郵遞區號"
+			autocomplete=	"off"
+			data-title=		"{{$data.title}}-郵遞區號"
+			data-bean=		"{{$data.name}}_Zipcode"
+			data-id=		"{{$data.name}}_Zipcode"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips}}{{$data.promptTips}}{{else}}請輸入「{{$data.title}}-郵遞區號」{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			""
+			onclick=		""
+			onchange=		"setFullAddress_{{$data.name}}();{{$data.change}}"
+		>
+		</input>
+		<select
+			type=			"select"
+			class=			"{{if $data.hasCounty}}formItem addrTWFormItem addrTWCountyFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}{{/if}}"
+			id=				"{{$data.name}}_County"
+			name=			"{{$data.name}}_County"
+			data-title=		"{{$data.title}}-縣市"
+			data-bean=		"{{$data.name}}_County"
+			data-id=		"{{$data.name}}_County"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}-縣市」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			"{{if $data.hasCounty}}{{else}}display: none;{{/if}}"
+			onchange=		"setFullAddress_{{$data.name}}();{{$data.click}}{{$data.change}}"
+		>
+		</select>
+		<select
+			type=			"select"
+			class=			"{{if $data.hasDistrict}}formItem addrTWFormItem addrTWDistrictFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}{{/if}}"
+			id=				"{{$data.name}}_District"
+			name=			"{{$data.name}}_District"
+			data-title=		"{{$data.title}}-鄉鎮市區"
+			data-bean=		"{{$data.name}}_District"
+			data-id=		"{{$data.name}}_District"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}-鄉鎮市區」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			"{{if $data.hasDistrict}}{{else}}display: none;{{/if}}"
+			onchange=		"setFullAddress_{{$data.name}}();{{$data.click}}{{$data.change}}"
+		>
+		</select>
+		<input
+			type=			"{{if $data.hasStreet}}text{{else}}hidden{{/if}}"
+			class=			"{{if $data.hasStreet}}formItem addrTWFormItem addrTWStreetFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}{{/if}}"
+			id=				"{{$data.name}}_Street"
+			name=			"{{$data.name}}_Street"
+			maxlength=		"{{$data.maxlength}}"
+			placeholder=	"詳細地址"
+			autocomplete=	"off"
+			data-title=		"{{$data.title}}-詳細地址"
+			data-bean=		"{{$data.name}}_Street"
+			data-id=		"{{$data.name}}_Street"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips}}{{$data.promptTips}}{{else}}請輸入「{{$data.title}}-詳細地址」{{/if}}"
+			{{if isHor||isVer}}
+				data-upload= "false"
+			{{else if $data.upload}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			style=			""
+			onclick=		""
+			onchange=		"setFullAddress_{{$data.name}}();{{$data.change}}"
+		>
+		</input>
+		{{if $data.backTitle}}
+		<label
+			class=			"addrTWBkFormItem"
+			id=				"label_backTitle_{{$data.name}}"
+		>
+			{{$data.backTitle}}
+		</label>
+		{{/if}}
+	</div>
+	<script>
+	    //初始化地址
+        $('#div_{{$data.name}}').twzipcode32({
+            // 'countySel': '新北市',
+            // 'districtSel': '板橋區',
+            // 'addressSel': '中山路',
+            // 'zipcodeSel': '220',
+            // 'onCountyChange'      : function(that){},
+            // 'onDistrictChange'    : function(that){},
+            // 'onAddressChange'    : function(that){},
+            // 'onZipcodeChange'      : function(that){}
+        },{
+            'zipcode': '{{$data.name}}_Zipcode',
+            'county': '{{$data.name}}_County',
+            'district': '{{$data.name}}_District',
+            'address': '{{$data.name}}_Street'
+        });
+        function setFullAddress_{{$data.name}}(){
+        	var zipcode = ({{$data.hasZipcode}}) ? $("#{{$data.name}}_Zipcode").val() : "",
+        		county = ({{$data.hasCounty}}) ? $("#{{$data.name}}_County").val() : "",
+        		district = ({{$data.hasDistrict}}) ? $("#{{$data.name}}_District").val() : "",
+        		address = ({{$data.hasStreet}}) ? $("#{{$data.name}}_Street").val() : "";
+        	$("#{{$data.name}}").val(zipcode+county+district+address).change();
+        }
+	</script>
+{{/if}}

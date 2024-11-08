@@ -1,0 +1,23 @@
+<button
+	type=			"button"
+	class=			"formItem buttonFormItem {{$data.uiClass}}"
+	id=				"{{$data.name}}"
+	name=			"{{$data.name}}"
+	data-title=		"{{$data.title}}"
+	data-bean=		"{{$data.name}}"
+	data-id=		"{{$data.name}}"
+	data-parent=	"{{$data.parent}}"
+	{{if $data.upload}}
+		data-upload="{{$data.upload}}"
+	{{else}}
+		data-upload="{{$data.show}}"
+	{{/if}}
+	{{if $data.controlMode=="disabled"}}
+		disabled=	"disabled"
+	{{/if}}
+	style=			"{{if !$data.show}}display:none;{{/if}}{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+	onclick=		"{{$data.click}}"
+	value=			"{{ if $data.uiDesc}}{{$data.uiDesc[0]}}{{else if $data.placeholder!=undefined}}{{$data.placeholder}}{{else}}按鈕{{/if}}"
+>
+{{$data.placeholder}}
+</button>

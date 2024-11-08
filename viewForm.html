@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定磐表單設計工具 (Form Tool)</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="plugins/datetimepicker/css/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" href="css/form.css">
+	<script src="META-JS/properties.js"></script>
+	<script src="js/config.js?version=0"></script>
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
+	<script src="plugins/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+	<script src="plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js"></script>
+	<script src="plugins/address/jquery.twzipcode32.beta.js"></script>
+    <script src="plugins/eNursing/lz-string.min.js"></script>
+    <script src="plugins/eNursing/eNursing.js"></script>
+    <script src="plugins/eNursing/eNursing.init.js"></script>
+    <script src="plugins/eNursing/dynamicForm.js"></script>
+    <script src="plugins/eNursing/gForm.js"></script>
+    <script src="plugins/eNursing/addAndUpd.js"></script>
+    <script src="plugins/eNursing/list.js"></script>
+    <script src="plugins/eNursing/common.js"></script>
+    <script src="plugins/eNursing/DateTime.js"></script>
+    <script src="plugins/eNursing/template-web.js"></script>
+    <script src="plugins/eNursing/template-transfer.js"></script>
+</head>
+<body>
+    <div class="loading-mask fade hide"></div>
+    <div class="spinner-container fade hide">
+		<div class="spinner-border m-5 loading-spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+    <div class="container-fluid fade view-page hide" id="addPage"></div>
+    <div class="container-fluid fade view-page hide" id="listPage"></div>
+    <div class="container-fluid fade view-page hide" id="printPage"></div>
+</body>
+<script src="js/method.js?version=1"></script>
+<script src="js/shared-utils.js?version=0"></script>
+<script src="js/bean.js?version=0"></script>
+<script>
+    let formBeanData, addFormFrame, listFormFrame, printFormFrame, viewFormType
+    var frameModel = null;
+    var gForm = null;
+    var gFormJS = null;
+    var dynamicFormTemplate = null;
+    var formItemsTemplate = null;
+    var thisTimeIsAddTime = true;
+    var thisTimeIsGform = true;
+    var sourceId = SharedUtils._uuid()
+    var gForms = [];
+    var formType = 'viewForm'
+    $(document).ready(function() {
+        SharedUtils.loadingToggle()
+        formBeanData = window.opener['formBeanData']
+        addFormFrame = window.opener['addFormFrame']
+        listFormFrame = window.opener['listFormFrame']
+        printFormFrame = window.opener['printFormFrame']
+        viewFormType = window.opener['formType']
+        console.log(formBeanData, addFormFrame, listFormFrame, printFormFrame)
+        if ((viewFormType === 'add' && addFormFrame === undefined) || (viewFormType === 'list' && listFormFrame === undefined) || (viewFormType === 'print' && printFormFrame === undefined)) {
+            SharedUtils.loadingToggle()
+            CreateUtils.createModal(`alert`, {body: '無表單內容可以預覽'})
+        } else {
+            if (addFormFrame !== undefined) {
+                formBeanData.DynamicFormTemplate.hashItems = {}
+                for (let key in formBeanData.DynamicFormTemplate.items.DynamicFormItem) {
+                    formBeanData.DynamicFormTemplate.hashItems[formBeanData.DynamicFormTemplate.items.DynamicFormItem[key].name] = formBeanData.DynamicFormTemplate.items.DynamicFormItem[key]
+                }
+                $('#addPage').html(addFormFrame)
+                $('#tabContent').css('height', 'auto')
+                addEnd()
+            } else {
+                $('#addPage').html('<h1 class="h1">新增頁未經過編輯</h1><button class="btn btn-danger" onclick="window.close()">關閉</button>')
+                pageReady()
+            }
+            if (listFormFrame !== undefined) {
+                $('#listPage').html(listFormFrame)
+                listEnd()
+            } else {
+                $('#listPage').html('<h1 class="h1">清單頁未經過編輯，無法預覽</h1><button class="btn btn-danger" onclick="changePage(\'add\')">返回</button>')
+                pageReady()
+            }
+            if (printFormFrame !== undefined) {
+                $('#printPage').html(printFormFrame)
+                $('#printContent').css('height', 'auto')
+                printEnd()
+            } else {
+                $('#printPage').html('<h1 class="h1">列印頁未經過編輯，無法預覽</h1><button class="btn btn-danger" onclick="changePage(\'list\')">返回</button>')
+                pageReady()
+            }
+        }
+        
+    })
+    
+    function addEnd(upd = false) {
+        basicParam = nursing.getBasicParam();
+        dynamicForm = nursing.getDynamicForm();
+        if (!upd)
+            gFormJS = nursing.createGForm();
+        dynamicFormTemplate = formBeanData.DynamicFormTemplate
+        formItemsTemplate = dynamicFormTemplate.hashItems
+        dynamicForm.setElementGroup(formItemsTemplate);
+        createElement(formItemsTemplate, pageReady);
+    }
+
+    function listEnd() {
+        if ($("#tableListTr_Template").length === 0) return false;
+        $("#tableList").find("tr:has(td)").remove();
+        var cxt = template.compile($("#tableListTr_Template").html());
+        var html = cxt(gForms);
+        $("#tableList tbody").html(html);
+        list_gFormTransefer(pageReady, errorTransefer);
+
+        function errorTransefer(err){
+            if (window.console) console.log(err);
+            SharedUtils.loadingToggle()
+        }
+    }
+
+    function printEnd() {
+        basicParam = nursing.getBasicParam();
+        dynamicForm = nursing.getDynamicForm();
+        dynamicFormTemplate = formBeanData.DynamicFormTemplate
+        formItemsTemplate = dynamicFormTemplate.hashItems
+        dynamicForm.setElementGroup(formItemsTemplate);
+        dynamicForm.showElementUiDesc_Print($("#printPage .pFormItem"), $("#printPage .pFormItemGroup"), dynamicFormTemplate, gFormJS.gformItemMap);
+        goPageReady(pageReady);
+    }
+
+    var pass = 0
+    function pageReady() {
+        if (++pass < 3) return
+        if (window.console) console.log("頁面載入完成...");
+        if (viewFormType === 'add') {
+            initNavLink();
+            if (gForms.length > 0 && gForm !== null)
+                setElementValue_GForm();
+        }
+        if (viewFormType === 'list') { }
+        if (viewFormType === 'print') { }
+        $('[draggable="true"]').attr('draggable', 'false');
+        if (pass <= 3) {
+            changePage(viewFormType)
+            SharedUtils.loadingToggle()
+        }
+    }
+
+    function viewFormSave(ele, callback, errorCall, isCheckAll) {
+        needCheck = (gFormJS.status == "N") ? false : (gFormJS.status == "Y") ? true : true
+        var items = dynamicFormSave_getItems(ele, isCheckAll) //取得 Items[]
+        if (items) {
+            if (items.rejected) {
+                if (errorCall) {
+                    errorCall({"type": "rejected", "rejectedItem": items.rejectedItem})
+                }
+                return items.rejectedItem
+            } else {
+                items = items.items
+            }
+            gFormJS.versionNo = 0
+            gFormJS.formVersionId = dynamicFormTemplate.formVersionId
+            gFormJS.gformItems = items
+            gFormJS.modifyTime = new Date().format('yyyy-MM-dd HH:mm')
+            gFormJS.modifyUserId = 'testUser'
+            gFormJS.modifyUserName = 'testUser'
+            gFormJS.setGFormItemMap(gFormJS)
+            gForms.push({'gForm': gFormJS})
+            listEnd()
+            callback()
+        }
+    }
+
+    function clearGFormTemp() {
+        $('#addPage').html(addFormFrame)
+        $('#tabContent').css('height', 'auto')
+        addEnd()
+    }
+
+    function changePage(pageType) {
+        $('.view-page').removeClass('show')
+        switch (pageType) {
+            case 'add':
+                frameModel = 'gFormWebADD'
+                break
+            case 'list':
+                frameModel = 'gFormWebLIST'
+                break
+            case 'print':
+                frameModel = 'gFormWebPRINT'
+                break
+        }
+        setTimeout(function() {
+            $('.view-page').addClass('hide')
+            switch (pageType) {
+                case 'add':
+                    frameModel = 'gFormWebADD'
+                    $('#addPage').removeClass('hide')
+                    setTimeout(function() {
+                        $('#addPage').addClass('show')
+                    }, 100)
+                    break
+                case 'list':
+                    frameModel = 'gFormWebLIST'
+                    $('#listPage').removeClass('hide')
+                    setTimeout(function() {
+                        $('#listPage').addClass('show')
+                    }, 100)
+                    break
+                case 'print':
+                    frameModel = 'gFormWebPRINT'
+                    $('#printPage').removeClass('hide')
+                    setTimeout(function() {
+                        $('#printPage').addClass('show')
+                    }, 100)
+                    break
+            }
+        }, 160)
+    }
+
+    function updateForm(that, index) {
+        gFormJS.leftJoin(gForms[index].gForm)
+        changePage('add')
+        pageReady()
+    }
+
+    function deleteForm(that, index) {
+        gForms[index] = null
+        gForms = gForms.filter(x => x !== null)
+        listEnd()
+    }
+
+    function printForm(that, index) {
+        gFormJS = nursing.createGForm();
+        gFormJS.leftJoin(gForms[index].gForm)
+        gFormJS.setGFormItemMap(gFormJS)
+        changePage('print')
+        printEnd(true)
+    }
+</script>
+</html>

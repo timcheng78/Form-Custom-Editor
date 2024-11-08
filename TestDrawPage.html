@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bstreeview.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="plugins/datetimepicker/css/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" href="plugins/codemirror-5.57.0/lib/codemirror.css">
+	<link rel="stylesheet" href="plugins/codemirror-5.57.0/theme/abcdef.css">
+    <link rel="stylesheet" href="plugins/contextMenu/css/jquery.contextMenu.css">
+	<link rel="stylesheet" href="css/form.css">
+    <title>TestDrawPage</title>
+</head>
+<body>
+    <div class="col-12 h-100 d-flex flex-wrap align-content-start" id="queryList">
+        <div class="cards">
+        </div>
+        <!-- <div class="card card-plus"></div> -->
+        <!-- <div class="card card-plus"></div> -->
+        <!-- <div class="card card-plus"></div> -->
+        <!-- <table class="table table-bordered table-tool">
+            <tr>
+                <td class="" colspan="3" rowspan="3">&nbsp;</td>
+                <td class="hide">&nbsp;</td>
+                <td class="hide">&nbsp;</td>
+                <td class="">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="hide">&nbsp;</td>
+                <td class="hide">&nbsp;</td>
+                <td class="hide">&nbsp;</td>
+                <td class="">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="hide">&nbsp;</td>
+                <td class="hide">&nbsp;</td>
+                <td class="hide">&nbsp;</td>
+                <td class="">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="">&nbsp;</td>
+                <td class="">&nbsp;</td>
+                <td class="">&nbsp;</td>
+                <td class="">&nbsp;</td>
+            </tr>
+        </table> -->
+    </div>
+</body>
+<script src="js/method.js?version=1"></script>
+<script src="js/table-module.js?version=1"></script>
+<script>
+    (function() {
+        var container = document.querySelectorAll('.cards')
+        var cards = new CardModule({selector: container})
+        console.log(cards)
+    })()
+
+</script>
+</html>

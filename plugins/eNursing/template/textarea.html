@@ -1,0 +1,63 @@
+{{if $data.controlMode=="readOnly"}}
+<label
+		type=			"textarea"
+		class=			"formItem taLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+{{if $data.upload}}
+data-upload="{{$data.upload}}"
+{{else}}
+data-upload="{{$data.show}}"
+{{/if}}
+style=			"{{if !$data.show}}display:none;{{/if}}"
+onclick=		"{{$data.click}}"
+>{{$data.defaultValue}}</label>
+{{else}}
+{{set isHor=($data.isHorFormItem===true)}}
+{{set isVer=($data.isVerFormItem===true)}}
+<div
+		class=			"divFormItem taDivFormItem"
+		id=				"div_{{$data.name}}"
+		style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+>
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem taFontFormItem"
+			id=				"font_{{$data.name}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<textarea
+			type=			"textarea"
+			class=			"formItem textareaFormItem form-control{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+			id=				"{{$data.name}}"
+			name=			"{{$data.name}}"
+			size=			"{{$data.textSize}}"
+			data-title=		"{{$data.title}}"
+			data-bean=		"{{$data.name}}"
+			data-id=		"{{$data.name}}"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+			{{if isHor||isVer}}
+			data-upload= "false"
+			{{else if $data.upload}}
+			data-upload="{{$data.upload}}"
+			{{else}}
+			data-upload="{{$data.show}}"
+			{{/if}}
+	{{if $data.controlMode=="disabled"}}
+	disabled=		"disabled"
+	{{/if}}
+	style=			"margin: 0px; {{if $data.width!=undefined}}width:{{$data.width}}{{if /^\d+$/.test($data.width)}}px{{/if}};{{else}}width: 734px;{{/if}} {{if $data.textSize}}height: {{$data.textSize * 30}}px;{{/if}}"
+	onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</textarea>
+</div>
+{{/if}}

@@ -1,0 +1,90 @@
+
+////////* 色版2 - 綠色系 *////////
+//*基本
+$background-color:#bec9be;
+$text-color:#444444;
+$card-background-color:#ffffff;
+
+//*header
+$header-background-color:#ffffff;
+$header-text:#444444;
+$header-suv-text:#888888;
+
+//*tab 頁籤
+$tab-menu-border-color:#dee2e6;
+$tab-menu-background:#EDEDED;
+$tab-menu-background-hover:#d1d1d1;
+$tab-menu-text:#444444;
+$tab-menu-active-background:#ffffff;
+$tab-menu-active-text:#444444;
+
+//*tab 頁籤 fixed
+$tab-menu-fixed-border-color:#dee2e6;
+$tab-menu-fixed-background:#ffffff;
+$tab-menu-fixed-background-hover:#EDEDED;
+$tab-menu-fixed-text:#1f3e27;
+$tab-menu-fixed-active-background:#1f3e27;
+$tab-menu-fixed-active-text:#ffffff;
+
+//*點擊按鈕
+$click-color:#1f3e27; 
+
+//*主按鈕
+$btn-main:#fd7302  ; 
+$btn-main-border:#fd7302  ;
+$btn-main-text:#ffffff;  
+$btn-main-hover:#fd7302 ; 
+$btn-main-hover-text:#ffffff; 
+
+//副按鈕
+$btn-sub:#008b20; 
+$btn-sub-border:#008b20;
+$btn-sub-text:#ffffff; 
+$btn-sub-hover:#006919;
+$btn-sub-hover-text:#ffffff;
+ 
+//其他按鈕
+$btn-other:#ffffff; 
+$btn-other-border:#767676 ; 
+$btn-other-text:#767676 ; 
+$btn-other-hover:#767676 ; 
+$btn-other-hover-text:#ffffff; 
+
+//禁止按鈕
+$btn-disabled:#E9ECEF; 
+$btn-disabled-border:#E9ECEF; 
+$btn-disabled-text:#444444; 
+$btn-disabled-hover:#E9ECEF; 
+$btn-disabled-hover-text:#444444; 
+
+//*表單
+$table-sub-title:#1f3e27; //*可展開-大標
+$table-sub-title-text:#ffffff; //*可展開-大標文字
+$table-sub-title-text-sub:#a2bd76; //*可展開-大標文字副色
+
+$table-sub-btn:#ffffff; //*大標按鈕 
+$table-sub-btn-text:#444444;//*大標按鈕文字
+
+$table-title:#eff5f2; //*表單內容標題底色
+$table-nurstr1:#eeeeee;//*表單內容標題二底色
+$table-title-icon:#ff0000;
+$table-title-text:#e8f5ff; //*表單內容標題文字
+
+//*單-多選
+$choose-border:#888888;
+$choose-color:#00aefe; 
+$choose-background-color:#ffffff; 
+
+//*禁止色
+$disabled-color:#b3b3b3; 
+
+//*輸入框
+$form-control-background:#ffffff;
+$form-control-text-color:#444444;
+$form-control-border:#ced4da;
+$form-control-focus:#80bdff; 
+$form-control-focus-box-shadow:0 0 0 0.2rem rgba(0,123,255,0.25); 
+$form-control-disabled:#e9ecef; 
+
+@import "_structure1.scss";
+

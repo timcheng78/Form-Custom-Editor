@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>定磐表單設計工具 (CS Form)</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bstreeview.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="plugins/datetimepicker/css/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" href="plugins/codemirror-5.57.0/lib/codemirror.css">
+	<link rel="stylesheet" href="plugins/codemirror-5.57.0/theme/abcdef.css">
+    <link rel="stylesheet" href="plugins/contextMenu/css/jquery.contextMenu.css">
+	<link rel="stylesheet" href="css/form.css">
+	<link rel="stylesheet" href="css/feather.css">
+	<link rel="stylesheet" href="css/style1-1.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.js"></script>
+	<script src="js/config.js?version=0"></script>
+	<script src="META-JS/properties.js"></script>
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
+	<script src="plugins/bootstrap-4.6.0-dist/js/bstreeview.min.js"></script>
+	<script src="plugins/codemirror-5.57.0/lib/codemirror.js"></script>
+	<script src="plugins/codemirror-5.57.0/mode/javascript/javascript.js"></script>
+	<script src="plugins/codemirror-5.57.0/mode/xml/xml.js"></script>
+	<script src="plugins/codemirror-5.57.0/mode/css/css.js"></script>
+	<script src="plugins/codemirror-5.57.0/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="plugins/codemirror-5.57.0/addon/display/autorefresh.js"></script>
+	<script src="plugins/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+	<script src="plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js"></script>
+    <script src="plugins/contextMenu/js/jquery.contextMenu.js"></script>
+	<script src="plugins/address/jquery.twzipcode32.beta.js"></script>
+	<script src="plugins/x2js/xml2json.js"></script>
+	<!-- 動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+	<script src="plugins/eNursing/DateTime.js"></script>
+	<script src="plugins/eNursing/lz-string.min.js"></script>
+	<script src="plugins/eNursing/eNursing.js"></script>
+	<script src="plugins/eNursing/dynamicForm.js"></script>
+	<script src="plugins/eNursing/gForm.js"></script>
+	<script src="plugins/eNursing/apiModule.js"></script>
+	<script src="plugins/eNursing/fileUpload.js"></script>
+	<script src="plugins/eNursing/eNursing.init.js"></script>
+	<!-- 人形圖 預設資料 -->
+	<script src="data/csCanvas/data_type1.js"></script>
+	<script src="data/csCanvas/data_type2.js"></script>
+	<script src="data/csCanvas/data_type3.js"></script>
+	<script src="data/csCanvas/data_pain_human.js"></script>
+	<script src="data/csCanvas/data_pain_child.js"></script>
+	<script src="data/csCanvas/data_pain_baby.js"></script>
+	<script src="data/csCanvas/data_footRight_nerve.js"></script>
+	<script src="data/csCanvas/data_footLeft_nerve.js"></script>
+	<script>
+		//人形圖properties
+		var dataCsCanvas = [], //當前資料
+			dataCsCanvasDefault = [], //預設
+			dataCsCanvasOnline = [] //線上，點擊"線上模式"、切換"本地/測試機"時，重新查詢並覆蓋至dataCsCanvas
+		dataCsCanvasDefault.push(data_type1)
+		dataCsCanvasDefault.push(data_type2)
+		dataCsCanvasDefault.push(data_type3)
+		dataCsCanvasDefault.push(data_pain_human)
+		dataCsCanvasDefault.push(data_pain_child)
+		dataCsCanvasDefault.push(data_pain_baby)
+		dataCsCanvasDefault.push(data_footRight_nerve)
+		dataCsCanvasDefault.push(data_footLeft_nerve)
+		dataCsCanvas = $.extend(true, [], dataCsCanvasDefault)
+	</script>
+</head>
+<body>
+	<div class="mask hide"></div>
+	<div class="loading-mask fade hide"></div>
+	<div class="spinner-container fade hide">
+		<div class="spinner-border m-5 loading-spinner" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<div class="d-flex flex-column h-100">
+	  	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  		<a class="navbar-brand" href="#">CS Form</a>
+	  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			</button>
+	  	  	<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			    <ul class="navbar-nav mr-auto">
+			      	<li class="nav-item dropdown">
+			      	  	<a class="nav-link" href="#" id="navbarFileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      	  	  	檔案
+			      	  	</a>
+			      	  	<div class="dropdown-menu" aria-labelledby="navbarFileDropdown">
+			      	  	  	<a class="dropdown-item" href="#" onclick="newForm(); return false">開新表單</a>
+			      	  	  	<!-- <a class="dropdown-item" href="#" onclick="openForm(); return false">開啟舊檔</a> -->
+			      	  	  	<!-- <a class="dropdown-item" href="#" onclick="saveForm(document.getElementById('drawPage'), true); return false">儲存表單</a> -->
+							<!-- <a class="dropdown-item" href="#" onclick="viewForm(); return false">預覽表單</a> -->
+			      	  	  	<a class="dropdown-item" href="#" onclick="importForm(); return false">匯入表單</a>
+			      	  	  	<a class="dropdown-item" href="#" onclick="exportForm(); return false">匯出表單</a>
+							<!-- <a class="dropdown-item" href="#" onclick="batchExport(); return false">批次匯出</a> -->
+			      	  	</div>
+			      	</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" id="navbarFormatDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							編輯
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarFormatDropdown">
+							<a class="dropdown-item" href="#" onclick="switchFormat(); return false">切換表單類型</a>
+							<a class="dropdown-item" href="#" onclick="switchStyle(); return false">切換表單樣式</a>
+							<!-- <a class="dropdown-item" href="#" onclick="exportBean(); return false">匯出元件</a> -->
+						</div>
+					</li>
+					<!-- <li class="nav-item dropdown">
+						<a class="nav-link" href="#" id="navbarSuperLinkDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							連結
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarSuperLinkDropdown">
+							<a class="dropdown-item" href="#" onclick="superLink.syncTool(); return false">表單同步工具syncTool</a>
+							<a class="dropdown-item" href="#" onclick="superLink.dynamicTool(); return false">小黑dynamicTool (22-6)</a>
+							<a class="dropdown-item" href="#" onclick="superLink.csCanvasTool(); return false">人形圖繪製工具csCanvasTool</a>
+							<a class="dropdown-item" href="#" onclick="superLink.csApiDefine(); return false">api設計工具csApiDefine</a>
+							<a class="dropdown-item" href="queryList.html" target="_blank">查詢清單管理queryList</a>
+							<a class="dropdown-item" href="XMLDesign.html" target="_blank">XML中間表設計</a>
+						</div>
+					</li> -->
+			      	<li class="nav-item dropdown">
+			      	  	<a class="nav-link" href="#" id="navbarFormatDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      	  	  	說明
+			      	  	</a>
+			      	  	<div class="dropdown-menu" aria-labelledby="navbarFormatDropdown">
+			      	  	  	<!-- <a class="dropdown-item" href="#" onclick="controlInformation(); return false">操作說明</a> -->
+			      	  	  	<!-- <a class="dropdown-item" href="#" onclick="featuresInformation(); return false">功能說明</a> -->
+			      	  	  	<a class="dropdown-item" href="#" onclick="copyrightInformation(); return false">版權說明</a>
+			      	  	  	<a class="dropdown-item disabled" href="#">版本 ver1.0 (Beta)</a>
+			      	  	</div>
+			      	</li>
+					<!-- <li class="nav-item dropdown">
+						<a href="#" class="nav-link" id="navbarToolDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							舊表專區
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarFormatDropdown">
+							<a href="#" class="dropdown-item" onclick="selectOldForm(); return false">舊表轉換</a>
+							<a href="#" class="dropdown-item" onclick="exportOldForm(); return false">匯出Jsp</a>
+						</div>
+					</li> -->
+			    </ul>
+				<div class="custom-control custom-switch hide">
+					<input type="checkbox" class="custom-control-input" id="headSwitch">
+					<label class="custom-control-label text-white" for="headSwitch">顯示表頭</label>
+				</div>
+				<div class="custom-control custom-switch hide">
+					<input type="checkbox" class="custom-control-input" id="pluginSwitch">
+					<label class="custom-control-label text-white" for="pluginSwitch">轉換結構</label>
+				</div>
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" id="codeSwitch">
+					<label class="custom-control-label text-white" for="codeSwitch">切換程式碼</label>
+				</div>
+				<form class="form-inline my-2 my-lg-0 hide">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="onlineMode">
+						<label class="text-white" for="onlineMode">線上模式</label>
+					</div>
+					<div class="form-check form-check-inline onlineMode hide">
+						<input class="form-check-input" type="checkbox" id="debuggerModeToggle">
+						<label class="text-white" for="debuggerModeToggle">debug模式</label>
+					</div>
+					<select class="form-control onlineMode hide" name="dynamicPort" id="dynamicPort">
+						<option value="default">預設</option>
+						<option value="http://172.16.100.22:8081/minsheng/services/DynamicFormService">民生</option>
+						<option value="http://172.16.100.22:8081/xindian/services/DynamicFormService">新店耕莘</option>
+						<option value="http://172.16.100.22:8085/NCQI/services/DynamicFormService">北榮NCQI</option>
+						<option value="http://172.16.100.23:8082/chungkang/services/DynamicFormService">忠港</option>
+						<option value="http://172.16.100.22:8081/HY/services/DynamicFormService">華育</option>
+						<option value="http://172.16.100.23:8082/hongen-taichung/services/DynamicFormService">台中宏恩</option>
+						<option value="http://172.16.100.23:8083/kch/services/DynamicFormService">高基醫院</option>
+						<option value="http://172.16.100.22:8081/shangshui/services/DynamicFormService">上水</option>
+                        <option value="http://172.16.100.24:8085/MJ/services/DynamicFormService">南京明碁</option>
+						<option value="http://172.16.100.23:8085/aiai_v2/services/DynamicFormService">愛愛院</option>
+						<option value="http://172.16.100.22:8083/GZH/services/DynamicFormService">郭综合</option>
+						<option value="http://172.16.100.23:8086/yangming/services/DynamicFormService">陽明</option>
+					</select>
+					<button class="btn btn-danger" type="button" id="cleanLocalBtn">清空暫存數據</button>
+				</form>
+			</div>
+	  	</nav>
+		<div class="main-page container-fluid row d-flex flex-fill border no-padding">
+			<div class="left-block active" id="leftMenu">
+				<div class="left-top-box">
+					<ul class="nav nav-tabs" id="bean-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link" id="base-layout" data-toggle="tab" data-show-type="add" data-online-mode="false" href="#base-layout-content" role="tab" draggable="false" aria-controls="base-layout-content" aria-selected="true">布局</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" id="base-bean" data-toggle="tab" data-show-type="add" data-online-mode="false" href="#base-bean-content" role="tab" draggable="false" aria-controls="base-bean-content" aria-selected="true">基礎元件</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="list-bean" data-toggle="tab" data-show-type="list" data-online-mode="false" href="#list-bean-content" role="tab" draggable="false" aria-controls="list-bean-content" aria-selected="true">清單元件</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="print-bean" data-toggle="tab" data-show-type="print" data-online-mode="false" href="#print-bean-content" role="tab" draggable="false" aria-controls="print-bean-content" aria-selected="true">列印元件</a>
+						</li>
+						<!-- <li class="nav-item">
+							<a class="nav-link" id="default-bean" data-toggle="tab" data-show-type="add" data-online-mode="false" href="#default-bean-content" role="tab" draggable="false" aria-controls="default-bean-content" aria-selected="true">預設元件</a>
+						</li> -->
+						<li class="nav-item">
+							<a class="nav-link" id="created-bean" data-toggle="tab" data-show-type="add,list,print" data-online-mode="false" href="#created-bean-tabContent" role="tab" draggable="false" aria-controls="created-bean-tabContent" aria-selected="true">表單元件</a>
+						</li>
+						<!-- <li class="nav-item">
+							<a class="nav-link" id="bean-tree" data-toggle="tab" data-show-type="add" data-online-mode="false" href="#bean-tree-content" role="tab" draggable="false" aria-controls="bean-tree-content" aria-selected="true">表單樹</a>
+						</li> -->
+						<li class="nav-item">
+							<a class="nav-link" id="api-list" data-toggle="tab" data-show-type="add,list,print" data-online-mode="true" href="#api-list-content" role="tab" draggable="false" aria-controls="api-list-content" aria-selected="true">API</a>
+						</li>
+					</ul>
+					<div class="tab-content border flex-fill" id="bean-tabContent">
+						<div class="tab-pane fade" id="base-layout-content" role="tabpanel" aria-labelledby="base-layout">
+						</div>
+						<div class="tab-pane fade show active" id="base-bean-content" role="tabpanel" aria-labelledby="base-bean">
+							<!-- <button class="btn btn-outline-info" value="button" draggable="true">按鈕(button)</button>
+							<button class="btn btn-outline-info" value="div" draggable="true">區塊(div)</button>
+							<button class="btn btn-outline-info" value="checkbox" draggable="true">多選方塊(checkbox)</button>
+							<button class="btn btn-outline-info" value="radiobox" draggable="true">單選方塊(radiobox)</button>
+							<button class="btn btn-outline-info" value="input" draggable="true">輸入方塊(input)</button>
+							<button class="btn btn-outline-info" value="textarea" draggable="true">文字方塊(textarea)</button> -->
+						</div>
+						<div class="tab-pane fade" id="list-bean-content" role="tabpanel" aria-labelledby="list-bean">
+						</div>
+						<div class="tab-pane fade" id="print-bean-content" role="tabpanel" aria-labelledby="print-bean">
+						</div>
+						<div class="tab-pane no-padding fade" id="default-bean-content" role="tabpanel" aria-labelledby="default-bean">
+							<nav class="navbar navbar-expand-lg">
+								<form class="col-12" id="search-form">
+									<div class="col-md-12">
+										<select class="form-control" name="search-type" id="search-type">
+											<option value="0">選擇查詢類型</option>
+											<option value="checkbox">多選方塊</option>
+											<option value="radio">單選方塊</option>
+											<option value="input">輸入方塊</option>
+											<option value="datetime">日期方塊</option>
+											<option value="select">下拉框</option>
+											<option value="address">地址</option>
+											<option value="group">組合元件</option>
+										</select>
+									</div>
+								</form>
+							</nav>
+							<div class="button-list" id="default-bean-list"></div>
+						</div>
+						<div class="tab-pane no-padding fade" id="created-bean-tabContent" role="tabpanel" aria-labelledby="created-bean">
+							<ul class="nav nav-tabs" id="created-bean-tabs" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="already-used-bean" data-toggle="tab" href="#already-used-bean-content" role="tab" aria-controls="already-used-bean-content" aria-selected="true">表單上的元件</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="abandoned-bean" data-toggle="tab" href="#abandoned-bean-content" role="tab" aria-controls="abandoned-bean-content" aria-selected="true">已棄用元件</a>
+								</li>
+							</ul>
+							<div class="tab-content flex-fill" id="created-inside-bean-tabContent">
+								<div class="tab-pane no-padding tree-list fade show active" id="already-used-bean-content" role="tabpanel" aria-labelledby="already-used-bean">
+								</div>
+								<div class="tab-pane no-padding tree-list fade" id="abandoned-bean-content" role="tabpanel" aria-labelledby="abandoned-bean">
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane no-padding fade" id="bean-tree-content" role="tabpanel" aria-labelledby="bean-tree">
+							<nav class="navbar navbar-expand-lg no-padding">
+								<form class="col-12 search-box row">
+									<div class="col-xl-7 col-lg-12 no-padding">
+										<input type="text" class="form-control" name="bean-tree-search-box" id="bean-tree-search-box" placeholder="搜尋..">
+									</div>
+									<button class="btn btn-success" id="bean-tree-import-btn" onclick="return false">匯入</button>
+									<button class="btn btn-secondary" id="bean-tree-reload-btn" onclick="return false"><i class="bi bi-arrow-repeat"></i></button>
+									<input class="hide" type="file" id="bean-tree-file" accept=".json" multiple/>
+								</form>
+							</nav>
+							<div class="tree-list" id="bean-tree-list"></div>
+						</div>
+						<div class="tab-pane no-padding fade" id="api-list-content" role="tabpanel" aria-labelledby="api-list">
+							<nav class="navbar navbar-expand-lg no-padding">
+								<form class="col-12 search-box row">
+									<div class="col-xl-7 col-lg-12 no-padding">
+										<input type="text" class="form-control" name="api-list-search-box" id="api-list-search-box" placeholder="搜尋..">
+									</div>
+									<button class="btn btn-primary" id="api-list-search-btn" onclick="return false">查詢</button>
+									<button class="btn btn-success" id="api-list-add-btn" onclick="return false">新增</button>
+								</form>
+							</nav>
+							<div class="list-group tree-list bstreeview" id="api-list-list"></div>
+						</div>
+					</div>
+				</div>
+				<div class="left-bottom-box">
+					<div class="materialTitle container row no-padding">
+						<div class="col-3 bg-dark text-white attributeTitle">參數</div>
+						<div class="col-9 bg-dark text-white attributeTitle">值</div>
+					</div>
+					<div class="row attributeContent flex-fill" id="materialList">
+							
+					</div>
+				</div>
+			</div>
+			<div class="right-block">
+				<div class="col-12 h-100 d-flex flex-column no-padding structure1" id="drawPage"></div>
+				<div class="col-12 h-100 container-fluid hide" id="codeBlock" style="z-index: 0">
+					<textarea name="codeArea" id="codeArea"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class="button icon combineBtn hide" draggable="true" id="toolPack" data-action="toolPack" disabled><i class="bi bi-tools"></i></button>
+	<div class="tool-pack-bar hide" id="toolPackBar">
+		<button class="button icon" id="combineCell" data-action="combine" title="合併"><i class="bi bi-chevron-expand"></i></button>
+		<button class="button icon" id="disassemble" data-action="disassemble" title="分解"><i class="bi bi-chevron-contract"></i></button>
+		<button class="button icon" id="deleteBean" data-action="delete" title="刪除"><i class="bi bi-trash"></i></button>
+		<button class="button icon" id="scriptBtn" data-action="script" title="腳本"><i class="bi bi-lightning-charge-fill"></i></button>
+		<button class="button icon" id="scoreBtn" data-action="score" title="計分元件"><i class="bi bi-file-spreadsheet"></i></button>
+		<button class="button icon" id="copyBtn" data-action="copy" title="複製"><i class="bi bi-files"></i></button>
+		<button class="button icon" id="pasteBtn" data-action="paste" title="貼上"><i class="bi bi-clipboard"></i></button>
+		<button class="button icon" id="groupUpBtn" data-action="group" title="建立群組"><i class="bi bi-columns"></i></button>
+		<button class="button icon" id="groupDownBtn" data-action="ungroup" title="解除群組"><i class="bi bi-columns-gap"></i></button>
+	</div>
+	<div class="list-block">
+		<button class="button list-button" id="initBtn"><i class="bi bi-list"></i></button>
+		<div class="container-fluid list-init-block">
+			<textarea name="codemirror" id="codemirror"></textarea>
+		</div>
+	</div>
+</body>
+<script src="js/method.js?version=1"></script>
+<script src="js/create-utils.js?version=0"></script>
+<script src="js/shared-utils.js?version=0"></script>
+<!-- <script src="js/dragNDrop.js?version=0"></script> -->
+<script src="js/switchForm.js?version=0"></script>
+<script src="js/formFile.js?version=0"></script>
+<script src="js/information.js?version=0"></script>
+<script src="js/superLink.js?version=0"></script>
+<!-- <script src="js/init.js?version=0"></script> -->
+<!-- <script src="js/table-module.js?version=0"></script> -->
+<script src="js/tool.js?version=0"></script>
+<script src="js/componentModule/init-component.js" type="module"></script>
+<script src="js/apiModule/api-module.js" type="module"></script>
+<script src="js/dnd.js?version=0" defer></script>
+<script src="js/versionModule/version-module.js" type="module"></script>
+<script src="js/template-module.js"></script>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+    <title>Testing teable</title>
+    <style>
+        thead tr th {
+            cursor: pointer;
+        }
+        thead tr th::after {
+            color: #cacaca;
+            font-size: 9pt;
+            float: right;
+            line-height: 2;
+        }
+        thead tr th:hover::after {
+            color: #313131;
+        }
+        thead tr th.asc::after {
+            content: '\25BC';
+            
+        }
+        thead tr th.desc::after {
+            content: '\25B2';
+        }
+    </style>
+</head>
+<body>
+    <table class="table table-striped" id="tableData">
+        <thead>
+            <tr>
+                <th scope="col">病歷號</th>
+                <th scope="col">身分證字號</th>
+                <th scope="col">姓名</th>
+                <th scope="col">性別</th>
+                <th scope="col">生日</th>
+                <th scope="col">初診單填寫時間</th>
+                <th scope="col">功能</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="">1</td>
+                <td class="">a123456789</td>
+                <td class="">王大明</td>
+                <td class="">男</td>
+                <td class="">2023-02-21</td>
+                <td class="">2023/02/21 12:00:00</td>
+                <td class="">
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="">2</td>
+                <td class="">b123456789</td>
+                <td class="">王小明</td>
+                <td class="">女</td>
+                <td class="">2022-02-21</td>
+                <td class="">2022/02/21 12:00:00</td>
+                <td class="">
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="">3</td>
+                <td class="">d123456789</td>
+                <td class="">王黑明</td>
+                <td class="">男</td>
+                <td class="">2021-02-21</td>
+                <td class="">2021/02/21 12:00:00</td>
+                <td class="">
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="">4</td>
+                <td class="">c123456789</td>
+                <td class="">王白明</td>
+                <td class="">男</td>
+                <td class="">2010-02-21</td>
+                <td class="">2010/02/21 12:00:00</td>
+                <td class="">
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="">6</td>
+                <td class="">f123456789</td>
+                <td class="">王出明</td>
+                <td class="">女</td>
+                <td class="">1999-02-21</td>
+                <td class="">2020/02/21 12:00:01</td>
+                <td class="">
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="">5</td>
+                <td class="">h123456789</td>
+                <td class="">王楊明</td>
+                <td class="">男</td>
+                <td class="">2020-02-21</td>
+                <td class="">2020/02/21 12:00:00</td>
+                <td class="">
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                    <button class="btn btn-primary">按鈕</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        // class TableSortModule {
+            
+        //     constructor (selector, order, options) {
+        //         /** Table 選擇器 */
+        //         this.selector = selector
+        //         /** 預設順序 desc/asc (預設 asc) */
+        //         this.order = order || "asc"
+        //         /** 可選參數 (擴充用) */
+        //         this.options = options
+        
+        //         this.init()
+        //     }
+        
+        //     get selector () {
+        //         return this._selector
+        //     }
+        
+        //     set selector (selector) {
+        //         this._selector = selector
+        //     }
+        
+        //     get order () {
+        //         return this._order
+        //     }
+        
+        //     set order (order) {
+        //         this._order = order
+        //     }
+        
+        //     get options () {
+        //         return this._options
+        //     }
+        
+        //     set options (options) {
+        //         this._options = options
+        //     }
+        
+        //     get header () {
+        //         return this._header
+        //     }
+        
+        //     set header (header) {
+        //         this._header = header
+        //     }
+        
+        //     get rows () {
+        //         return this._rows
+        //     }
+        
+        //     set rows (rows) {
+        //         this._rows = rows
+        //     }
+        
+        //     get sortColumn () {
+        //         return this._sortColumn
+        //     }
+        
+        //     set sortColumn (sortColumn) {
+        //         this._sortColumn = sortColumn
+        //     }
+            
+        //     /** 初始化 */
+        //     init () {
+        //         this.header = this.selector.querySelector("thead tr")
+        //         this.rows = Array.from(this.selector.querySelectorAll("tbody tr"))
+                
+        //         if (!this.header) return
+        //         this.header.addEventListener('click', this.headerClickEvent.bind(this))
+        //     }
+        
+        //     /** 表頭點擊 */
+        //     headerClickEvent (event) {
+        //         const target = event.target
+        //         if (target.tagName.toLowerCase() === "th") {
+        //             const index = Array.from(this.header.children).indexOf(target)
+        
+        //             if (this.sortColumn === index) this.order = this.order === "asc" ? "desc" : "asc"
+        //             else {
+        //                 this.sortColumn = index
+        //                 this.order = "asc"
+        //             }
+        //             Array.from(this.header.children).forEach(tableHead => {
+        //                 tableHead.classList.value = ''
+        //             })
+        //             target.classList.add(this.order)
+        //             this.rows.sort((a, b) => {
+        //                 const aValue = a.children[index].textContent.trim()
+        //                 const bValue = b.children[index].textContent.trim()
+        //                 if (this.order === "asc") return aValue.localeCompare(bValue)
+        //                 else return bValue.localeCompare(aValue)
+        //             })
+        
+        //             for (const row of this.rows) {
+        //                 this.selector.tBodies[0].appendChild(row)
+        //             }
+        //         }
+        //     }
+        // }
+    </script>
+    <script>
+        // new TableSortModule(document.querySelector('#tableData'))
+        function TableSortModle (selector, order, options) {
+            /** Table 選擇器 */
+            this.selector = selector
+            /** 預設順序 desc/asc (預設 asc) */
+            this.order = order || "asc"
+            /** 可選參數 (擴充用) */
+            this.options = options
+            /** 初始化 */
+            this.init = function () {
+                this.header = this.selector.querySelector("thead tr")
+                this.rows = Array.from(this.selector.querySelectorAll("tbody tr"))
+                if (!this.header) return
+                this.header.addEventListener('click', this.headerClickEvent.bind(this))
+            }
+            /** 表頭點擊事件 */
+            this.headerClickEvent = function (event) {
+                const target = event.target
+                if (target.tagName.toLowerCase() === "th") {
+                    const index = Array.from(this.header.children).indexOf(target)
+
+                    if (this.sortColumn === index) this.order = this.order === "asc" ? "desc" : "asc"
+                    else {
+                        this.sortColumn = index
+                        this.order = "asc"
+                    }
+                    Array.from(this.header.children).forEach(tableHead => {
+                        tableHead.classList.value = ''
+                    })
+                    target.classList.add(this.order)
+                    this.rows.sort((a, b) => {
+                        const aValue = a.children[index].textContent.trim()
+                        const bValue = b.children[index].textContent.trim()
+                        if (this.order === "asc") return aValue.localeCompare(bValue)
+                        else return bValue.localeCompare(aValue)
+                    })
+
+                    for (const row of this.rows) {
+                        this.selector.tBodies[0].appendChild(row)
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+div[data-display-mode=horizontal] {
+  padding-left: 0;
+}
+div[data-display-mode=horizontal] input[type=checkbox], div[data-display-mode=horizontal] input[type=radio] {
+  position: static;
+  margin-left: 5px;
+}
+div[data-display-mode=horizontal] input + label {
+  margin-left: 5px;
+}
+
+div.form-group.selected[data-display-mode=vertical] input.checkbox-default + label.checkbox-label-default::after {
+  content: "u2295";
+}
+
+/*# sourceMappingURL=input.css.map */
